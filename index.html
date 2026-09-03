@@ -121,7 +121,7 @@
             </div>
             
             <div class="flex items-center gap-6 text-sm font-medium text-gray-400">
-                <a href="https://github.com/DoanTrungHuy/Spindle#features" class="hover:text-white transition-colors hidden sm:block">Features & Docs</a>
+                
                 <a href="https://github.com/DoanTrungHuy/Spindle" class="flex items-center gap-2 bg-white text-black px-4 py-2 rounded-full hover:bg-gray-200 transition-colors">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
                     GitHub
@@ -130,10 +130,10 @@
         </div>
     </nav>
 
-    <main class="flex-grow mesh-bg pt-32 pb-20 relative">
+    <main class="flex-grow mesh-bg pt-32 pb-10 relative">
         <!-- Hero Section -->
         <header class="max-w-5xl mx-auto px-6 text-center mb-24 relative z-10">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold tracking-wide uppercase mb-8 animate-float">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-transparent border border-brand-500/20 text-brand-400 text-xs font-semibold tracking-wide uppercase mb-8 animate-float">
                 <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
                 v1.0 is now live
             </div>
@@ -148,12 +148,8 @@
             </p>
 
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="https://github.com/DoanTrungHuy/Spindle" class="px-8 py-4 rounded-xl bg-white text-black font-semibold hover:scale-105 transition-transform duration-300 w-full sm:w-auto">
-                    View on GitHub
-                </a>
-                <a href="#quick-start" class="px-8 py-4 rounded-xl glass text-white font-semibold hover:bg-white/5 transition-colors duration-300 w-full sm:w-auto">
-                    Quick Start
-                </a>
+                <a href="#architecture" class="px-8 py-4 rounded-xl bg-white text-black font-semibold hover:scale-105 transition-transform duration-300 w-full sm:w-auto">Explore Architecture</a>
+                
             </div>
         </header>
 
@@ -204,19 +200,19 @@
         </section>
 
         <!-- Bento Grid Features -->
-        <section id="architecture" class="max-w-6xl mx-auto px-6 mb-32 pt-20 -mt-20">
+        <section id="architecture" class="max-w-6xl mx-auto px-6 mb-10 pt-20 -mt-20">
             <h2 class="font-display text-3xl md:text-4xl font-bold mb-12 text-center">Engineered for Performance</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Large Card -->
                 <div class="md:col-span-2 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute right-0 top-0 w-64 h-64 bg-brand-500/10 blur-[80px] rounded-full group-hover:bg-brand-500/20 transition-colors"></div>
+                    <div class="absolute right-0 top-0 w-64 h-64 bg-transparent blur-[80px] rounded-full group-hover:bg-brand-500/20 transition-colors"></div>
                     <div>
                         <div class="w-12 h-12 rounded-full bg-brand-500/20 flex items-center justify-center mb-6 border border-brand-500/30">
                             <svg class="w-6 h-6 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         </div>
                         <h3 class="text-2xl font-display font-bold mb-3 text-white">Userspace Spinlocks</h3>
-                        <p class="text-gray-400 leading-relaxed max-w-md">By avoiding expensive OS-level mutex context switches, Spindle achieves ultra-fast lock-free multi-core synchronization. Perfect for high-contention environments.</p>
+                        <p class="text-gray-400 leading-relaxed ">By avoiding expensive OS-level mutex context switches, Spindle achieves ultra-fast lock-free multi-core synchronization. Perfect for high-contention environments.</p>
                     </div>
                 </div>
 
@@ -250,7 +246,7 @@
                             <svg class="w-6 h-6 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
                         <h3 class="text-2xl font-display font-bold mb-3 text-white">Active & Lazy Expiry</h3>
-                        <p class="text-gray-400 leading-relaxed max-w-md">TTL and key expiration is handled gracefully via background cleaner threads and on-demand lazy eviction, ensuring memory is freed without blocking readers.</p>
+                        <p class="text-gray-400 leading-relaxed ">TTL and key expiration is handled gracefully via background cleaner threads and on-demand lazy eviction, ensuring memory is freed without blocking readers.</p>
                     </div>
                 </div>
             </div>
@@ -259,35 +255,54 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-border bg-[#020202] py-16 relative overflow-hidden z-20">
+    <footer class="border-t border-border bg-[#020202] py-8 relative overflow-hidden z-20">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-brand-500/30 to-transparent"></div>
         
         <div class="max-w-6xl mx-auto px-6 flex flex-col items-center">
             
-            <div class="flex items-center gap-3 mb-8 opacity-80 hover:opacity-100 transition-opacity">
+            <div class="flex items-center gap-3 mb-4 opacity-80 hover:opacity-100 transition-opacity">
                 <img src="favicon.png" class="w-8 h-8" alt="Spindle">
-                <span class="font-display font-bold text-2xl tracking-tight text-white">Spindle</span>
+                <span class="font-display font-bold text-xl tracking-tight text-white">Spindle</span>
             </div>
             
-            <div class="text-center mb-10">
+            <div class="text-center">
                 <p class="text-gray-400 font-medium mb-1">
-                    Engineered with <span class="text-brand-400">C++20</span> by <a href="https://github.com/DoanTrungHuy" class="text-white hover:text-brand-300 underline decoration-border underline-offset-4 transition-colors">Doan Trung Huy</a>
+                    By <a href="https://github.com/DoanTrungHuy" class="text-white hover:text-brand-300 underline decoration-border underline-offset-4 transition-colors">Doan Trung Huy</a>
                 </p>
                 <p class="text-gray-600 text-sm">Released under the MIT License.</p>
             </div>
 
-            <!-- View Counter Badge -->
-            <div class="inline-flex items-center gap-3 bg-[#080808] px-4 py-2 rounded-xl border border-border hover:border-brand-500/30 transition-colors">
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
-                </span>
-                <span class="text-xs text-gray-500 font-mono">TRAFFIC</span>
-                <img src="https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=080808&style=flat-square" alt="Views" class="h-4 opacity-75 filter contrast-125">
-            </div>
+            </div></footer>
+        <!-- Floating Status Widget -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <div class="group flex items-center gap-3 bg-[#0a0a0a]/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/10 shadow-2xl hover:border-brand-500/40 hover:bg-[#111] transition-all duration-300">
+            <span class="relative flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+            </span>
+            <span class="text-xs text-gray-300 font-mono font-medium tracking-wide">SYSTEM_LIVE</span>
+            <div class="w-px h-4 bg-white/10"></div>
             
+            <div class="flex items-center gap-1.5 bg-transparent px-2 py-0.5 rounded border border-brand-500/20">
+                <svg class="w-3.5 h-3.5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                <div class="overflow-hidden flex items-center justify-end h-[20px] ml-[-4px]">
+                    <img src="https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=0a0a0a&style=flat-square" alt="Views" style="margin-left: -17px;" class="max-w-none opacity-90">
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
+
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
 
