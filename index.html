@@ -109,8 +109,12 @@
                 radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%);
         }
     </style>
-    </style>
     <style>
+        /* Smooth transitions for theme switching */
+        *, *::before, *::after {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+        }
+        
         /* Light mode overrides using :root level class */
         html.light body { background-color: #f8fafc !important; color: #1e293b !important; }
         html.light .glass,
