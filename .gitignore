@@ -1,0 +1,30 @@
+# Build directories and files
+build/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+
+# Compiled executables
+spindle_app
+bench_client
+
+# Log and data files
+wal.log
+server.log
+*.log
+
+# Object files (if compiled manually)
+*.o
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Learning Notes
+INTERVIEW_NOTES.md
+nhung_gi_minh_hoc.md
+spinlock.md
+Spindle_Low_Level_Optimizations.md
+logo_xp.md
+logo_xp.png
