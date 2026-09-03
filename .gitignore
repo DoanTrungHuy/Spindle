@@ -1,0 +1,28 @@
+# Build directories and files
+build/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+
+# Compiled executables
+kv_store_app
+bench_client
+
+# Log and data files
+wal.log
+server.log
+*.log
+
+# Object files (if compiled manually)
+*.o
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Learning Notes
+INTERVIEW_NOTES.md
+nhung_gi_minh_hoc.md
+spinlock.md
+TurboKV_Low_Level_Optimizations.md
