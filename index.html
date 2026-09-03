@@ -109,27 +109,34 @@
                 radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%);
         }
     </style>
-    <style id="light-mode-styles">
-        html.light body { background-color: #f8fafc; color: #0f172a; }
-        html.light .bento-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-        html.light .bento-card:hover { border-color: rgba(139, 92, 246, 0.5); box-shadow: 0 10px 40px -10px rgba(139, 92, 246, 0.15); }
-        html.light nav.bg-\\[\\#030303\\]\\/95 { background-color: rgba(255, 255, 255, 0.95); border-color: #e2e8f0; }
-        html.light nav .text-white { color: #0f172a; }
-        html.light nav .bg-white.text-black { background-color: #0f172a; color: white; }
-        html.light .text-white { color: #0f172a; }
-        html.light .text-gray-400 { color: #475569; }
-        html.light .text-gray-300 { color: #334155; }
-        html.light .text-gray-500 { color: #64748b; }
-        html.light .bg-\\[\\#050505\\] { background-color: #f1f5f9; border-color: #e2e8f0; }
-        html.light .bg-\\[\\#0a0a0a\\] { background-color: #e2e8f0; border-color: #cbd5e1; }
-        html.light .bg-\\[\\#020202\\] { background-color: #f8fafc; border-color: #e2e8f0; }
-        html.light .border-border { border-color: #e2e8f0; }
-        html.light .glow-text { text-shadow: none; }
-        html.light .mesh-bg { background-image: radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.1) 0px, transparent 50%), radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.1) 0px, transparent 50%); }
-        html.light .glass { background: rgba(255, 255, 255, 0.8); border-color: #e2e8f0; }
-        html.light .bg-\\[\\#0a0a0a\\]\\/90 { background-color: rgba(255, 255, 255, 0.9); }
-        html.light footer .bg-white { background-color: #0f172a; }
-        html.light footer .text-black { color: white; }
+    </style>
+    <style>
+        /* Light mode overrides using :root level class */
+        html.light body { background-color: #f8fafc !important; color: #1e293b !important; }
+        html.light .glass,
+        html.light [class*="bg-[#030303]"],
+        html.light [class*="bg-[#0a0a0a]"] { background: rgba(255,255,255,0.9) !important; border-color: #e2e8f0 !important; }
+        html.light .bento-card { background: #ffffff !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06); }
+        html.light .bento-card:hover { border-color: rgba(139,92,246,0.5) !important; box-shadow: 0 10px 40px -10px rgba(139,92,246,0.15) !important; }
+        html.light .mesh-bg { background-image: radial-gradient(at 0% 0%, rgba(124,58,237,0.08) 0px, transparent 50%), radial-gradient(at 100% 0%, rgba(59,130,246,0.08) 0px, transparent 50%) !important; }
+        html.light .glow-text { text-shadow: none !important; }
+        html.light .text-white, html.light .font-bold.text-white { color: #0f172a !important; }
+        html.light .text-gray-300 { color: #334155 !important; }
+        html.light .text-gray-400 { color: #475569 !important; }
+        html.light .text-gray-500 { color: #64748b !important; }
+        html.light .border-border { border-color: #e2e8f0 !important; }
+        html.light [class*="bg-[#050505]"] { background-color: #f1f5f9 !important; }
+        html.light [class*="bg-[#020202]"] { background-color: #f8fafc !important; }
+        html.light .bg-white.text-black { background-color: #0f172a !important; color: #ffffff !important; }
+        html.light .bg-white.text-black:hover { background-color: #1e293b !important; }
+        html.light #theme-toggle { color: #0f172a !important; }
+        html.light .font-display.font-bold.text-xl { color: #0f172a !important; }
+        /* Floating widget */
+        html.light #status-widget { background: #ffffff !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04) !important; }
+        html.light #status-text { color: #334155 !important; }
+        html.light #status-separator { background-color: #e2e8f0 !important; }
+        html.light #status-views { background: transparent !important; border: 1px solid #e2e8f0 !important; border-radius: 9999px !important; padding: 2px 8px !important; }
+        html.light #status-badge { filter: invert(1) brightness(1.08); clip-path: inset(2px); }
     </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen selection:bg-brand-500/30 selection:text-brand-400">
@@ -168,36 +175,41 @@
         const themeIconSun = document.getElementById('theme-icon-sun');
         const themeIconMoon = document.getElementById('theme-icon-moon');
         const htmlElement = document.documentElement;
+        const badge = document.getElementById('status-badge');
+        const badgeDark = "https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=0a0a0a&style=flat-square";
 
-        // Check local storage or system preference
-        const isLightMode = localStorage.getItem('theme') === 'light' || 
-            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches);
-
-        if (isLightMode) {
+        function setLight() {
             htmlElement.classList.add('light');
             htmlElement.classList.remove('dark');
             themeIconSun.classList.add('hidden');
             themeIconSun.classList.remove('block');
             themeIconMoon.classList.add('block');
             themeIconMoon.classList.remove('hidden');
+            if (badge) badge.src = badgeDark;
         }
 
+        function setDark() {
+            htmlElement.classList.add('dark');
+            htmlElement.classList.remove('light');
+            themeIconMoon.classList.add('hidden');
+            themeIconMoon.classList.remove('block');
+            themeIconSun.classList.add('block');
+            themeIconSun.classList.remove('hidden');
+        }
+
+        // Check local storage or system preference
+        const isLightMode = localStorage.getItem('theme') === 'light' || 
+            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches);
+
+        if (isLightMode) setLight();
+
         themeToggleBtn.addEventListener('click', () => {
-            htmlElement.classList.toggle('light');
-            htmlElement.classList.toggle('dark');
-            
             if (htmlElement.classList.contains('light')) {
-                localStorage.setItem('theme', 'light');
-                themeIconSun.classList.add('hidden');
-                themeIconSun.classList.remove('block');
-                themeIconMoon.classList.add('block');
-                themeIconMoon.classList.remove('hidden');
-            } else {
                 localStorage.setItem('theme', 'dark');
-                themeIconMoon.classList.add('hidden');
-                themeIconMoon.classList.remove('block');
-                themeIconSun.classList.add('block');
-                themeIconSun.classList.remove('hidden');
+                setDark();
+            } else {
+                localStorage.setItem('theme', 'light');
+                setLight();
             }
         });
     </script>
@@ -368,18 +380,18 @@
             </div></footer>
         <!-- Floating Status Widget -->
     <div class="fixed bottom-6 right-6 z-50">
-        <div class="group flex items-center gap-3 bg-[#0a0a0a]/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/10 shadow-2xl hover:border-brand-500/40 hover:bg-[#111] transition-all duration-300">
+        <div id="status-widget" class="group flex items-center gap-3 bg-[#0a0a0a]/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/10 shadow-2xl hover:border-brand-500/40 hover:bg-[#111] transition-all duration-300">
             <span class="relative flex h-2.5 w-2.5">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
             </span>
-            <span class="text-xs text-gray-300 font-mono font-medium tracking-wide">SYSTEM_LIVE</span>
-            <div class="w-px h-4 bg-white/10"></div>
+            <span id="status-text" class="text-xs text-gray-300 font-mono font-medium tracking-wide">SYSTEM_LIVE</span>
+            <div id="status-separator" class="w-px h-4 bg-white/10"></div>
             
-            <div class="flex items-center gap-1.5 bg-transparent px-2 py-0.5 rounded border border-brand-500/20">
+            <div id="status-views" class="flex items-center gap-1.5 bg-transparent px-2 py-0.5 rounded border border-brand-500/20">
                 <svg class="w-3.5 h-3.5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                 <div class="overflow-hidden flex items-center justify-end h-[20px] ml-[-4px]">
-                    <img src="https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=0a0a0a&style=flat-square" alt="Views" style="margin-left: -17px;" class="max-w-none opacity-90">
+                    <img id="status-badge" src="https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=0a0a0a&style=flat-square" alt="Views" style="margin-left: -17px;" class="max-w-none opacity-90">
                 </div>
             </div>
         </div>
