@@ -204,10 +204,20 @@
             <h2 class="font-display text-3xl md:text-4xl font-bold mb-12 text-center">Engineered for Performance</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <!-- Medium Card (New) -->
+                <div class="md:col-span-1 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute left-0 bottom-0 w-64 h-64 bg-red-500/10 blur-[80px] rounded-full group-hover:bg-red-500/20 transition-colors"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center mb-6 border border-red-500/30">
+                            <svg class="w-6 h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-display font-bold mb-3 text-white">Write-Ahead Logging (WAL)</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Data durability is guaranteed via an asynchronous Write-Ahead Log, fueled by a lock-free MPSC Ring Buffer to eliminate I/O blocking.</p>
+                    </div>
+                </div>
                 <!-- Large Card (New) -->
-                <div class="md:col-span-3 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute right-1/4 top-0 w-64 h-64 bg-amber-500/10 blur-[80px] rounded-full group-hover:bg-amber-500/20 transition-colors"></div>
-                    <div>
+                <div class="md:col-span-2 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute right-1/4 top-0 w-64 h-64 bg-amber-500/10 blur-[80px] rounded-full group-hover:bg-amber-500/20 transition-colors"></div><div class="relative z-10">
                         <div class="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center mb-6 border border-amber-500/30">
                             <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                         </div>
@@ -219,28 +229,22 @@
                 <div class="md:col-span-2 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
                     <div class="absolute right-0 top-0 w-64 h-64 bg-transparent blur-[80px] rounded-full group-hover:bg-brand-500/20 transition-colors"></div>
                     <div>
-                        <div class="w-12 h-12 rounded-full bg-brand-500/20 flex items-center justify-center mb-6 border border-brand-500/30">
+                        <div class="relative z-10"><div class="w-12 h-12 rounded-full bg-brand-500/20 flex items-center justify-center mb-6 border border-brand-500/30">
                             <svg class="w-6 h-6 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         </div>
                         <h3 class="text-2xl font-display font-bold mb-3 text-white">Userspace Spinlocks</h3>
-                        <p class="text-gray-400 leading-relaxed ">By avoiding expensive OS-level mutex context switches, Spindle achieves ultra-fast lock-free multi-core synchronization. Perfect for high-contention environments.</p>
-                    </div>
-                </div>
-
-                <!-- Small Card -->
-                <div class="bento-card rounded-3xl p-8 flex flex-col justify-between">
-                    <div>
+                        <p class="text-gray-400 leading-relaxed ">By avoiding expensive OS-level mutex context switches, Spindle achieves ultra-fast lock-free multi-core synchronization. Perfect for high-contention environments.</p></div></div></div><!-- Small Card -->
+                <div class="bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute left-1/2 top-0 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full group-hover:bg-blue-500/20 transition-colors -translate-x-1/2"></div>
+                    <div class="relative z-10">
                         <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center mb-6 border border-blue-500/30">
                             <svg class="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4"></path></svg>
                         </div>
                         <h3 class="text-xl font-display font-bold mb-3 text-white">Slab Allocator</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Custom memory management that eliminates heap fragmentation and maximizes CPU cache locality.</p>
-                    </div>
-                </div>
-
-                <!-- Small Card -->
-                <div class="bento-card rounded-3xl p-8 flex flex-col justify-between">
-                    <div>
+                        <p class="text-gray-400 text-sm leading-relaxed">Custom memory management that eliminates heap fragmentation and maximizes CPU cache locality.</p></div></div></div><!-- Small Card -->
+                <div class="bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute right-0 bottom-0 w-64 h-64 bg-green-500/10 blur-[80px] rounded-full group-hover:bg-green-500/20 transition-colors"></div>
+                    <div class="relative z-10">
                         <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mb-6 border border-green-500/30">
                             <svg class="w-6 h-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         </div>
@@ -251,8 +255,7 @@
 
                 <!-- Large Card -->
                 <div class="md:col-span-2 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute left-0 bottom-0 w-64 h-64 bg-pink-500/10 blur-[80px] rounded-full group-hover:bg-pink-500/20 transition-colors"></div>
-                    <div>
+                    <div class="absolute left-0 bottom-0 w-64 h-64 bg-pink-500/10 blur-[80px] rounded-full group-hover:bg-pink-500/20 transition-colors"></div><div class="relative z-10">
                         <div class="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center mb-6 border border-pink-500/30">
                             <svg class="w-6 h-6 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
@@ -271,16 +274,11 @@
         
         <div class="max-w-6xl mx-auto px-6 flex flex-col items-center">
             
-            <div class="flex items-center gap-3 mb-4 opacity-80 hover:opacity-100 transition-opacity">
+            <div class="flex items-center justify-center gap-3 opacity-80 hover:opacity-100 transition-opacity">
                 <img src="favicon.png" class="w-8 h-8" alt="Spindle">
                 <span class="font-display font-bold text-xl tracking-tight text-white">Spindle</span>
-            </div>
-            
-            <div class="text-center">
-                <p class="text-gray-400 font-medium mb-1">
-                    By <a href="https://github.com/DoanTrungHuy" class="text-white hover:text-brand-300 underline decoration-border underline-offset-4 transition-colors">Doan Trung Huy</a>
-                </p>
-                <p class="text-gray-600 text-sm">Released under the MIT License.</p>
+                <div class="w-1 h-1 rounded-full bg-gray-600 mx-1"></div>
+                <span class="text-gray-400 text-sm">Released under the MIT License</span>
             </div>
 
             </div></footer>
@@ -305,6 +303,14 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+
 
 
 
