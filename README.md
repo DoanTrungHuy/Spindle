@@ -45,15 +45,19 @@ target_link_libraries(my_app PRIVATE spindle)
 
 ## Running the Server
 
-Start the Spindle server from the build directory. By default, Spindle listens on **TCP socket 127.0.0.1:8888**.
+Start the Spindle server from the build directory.
+
 ```bash
-# Inside the build directory
+# Start with default settings (Host: 0.0.0.0, Port: 8888, Threads: 4)
 ./spindle_app
+
+# Start with custom host, port, and number of threads
+./spindle_app --host 127.0.0.1 --port 6379 --threads 8
 ```
 
 ## Usage Guides
 
-Spindle uses a simple text-based TCP protocol. You can connect to it using any language that supports TCP sockets. The default socket is `127.0.0.1:8888`. Commands are sent with a newline character (`\n`) at the end.
+Spindle uses a simple text-based TCP protocol. You can connect to it using any language that supports TCP sockets. The default server socket is `0.0.0.0:8888` (reachable via `127.0.0.1` locally). Commands are sent with a newline character (`\n`) at the end.
 
 ### Python (using the provided SDK)
 A Python client is provided in the `clients/python/` directory.
@@ -65,7 +69,7 @@ sys.path.append('clients/python')
 
 from spindle import SpindleClient
 
-# The default socket is 127.0.0.1:8888
+# Connect to the server (default is 127.0.0.1:8888)
 client = SpindleClient(host='127.0.0.1', port=8888)
 client.connect()
 
