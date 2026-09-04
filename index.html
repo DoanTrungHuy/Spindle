@@ -978,9 +978,11 @@ client.close()</code></pre>
                 <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg mb-8" id="benchmark-desc">Tested locally on an 8-core CPU using 100 concurrent connections with Pipelining (batch=100) and tiny payloads. Designed to measure theoretical max engine throughput.</p>
                 
                 <!-- Tab Switcher -->
-                <div class="inline-flex bg-gray-100 dark:bg-[#1a1a1a] p-1 rounded-xl border border-gray-200 dark:border-white/5 relative z-20">
-                    <button onclick="switchBenchmark('peak')" id="tab-peak" class="px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-white dark:bg-white/10 text-brand-600 dark:text-brand-400 shadow-sm">Peak Throughput</button>
-                    <button onclick="switchBenchmark('real')" id="tab-real" class="px-6 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">1KB Payload</button>
+                <div class="inline-flex bg-gray-100 dark:bg-[#1a1a1a] p-1 rounded-xl border border-gray-200 dark:border-white/5 relative z-20 flex-wrap justify-center gap-1">
+                    <button onclick="switchBenchmark('peak')" id="tab-peak" class="px-5 py-2.5 rounded-lg text-sm font-bold transition-all bg-white dark:bg-white/10 text-brand-600 dark:text-brand-400 shadow-sm">Peak Throughput</button>
+                    <button onclick="switchBenchmark('real')" id="tab-real" class="px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">1KB Payload</button>
+                    <button onclick="switchBenchmark('conn')" id="tab-conn" class="px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">1000 Connections</button>
+                    <button onclick="switchBenchmark('get')" id="tab-get" class="px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">Pure Reads (GET)</button>
                 </div>
             </div>
 
@@ -1038,11 +1040,25 @@ client.close()</code></pre>
                         desc: "Tested locally on an 8-core CPU using 100 concurrent connections with Pipelining (batch=100) and tiny payloads. Designed to measure theoretical max engine throughput."
                     },
                     real: {
-                        spindleOps: "1,743,316", redisOps: "120,208",
-                        spindleWidth: "100%", redisWidth: "6.8%",
-                        spindleP50: "5.32ms", spindleP99: "12.12ms",
+                        spindleOps: "1,290,672", redisOps: "120,208",
+                        spindleWidth: "100%", redisWidth: "9.3%",
+                        spindleP50: "6.41ms", spindleP99: "20.52ms",
                         redisP50: "78.09ms", redisP99: "101.29ms",
-                        desc: "Tested locally on an 8-core CPU using 100 concurrent connections with realistic 1KB Data Payloads. Redis suffers severe CPU bottlenecking while Spindle scales gracefully."
+                        desc: "Tested locally using 100 concurrent connections with realistic 1KB Data Payloads (Random Alphanumeric). Redis suffers severe CPU bottlenecking while Spindle scales gracefully."
+                    },
+                    conn: {
+                        spindleOps: "11,125,916", redisOps: "968,221",
+                        spindleWidth: "100%", redisWidth: "8.7%",
+                        spindleP50: "7.98ms", spindleP99: "14.47ms",
+                        redisP50: "75.33ms", redisP99: "151.61ms",
+                        desc: "Stress testing the network layer with 1,000 concurrent active connections. Spindle's epoll-based multi-threaded Reactor absorbs the storm with virtually no latency spike, while Redis P99 degrades severely."
+                    },
+                    get: {
+                        spindleOps: "25,056,697", redisOps: "679,584",
+                        spindleWidth: "100%", redisWidth: "2.7%",
+                        spindleP50: "0.29ms", spindleP99: "1.79ms",
+                        redisP50: "6.91ms", redisP99: "13.25ms",
+                        desc: "Pure Read-Heavy Workload (100% GET commands). Without WAL/Disk writes holding it back, Spindle's Sharded Map shines, achieving an unbelievable 25 Million RPS. Redis is 37x slower here!"
                     }
                 };
 
@@ -1068,23 +1084,20 @@ client.close()</code></pre>
                         rBar.style.width = data.redisWidth;
                     }, 50);
 
-                    const tabPeak = document.getElementById('tab-peak');
-                    const tabReal = document.getElementById('tab-real');
-                    
+                    const tabs = ['peak', 'real', 'conn', 'get'];
                     const activeClasses = "bg-white dark:bg-white/10 text-brand-600 dark:text-brand-400 shadow-sm font-bold".split(" ");
                     const inactiveClasses = "text-gray-500 hover:text-gray-900 dark:hover:text-white font-medium".split(" ");
                     
-                    if (mode === 'peak') {
-                        activeClasses.forEach(c => tabPeak.classList.add(c));
-                        inactiveClasses.forEach(c => tabPeak.classList.remove(c));
-                        inactiveClasses.forEach(c => tabReal.classList.add(c));
-                        activeClasses.forEach(c => tabReal.classList.remove(c));
-                    } else {
-                        activeClasses.forEach(c => tabReal.classList.add(c));
-                        inactiveClasses.forEach(c => tabReal.classList.remove(c));
-                        inactiveClasses.forEach(c => tabPeak.classList.add(c));
-                        activeClasses.forEach(c => tabPeak.classList.remove(c));
-                    }
+                    tabs.forEach(t => {
+                        const tabBtn = document.getElementById('tab-' + t);
+                        if (t === mode) {
+                            activeClasses.forEach(c => tabBtn.classList.add(c));
+                            inactiveClasses.forEach(c => tabBtn.classList.remove(c));
+                        } else {
+                            inactiveClasses.forEach(c => tabBtn.classList.add(c));
+                            activeClasses.forEach(c => tabBtn.classList.remove(c));
+                        }
+                    });
                 }
             </script>
         </section>
