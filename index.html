@@ -95,6 +95,24 @@
                     }
                 }
             }
+        
+        function switchInstallTab(tabId) {
+            document.querySelectorAll('.install-panel').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.install-panel').forEach(p => p.classList.remove('block'));
+            
+            document.querySelectorAll('.install-tab').forEach(t => {
+                t.classList.remove('border-brand-500', 'text-white', 'bg-white/5');
+                t.classList.add('border-transparent');
+            });
+            
+            document.getElementById('panel-install-' + tabId).classList.remove('hidden');
+            document.getElementById('panel-install-' + tabId).classList.add('block');
+            
+            const activeTab = document.getElementById('tab-install-' + tabId);
+            activeTab.classList.remove('border-transparent');
+            activeTab.classList.add('border-brand-500', 'text-white', 'bg-white/5');
+        }
+
         function switchTab(tabId) {
             // Hide all panels
             document.querySelectorAll('.sdk-panel').forEach(p => p.classList.add('hidden'));
@@ -251,7 +269,7 @@
             
             <h1 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
                 Data processing at <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-blue-400 to-brand-400 animate-gradient-x glow-text">microsecond speed.</span>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-blue-400 to-brand-400 animate-gradient-x" style="filter: drop-shadow(0 0 20px rgba(139,92,246,0.3));">microsecond speed.</span>
             </h1>
             
             <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light">
@@ -313,6 +331,64 @@
                 </div>
             </div>
         </section>
+        
+        <!-- Installation Section -->
+        <section id="installation" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-display font-bold text-white mb-6 tracking-tight">Installation &amp; Setup</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">Get Spindle up and running in seconds. Build from source or include it directly in your CMake projects.</p>
+            </div>
+            
+            <div class="bento-card rounded-2xl p-2 overflow-hidden shadow-2xl shadow-brand-500/10 relative group">
+                <div class="absolute inset-0 bg-gradient-to-br from-brand-600/20 to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
+                <div class="bg-[#050505] rounded-xl border border-border flex flex-col md:flex-row h-[420px] md:h-[350px]">
+                    <!-- Sidebar Tabs -->
+                    <div class="w-full md:w-64 bg-[#0a0a0a] border-b md:border-b-0 md:border-r border-border flex flex-row md:flex-col overflow-x-auto rounded-tl-xl rounded-bl-none md:rounded-bl-xl shrink-0">
+                        <button onclick="switchInstallTab('source')" id="tab-install-source" class="install-tab text-sm font-semibold flex-1 md:flex-none text-left px-6 py-5 text-gray-400 hover:bg-white/5 hover:text-white transition-colors border-b-2 md:border-b-0 md:border-l-2 border-brand-500 text-white bg-white/5">Build from Source</button>
+                        <button onclick="switchInstallTab('cmake')" id="tab-install-cmake" class="install-tab text-sm font-semibold flex-1 md:flex-none text-left px-6 py-5 text-gray-400 hover:bg-white/5 hover:text-white transition-colors border-b-2 md:border-b-0 md:border-l-2 border-transparent">CMake FetchContent</button>
+                    </div>
+
+                    <!-- Content Panels -->
+                    <div class="flex-1 relative overflow-y-auto bg-[#030303] rounded-tr-xl rounded-br-xl">
+                        <!-- Source Panel -->
+                        <div id="panel-install-source" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed block">
+<pre><code class="language-bash text-gray-300"><span class="text-gray-500"># 1. Clone the repository</span>
+<span class="text-brand-400">$</span> git clone https://github.com/DoanTrungHuy/Spindle.git
+<span class="text-brand-400">$</span> cd Spindle
+
+<span class="text-gray-500"># 2. Build the project using CMake</span>
+<span class="text-brand-400">$</span> mkdir build &amp;&amp; cd build
+<span class="text-brand-400">$</span> cmake ..
+<span class="text-brand-400">$</span> make -j4
+
+<span class="text-gray-500"># 3. Start the server!</span>
+<span class="text-brand-400">$</span> ./spindle_app --port 8888 --threads 4
+</code></pre>
+                        </div>
+
+                        <!-- CMake Panel -->
+                        <div id="panel-install-cmake" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed hidden">
+<pre><code class="language-cmake text-gray-300"><span class="text-gray-500"># Add the following to your CMakeLists.txt:</span>
+
+<span class="text-pink-400">include</span>(FetchContent)
+
+<span class="text-blue-400">FetchContent_Declare</span>(
+  Spindle
+  GIT_REPOSITORY https://github.com/DoanTrungHuy/Spindle.git
+  GIT_TAG        master
+)
+<span class="text-blue-400">FetchContent_MakeAvailable</span>(Spindle)
+
+<span class="text-gray-500"># Link it to your executable</span>
+<span class="text-blue-400">add_executable</span>(my_app main.cpp)
+<span class="text-blue-400">target_link_libraries</span>(my_app PRIVATE spindle)
+</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Multi-Language SDKs Section -->
         <section id="sdks" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
             <div class="text-center mb-12">
