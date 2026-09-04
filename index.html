@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="light scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -174,9 +174,16 @@
         html.light .text-gray-300 { color: #334155 !important; }
         html.light .text-gray-400 { color: #475569 !important; }
         html.light .text-gray-500 { color: #64748b !important; }
+        html.light .text-pink-400 { color: #d946ef !important; }
+        html.light .text-green-400 { color: #16a34a !important; }
+        html.light .text-blue-400 { color: #2563eb !important; }
+        html.light .text-brand-400 { color: #7c3aed !important; }
         html.light .border-border { border-color: #e2e8f0 !important; }
         html.light [class*="bg-[#050505]"] { background-color: #f1f5f9 !important; }
         html.light [class*="bg-[#020202]"] { background-color: #f8fafc !important; }
+        html.light [class*="bg-[#0a0a0a]"] { background-color: #e2e8f0 !important; }
+        html.light [class*="bg-[#030303]"] { background-color: #ffffff !important; }
+        html.light .bg-white\/5, html.light .hover\:bg-white\/5:hover { background-color: rgba(0,0,0,0.05) !important; }
         html.light .bg-white.text-black { background-color: #0f172a !important; color: #ffffff !important; }
         html.light .bg-white.text-black:hover { background-color: #1e293b !important; }
         html.light #theme-toggle { color: #0f172a !important; }
@@ -204,11 +211,11 @@
                 <!-- Theme Toggle Button -->
                 <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200/10 transition-colors text-white">
                     <!-- Sun Icon (Hidden in Light Mode) -->
-                    <svg id="theme-icon-sun" class="w-5 h-5 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg id="theme-icon-sun" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
                     <!-- Moon Icon (Hidden in Dark Mode) -->
-                    <svg id="theme-icon-moon" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg id="theme-icon-moon" class="w-5 h-5 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
                 </button>
@@ -252,11 +259,15 @@
             themeIconSun.classList.remove('hidden');
         }
 
-        // Check local storage or system preference
-        const isLightMode = localStorage.getItem('theme') === 'light' || 
-            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches);
+        // Default to Light Mode unless the user prefers Dark Mode
+        const isDarkMode = localStorage.getItem('theme') === 'dark' || 
+            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
-        if (isLightMode) setLight();
+        if (isDarkMode) {
+            setDark();
+        } else {
+            setLight();
+        }
 
         themeToggleBtn.addEventListener('click', () => {
             if (htmlElement.classList.contains('light')) {
