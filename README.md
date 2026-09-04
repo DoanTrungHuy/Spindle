@@ -145,6 +145,14 @@ GET mykey
 DEL mykey
 ```
 
+### Other Languages (C#, PHP, Rust, C++, etc.)
+Since Spindle is built on a simple raw text-based TCP protocol, **you do not need any special database drivers**. You can build your own client in absolutely any programming language using its standard built-in TCP Socket library (e.g., `TcpClient` in C#, `fsockopen` in PHP, `std::net::TcpStream` in Rust). 
+
+To interact with Spindle:
+1. Open a TCP connection to the server IP and port.
+2. Send your command as a string, terminated by a newline character `\n`.
+3. Read the response string (also terminated by `\n`).
+
 ## Features
 - **High Performance**: Optimized with low-level techniques (Slab Allocation, Spinlocks, Reactor pattern).
 - **Multithreaded**: Built to handle concurrent workloads efficiently.
