@@ -59,6 +59,32 @@ Start the Spindle server from the build directory.
 
 Spindle uses a simple text-based TCP protocol. You can connect to it using any language that supports TCP sockets. The default server socket is `0.0.0.0:8888` (reachable via `127.0.0.1` locally). Commands are sent with a newline character (`\n`) at the end.
 
+### Java (using the provided SDK)
+A Java client is provided in the `clients/java/` directory.
+
+```java
+import clients.java.SpindleClient;
+
+public class Main {
+    public static void main(String[] args) {
+        SpindleClient client = new SpindleClient("127.0.0.1", 8888);
+        try {
+            client.connect();
+            
+            // Set key with expiration
+            client.setEx("session:1", "active", 3600);
+            System.out.println(client.get("session:1"));
+            
+            client.delete("session:1");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            client.close();
+        }
+    }
+}
+```
+
 ### Python (using the provided SDK)
 A Python client is provided in the `clients/python/` directory.
 
@@ -100,34 +126,6 @@ client.connect(8888, '127.0.0.1', () => {
 client.on('data', (data) => {
     console.log('Received: ' + data.toString().trim());
 });
-```
-
-### Go (Golang)
-Using the standard `net` package:
-
-```go
-package main
-
-import (
-    "bufio"
-    "fmt"
-    "net"
-)
-
-func main() {
-    conn, err := net.Dial("tcp", "127.0.0.1:8888")
-    if err != nil {
-        panic(err)
-    }
-    defer conn.Close()
-
-    // Send command
-    fmt.Fprintf(conn, "SET session:go active\n")
-    
-    // Read response
-    response, _ := bufio.NewReader(conn).ReadString('\n')
-    fmt.Print("Response: ", response)
-}
 ```
 
 ### cURL / Netcat (Command Line)
