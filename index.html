@@ -95,6 +95,7 @@
                     }
                 }
             }
+        };
         
         function switchInstallTab(tabId) {
             document.querySelectorAll('.install-panel').forEach(p => p.classList.add('hidden'));
@@ -134,8 +135,13 @@
             activeTab.classList.add('border-brand-500', 'text-white', 'bg-white/5');
         }
         
-        // Initialize active tab on load
-        window.addEventListener('DOMContentLoaded', () => setTimeout(() => switchTab('java'), 50));
+        // Initialize active tabs on load
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                switchTab('java');
+                switchInstallTab('source');
+            }, 50);
+        });
     </script>
     <style>
         body { background-color: #030303; color: #ededed; overflow-x: hidden; }
