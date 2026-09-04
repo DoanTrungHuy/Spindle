@@ -42,6 +42,9 @@ int make_conn() {
 void conn_loop(int fd) {
     std::string payload;
     std::string val(cfg.payload_size, 'x');
+    for (int i = 0; i < cfg.payload_size; ++i) {
+        val[i] = 'A' + (rand() % 26);
+    }
     for (int i = 0; i < cfg.batch; ++i) {
         if (strcmp(cfg.mode, "GET") == 0) {
             payload += "GET k" + std::to_string(i%5000) + "\n";
