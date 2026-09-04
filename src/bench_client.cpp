@@ -18,6 +18,8 @@ using namespace std::chrono;
 struct Config {
     const char* host = "127.0.0.1";
     int port = 8080, conns = 128, batch = 64, dur = 5, threads = 4;
+    int payload_size = 1;
+    const char* mode = "SET";
 } cfg;
 
 std::atomic<uint64_t> g_responses{0};
@@ -39,7 +41,14 @@ int make_conn() {
 
 void conn_loop(int fd) {
     std::string payload;
-    for (int i = 0; i < cfg.batch; ++i) payload += "SET k" + std::to_string(i%5000) + " v\n";
+    std::string val(cfg.payload_size, 'x');
+    for (int i = 0; i < cfg.batch; ++i) {
+        if (strcmp(cfg.mode, "GET") == 0) {
+            payload += "GET k" + std::to_string(i%5000) + "\n";
+        } else {
+            payload += "SET k" + std::to_string(i%5000) + " " + val + "\n";
+        }
+    }
     
     char rbuf[131072];
     std::vector<uint32_t> latencies;
@@ -80,8 +89,9 @@ int main(int argc, char** argv) {
     if(argc>1) cfg.host = argv[1]; if(argc>2) cfg.port = atoi(argv[2]);
     if(argc>3) cfg.conns = atoi(argv[3]); if(argc>4) cfg.batch = atoi(argv[4]);
     if(argc>5) cfg.dur = atoi(argv[5]); if(argc>6) cfg.threads = atoi(argv[6]);
+    if(argc>7) cfg.payload_size = atoi(argv[7]); if(argc>8) cfg.mode = argv[8];
     
-    printf("--- Minimal Spindle Benchmark (%d Threads, %d Conns) ---\n", cfg.threads, cfg.conns);
+    printf("--- Minimal Spindle Benchmark (%d Threads, %d Conns, Mode: %s, Payload: %dB) ---\n", cfg.threads, cfg.conns, cfg.mode, cfg.payload_size);
     auto t_start = steady_clock::now();
     {
         std::vector<std::jthread> threads;
