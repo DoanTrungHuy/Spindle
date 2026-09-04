@@ -47,9 +47,37 @@
         "priceCurrency": "USD"
       }
     }
+    
+        function toggleWidget() {
+            const content = document.getElementById('status-content');
+            if (content.classList.contains('max-w-[200px]')) {
+                // Collapse
+                content.classList.remove('max-w-[200px]', 'opacity-100', 'gap-3');
+                content.classList.add('max-w-0', 'opacity-0', 'gap-0');
+            } else {
+                // Expand
+                content.classList.remove('max-w-0', 'opacity-0', 'gap-0');
+                content.classList.add('max-w-[200px]', 'opacity-100', 'gap-3');
+            }
+        }
+
     </script>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com">
+        function toggleWidget() {
+            const content = document.getElementById('status-content');
+            if (content.classList.contains('max-w-[200px]')) {
+                // Collapse
+                content.classList.remove('max-w-[200px]', 'opacity-100', 'gap-3');
+                content.classList.add('max-w-0', 'opacity-0', 'gap-0');
+            } else {
+                // Expand
+                content.classList.remove('max-w-0', 'opacity-0', 'gap-0');
+                content.classList.add('max-w-[200px]', 'opacity-100', 'gap-3');
+            }
+        }
+
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
     
     <script>
@@ -142,6 +170,20 @@
                 switchInstallTab('source');
             }, 50);
         });
+    
+        function toggleWidget() {
+            const content = document.getElementById('status-content');
+            if (content.classList.contains('max-w-[200px]')) {
+                // Collapse
+                content.classList.remove('max-w-[200px]', 'opacity-100', 'gap-3');
+                content.classList.add('max-w-0', 'opacity-0', 'gap-0');
+            } else {
+                // Expand
+                content.classList.remove('max-w-0', 'opacity-0', 'gap-0');
+                content.classList.add('max-w-[200px]', 'opacity-100', 'gap-3');
+            }
+        }
+
     </script>
     <style>
         body { background-color: #030303; color: #ededed; overflow-x: hidden; }
@@ -278,6 +320,20 @@
                 setLight();
             }
         });
+    
+        function toggleWidget() {
+            const content = document.getElementById('status-content');
+            if (content.classList.contains('max-w-[200px]')) {
+                // Collapse
+                content.classList.remove('max-w-[200px]', 'opacity-100', 'gap-3');
+                content.classList.add('max-w-0', 'opacity-0', 'gap-0');
+            } else {
+                // Expand
+                content.classList.remove('max-w-0', 'opacity-0', 'gap-0');
+                content.classList.add('max-w-[200px]', 'opacity-100', 'gap-3');
+            }
+        }
+
     </script>
 
     <main class="flex-grow mesh-bg pt-32 pb-10 relative">
@@ -572,18 +628,20 @@ client.close()</code></pre>
             </div></footer>
         <!-- Floating Status Widget -->
     <div class="fixed bottom-6 right-6 z-50">
-        <div id="status-widget" class="group flex items-center gap-3 bg-[#0a0a0a]/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/10 shadow-2xl hover:border-brand-500/40 hover:bg-[#111] transition-all duration-300">
-            <span class="relative flex h-2.5 w-2.5">
+        <div id="status-widget" onclick="toggleWidget()" class="cursor-pointer group flex items-center gap-3 bg-[#0a0a0a]/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/10 shadow-2xl hover:border-brand-500/40 hover:bg-[#111] transition-all duration-300">
+            <span class="relative flex h-2.5 w-2.5 shrink-0" title="Click to collapse/expand">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
             </span>
-            <span id="status-text" class="text-xs text-gray-300 font-mono font-medium tracking-wide">SYSTEM_LIVE</span>
-            <div id="status-separator" class="w-px h-4 bg-white/10"></div>
-            
-            <div id="status-views" class="flex items-center gap-1.5 bg-transparent px-2 py-0.5 rounded border border-brand-500/20">
-                <svg class="w-3.5 h-3.5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                <div class="overflow-hidden flex items-center justify-end h-[20px] ml-[-4px]">
-                    <img id="status-badge" src="https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=000000&style=for-the-badge" alt="Views" style="margin-left: -17.5px; height: 20px;" class="max-w-none opacity-90">
+            <div id="status-content" class="flex items-center gap-3 overflow-hidden transition-all duration-500 max-w-[200px] opacity-100">
+                <span id="status-text" class="text-xs text-gray-300 font-mono font-medium tracking-wide whitespace-nowrap">SYSTEM_LIVE</span>
+                <div id="status-separator" class="w-px h-4 bg-white/10 shrink-0"></div>
+                
+                <div id="status-views" class="flex items-center gap-1.5 bg-transparent px-2 py-0.5 rounded border border-brand-500/20 shrink-0">
+                    <svg class="w-3.5 h-3.5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                    <div class="overflow-hidden flex items-center justify-end h-[20px] ml-[-4px]">
+                        <img id="status-badge" src="https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=000000&style=for-the-badge" alt="Views" style="margin-left: -17.5px; height: 20px;" class="max-w-none opacity-90">
+                    </div>
                 </div>
             </div>
         </div>
