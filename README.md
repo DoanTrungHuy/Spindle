@@ -107,25 +107,30 @@ client.close()
 ```
 
 ### Node.js / JavaScript
-You can easily interact with Spindle using the built-in `net` module.
+A JavaScript client (using Promises) is provided in the `clients/javascript/` directory.
 
 ```javascript
-const net = require('net');
+const SpindleClient = require('./clients/javascript/spindle');
 
-const client = new net.Socket();
-client.connect(8888, '127.0.0.1', () => {
-    console.log('Connected to Spindle');
+async function main() {
+    const client = new SpindleClient('127.0.0.1', 8888);
     
-    // Set a key
-    client.write('SET user:1 John\n');
-    
-    // Get a key
-    client.write('GET user:1\n');
-});
+    try {
+        await client.connect();
+        
+        // Set key with expiration
+        await client.set("session:1", "active", { ex: 3600 });
+        console.log(await client.get("session:1"));
+        
+        await client.delete("session:1");
+    } catch (err) {
+        console.error(err);
+    } finally {
+        client.close();
+    }
+}
 
-client.on('data', (data) => {
-    console.log('Received: ' + data.toString().trim());
-});
+main();
 ```
 
 ### cURL / Netcat (Command Line)
