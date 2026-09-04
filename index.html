@@ -95,7 +95,29 @@
                     }
                 }
             }
+        function switchTab(tabId) {
+            // Hide all panels
+            document.querySelectorAll('.sdk-panel').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.sdk-panel').forEach(p => p.classList.remove('block'));
+            
+            // Remove active classes from all tabs
+            document.querySelectorAll('.sdk-tab').forEach(t => {
+                t.classList.remove('border-brand-500', 'text-white', 'bg-white/5');
+                t.classList.add('border-transparent');
+            });
+            
+            // Show selected panel
+            document.getElementById('panel-' + tabId).classList.remove('hidden');
+            document.getElementById('panel-' + tabId).classList.add('block');
+            
+            // Activate selected tab
+            const activeTab = document.getElementById('tab-' + tabId);
+            activeTab.classList.remove('border-transparent');
+            activeTab.classList.add('border-brand-500', 'text-white', 'bg-white/5');
         }
+        
+        // Initialize active tab on load
+        window.addEventListener('DOMContentLoaded', () => setTimeout(() => switchTab('java'), 50));
     </script>
     <style>
         body { background-color: #030303; color: #ededed; overflow-x: hidden; }
@@ -287,6 +309,119 @@
                             <span>client.get(<span class="text-green-400">"session:1"</span>)</span>
                         </div>
                         <div class="flex text-green-400 font-bold ml-8">'active'</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Multi-Language SDKs Section -->
+        <section id="sdks" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-display font-bold text-white mb-6 glow-text tracking-tight">Write in Your Favorite Language</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">Spindle speaks raw TCP, so you can connect from anywhere. Use our official SDKs for Python, Java, and JavaScript, or drop down to raw sockets.</p>
+            </div>
+            
+            <div class="bento-card rounded-2xl p-2 overflow-hidden shadow-2xl shadow-brand-500/10 relative group">
+                <div class="absolute inset-0 bg-gradient-to-br from-brand-600/20 to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
+                <div class="bg-[#050505] rounded-xl border border-border flex flex-col md:flex-row h-[480px]">
+                    
+                    <!-- Sidebar Tabs -->
+                    <div class="w-full md:w-48 bg-[#0a0a0a] border-b md:border-b-0 md:border-r border-border flex flex-row md:flex-col overflow-x-auto rounded-tl-xl rounded-bl-none md:rounded-bl-xl shrink-0">
+                        <button onclick="switchTab('java')" id="tab-java" class="sdk-tab text-sm font-semibold flex-1 md:flex-none text-left px-6 py-4 text-gray-400 hover:bg-white/5 hover:text-white transition-colors border-b-2 md:border-b-0 md:border-l-2 border-transparent active-tab">Java</button>
+                        <button onclick="switchTab('javascript')" id="tab-javascript" class="sdk-tab text-sm font-semibold flex-1 md:flex-none text-left px-6 py-4 text-gray-400 hover:bg-white/5 hover:text-white transition-colors border-b-2 md:border-b-0 md:border-l-2 border-transparent">JavaScript</button>
+                        <button onclick="switchTab('python')" id="tab-python" class="sdk-tab text-sm font-semibold flex-1 md:flex-none text-left px-6 py-4 text-gray-400 hover:bg-white/5 hover:text-white transition-colors border-b-2 md:border-b-0 md:border-l-2 border-transparent">Python</button>
+                        <button onclick="switchTab('curl')" id="tab-curl" class="sdk-tab text-sm font-semibold flex-1 md:flex-none text-left px-6 py-4 text-gray-400 hover:bg-white/5 hover:text-white transition-colors border-b-2 md:border-b-0 md:border-l-2 border-transparent">Other / TCP</button>
+                    </div>
+
+                    <!-- Code Content Panels -->
+                    <div class="flex-1 relative overflow-y-auto bg-[#030303] rounded-tr-xl rounded-br-xl">
+                        
+                        <!-- Java Panel -->
+                        <div id="panel-java" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed block">
+<pre><code class="language-java text-gray-300"><span class="text-pink-400">import</span> clients.java.SpindleClient;
+
+<span class="text-pink-400">public class</span> <span class="text-blue-400">Main</span> {
+    <span class="text-pink-400">public static void</span> <span class="text-blue-400">main</span>(String[] args) {
+        SpindleClient client = <span class="text-pink-400">new</span> SpindleClient(<span class="text-green-400">"127.0.0.1"</span>, <span class="text-blue-400">8888</span>);
+        <span class="text-pink-400">try</span> {
+            client.connect();
+            
+            <span class="text-gray-500">// Set key with expiration (3600 seconds)</span>
+            client.setEx(<span class="text-green-400">"session:1"</span>, <span class="text-green-400">"active"</span>, <span class="text-blue-400">3600</span>);
+            System.out.println(client.get(<span class="text-green-400">"session:1"</span>));
+            
+            client.delete(<span class="text-green-400">"session:1"</span>);
+        } <span class="text-pink-400">catch</span> (Exception e) {
+            e.printStackTrace();
+        } <span class="text-pink-400">finally</span> {
+            client.close();
+        }
+    }
+}</code></pre>
+                        </div>
+
+                        <!-- JavaScript Panel -->
+                        <div id="panel-javascript" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden">
+<pre><code class="language-javascript text-gray-300"><span class="text-pink-400">const</span> SpindleClient = require(<span class="text-green-400">'./clients/javascript/spindle'</span>);
+
+<span class="text-pink-400">async function</span> <span class="text-blue-400">main</span>() {
+    <span class="text-pink-400">const</span> client = <span class="text-pink-400">new</span> SpindleClient(<span class="text-green-400">'127.0.0.1'</span>, <span class="text-blue-400">8888</span>);
+    
+    <span class="text-pink-400">try</span> {
+        <span class="text-pink-400">await</span> client.connect();
+        
+        <span class="text-gray-500">// Set key with expiration</span>
+        <span class="text-pink-400">await</span> client.set(<span class="text-green-400">"session:1"</span>, <span class="text-green-400">"active"</span>, { ex: <span class="text-blue-400">3600</span> });
+        console.log(<span class="text-pink-400">await</span> client.get(<span class="text-green-400">"session:1"</span>));
+        
+        <span class="text-pink-400">await</span> client.delete(<span class="text-green-400">"session:1"</span>);
+    } <span class="text-pink-400">catch</span> (err) {
+        console.error(err);
+    } <span class="text-pink-400">finally</span> {
+        client.close();
+    }
+}
+
+main();</code></pre>
+                        </div>
+
+                        <!-- Python Panel -->
+                        <div id="panel-python" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden">
+<pre><code class="language-python text-gray-300"><span class="text-pink-400">import</span> sys
+sys.path.append(<span class="text-green-400">'clients/python'</span>)
+
+<span class="text-pink-400">from</span> spindle <span class="text-pink-400">import</span> SpindleClient
+
+<span class="text-gray-500"># Connect to the server</span>
+client = SpindleClient(host=<span class="text-green-400">'127.0.0.1'</span>, port=<span class="text-blue-400">8888</span>)
+client.connect()
+
+<span class="text-gray-500"># Set key with expiration</span>
+client.set(<span class="text-green-400">"session:1"</span>, <span class="text-green-400">"active"</span>, ex=<span class="text-blue-400">3600</span>)
+<span class="text-pink-400">print</span>(client.get(<span class="text-green-400">"session:1"</span>))
+
+client.delete(<span class="text-green-400">"session:1"</span>)
+client.close()</code></pre>
+                        </div>
+
+                        <!-- cURL Panel -->
+                        <div id="panel-curl" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden">
+<pre><code class="language-bash text-gray-300"><span class="text-gray-500"># Other Languages (C#, PHP, Rust, C++, etc.)
+# Since Spindle is built on a raw TCP protocol,
+# you don't need any special database drivers. 
+# Just open a TCP socket, send a command with \n, and read!</span>
+
+<span class="text-gray-500"># Test directly from your terminal using netcat</span>
+<span class="text-brand-400">$</span> nc 127.0.0.1 8888
+
+<span class="text-green-400">SET</span> mykey hello
+<span class="text-gray-400">OK</span>
+
+<span class="text-green-400">GET</span> mykey
+<span class="text-gray-400">hello</span>
+
+<span class="text-green-400">DEL</span> mykey
+<span class="text-gray-400">OK</span></code></pre>
+                        </div>
                     </div>
                 </div>
             </div>
