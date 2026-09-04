@@ -61,6 +61,90 @@
             }
         }
 
+    
+        // Mock In-Memory DB for Terminal
+        const mockDB = new Map();
+        
+        function printToTerminal(input, output, isError = false) {
+            const container = document.getElementById('terminal-output');
+            const inputLine = document.createElement('div');
+            inputLine.className = 'text-gray-300';
+            inputLine.innerHTML = '<span class="text-brand-400 mr-2 font-bold">&gt;</span>' + input;
+            
+            const outputLine = document.createElement('div');
+            outputLine.className = isError ? 'text-red-400 font-bold ml-4' : 'text-gray-400 font-bold ml-4';
+            outputLine.textContent = output;
+            
+            container.appendChild(inputLine);
+            if (output !== '') container.appendChild(outputLine);
+            
+            const term = document.getElementById('terminal-container');
+            term.scrollTop = term.scrollHeight;
+        }
+
+        function handleTerminalInput(e) {
+            if (e.key === 'Enter') {
+                const inputEl = document.getElementById('terminal-input');
+                const val = inputEl.value.trim();
+                inputEl.value = '';
+                
+                if (!val) return;
+                
+                const args = val.split(/\s+/);
+                const cmd = args[0].toUpperCase();
+                
+                let output = '';
+                let isError = false;
+                
+                if (cmd === 'PING') {
+                    output = 'PONG';
+                } else if (cmd === 'SET') {
+                    if (args.length < 3) {
+                        output = '(error) ERR wrong number of arguments for \'SET\' command';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        const value = args.slice(2).join(' ');
+                        mockDB.set(key, value);
+                        output = 'OK';
+                    }
+                } else if (cmd === 'GET') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'GET\' command';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            output = '\"' + mockDB.get(key) + '\"';
+                        } else {
+                            output = '(nil)';
+                        }
+                    }
+                } else if (cmd === 'DEL') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'DEL\' command';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            mockDB.delete(key);
+                            output = '(integer) 1';
+                        } else {
+                            output = '(integer) 0';
+                        }
+                    }
+                } else if (cmd === 'CLEAR') {
+                    document.getElementById('terminal-output').innerHTML = '';
+                    return;
+                } else {
+                    output = '(error) ERR unknown command \'' + cmd + '\'';
+                    isError = true;
+                }
+                
+                printToTerminal(val, output, isError);
+            }
+        }
+
     </script>
 
     <script src="https://cdn.tailwindcss.com">
@@ -74,6 +158,90 @@
                 // Expand
                 content.classList.remove('max-w-0', 'opacity-0', 'gap-0');
                 content.classList.add('max-w-[200px]', 'opacity-100', 'gap-3');
+            }
+        }
+
+    
+        // Mock In-Memory DB for Terminal
+        const mockDB = new Map();
+        
+        function printToTerminal(input, output, isError = false) {
+            const container = document.getElementById('terminal-output');
+            const inputLine = document.createElement('div');
+            inputLine.className = 'text-gray-300';
+            inputLine.innerHTML = '<span class="text-brand-400 mr-2 font-bold">&gt;</span>' + input;
+            
+            const outputLine = document.createElement('div');
+            outputLine.className = isError ? 'text-red-400 font-bold ml-4' : 'text-gray-400 font-bold ml-4';
+            outputLine.textContent = output;
+            
+            container.appendChild(inputLine);
+            if (output !== '') container.appendChild(outputLine);
+            
+            const term = document.getElementById('terminal-container');
+            term.scrollTop = term.scrollHeight;
+        }
+
+        function handleTerminalInput(e) {
+            if (e.key === 'Enter') {
+                const inputEl = document.getElementById('terminal-input');
+                const val = inputEl.value.trim();
+                inputEl.value = '';
+                
+                if (!val) return;
+                
+                const args = val.split(/\s+/);
+                const cmd = args[0].toUpperCase();
+                
+                let output = '';
+                let isError = false;
+                
+                if (cmd === 'PING') {
+                    output = 'PONG';
+                } else if (cmd === 'SET') {
+                    if (args.length < 3) {
+                        output = '(error) ERR wrong number of arguments for \'SET\' command';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        const value = args.slice(2).join(' ');
+                        mockDB.set(key, value);
+                        output = 'OK';
+                    }
+                } else if (cmd === 'GET') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'GET\' command';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            output = '\"' + mockDB.get(key) + '\"';
+                        } else {
+                            output = '(nil)';
+                        }
+                    }
+                } else if (cmd === 'DEL') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'DEL\' command';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            mockDB.delete(key);
+                            output = '(integer) 1';
+                        } else {
+                            output = '(integer) 0';
+                        }
+                    }
+                } else if (cmd === 'CLEAR') {
+                    document.getElementById('terminal-output').innerHTML = '';
+                    return;
+                } else {
+                    output = '(error) ERR unknown command \'' + cmd + '\'';
+                    isError = true;
+                }
+                
+                printToTerminal(val, output, isError);
             }
         }
 
@@ -181,6 +349,90 @@
                 // Expand
                 content.classList.remove('max-w-0', 'opacity-0', 'gap-0');
                 content.classList.add('max-w-[200px]', 'opacity-100', 'gap-3');
+            }
+        }
+
+    
+        // Mock In-Memory DB for Terminal
+        const mockDB = new Map();
+        
+        function printToTerminal(input, output, isError = false) {
+            const container = document.getElementById('terminal-output');
+            const inputLine = document.createElement('div');
+            inputLine.className = 'text-gray-300';
+            inputLine.innerHTML = '<span class="text-brand-400 mr-2 font-bold">&gt;</span>' + input;
+            
+            const outputLine = document.createElement('div');
+            outputLine.className = isError ? 'text-red-400 font-bold ml-4' : 'text-gray-400 font-bold ml-4';
+            outputLine.textContent = output;
+            
+            container.appendChild(inputLine);
+            if (output !== '') container.appendChild(outputLine);
+            
+            const term = document.getElementById('terminal-container');
+            term.scrollTop = term.scrollHeight;
+        }
+
+        function handleTerminalInput(e) {
+            if (e.key === 'Enter') {
+                const inputEl = document.getElementById('terminal-input');
+                const val = inputEl.value.trim();
+                inputEl.value = '';
+                
+                if (!val) return;
+                
+                const args = val.split(/\s+/);
+                const cmd = args[0].toUpperCase();
+                
+                let output = '';
+                let isError = false;
+                
+                if (cmd === 'PING') {
+                    output = 'PONG';
+                } else if (cmd === 'SET') {
+                    if (args.length < 3) {
+                        output = '(error) ERR wrong number of arguments for \'SET\' command';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        const value = args.slice(2).join(' ');
+                        mockDB.set(key, value);
+                        output = 'OK';
+                    }
+                } else if (cmd === 'GET') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'GET\' command';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            output = '\"' + mockDB.get(key) + '\"';
+                        } else {
+                            output = '(nil)';
+                        }
+                    }
+                } else if (cmd === 'DEL') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'DEL\' command';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            mockDB.delete(key);
+                            output = '(integer) 1';
+                        } else {
+                            output = '(integer) 0';
+                        }
+                    }
+                } else if (cmd === 'CLEAR') {
+                    document.getElementById('terminal-output').innerHTML = '';
+                    return;
+                } else {
+                    output = '(error) ERR unknown command \'' + cmd + '\'';
+                    isError = true;
+                }
+                
+                printToTerminal(val, output, isError);
             }
         }
 
@@ -334,6 +586,90 @@
             }
         }
 
+    
+        // Mock In-Memory DB for Terminal
+        const mockDB = new Map();
+        
+        function printToTerminal(input, output, isError = false) {
+            const container = document.getElementById('terminal-output');
+            const inputLine = document.createElement('div');
+            inputLine.className = 'text-gray-300';
+            inputLine.innerHTML = '<span class="text-brand-400 mr-2 font-bold">&gt;</span>' + input;
+            
+            const outputLine = document.createElement('div');
+            outputLine.className = isError ? 'text-red-400 font-bold ml-4' : 'text-gray-400 font-bold ml-4';
+            outputLine.textContent = output;
+            
+            container.appendChild(inputLine);
+            if (output !== '') container.appendChild(outputLine);
+            
+            const term = document.getElementById('terminal-container');
+            term.scrollTop = term.scrollHeight;
+        }
+
+        function handleTerminalInput(e) {
+            if (e.key === 'Enter') {
+                const inputEl = document.getElementById('terminal-input');
+                const val = inputEl.value.trim();
+                inputEl.value = '';
+                
+                if (!val) return;
+                
+                const args = val.split(/\s+/);
+                const cmd = args[0].toUpperCase();
+                
+                let output = '';
+                let isError = false;
+                
+                if (cmd === 'PING') {
+                    output = 'PONG';
+                } else if (cmd === 'SET') {
+                    if (args.length < 3) {
+                        output = '(error) ERR wrong number of arguments for \'SET\' command';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        const value = args.slice(2).join(' ');
+                        mockDB.set(key, value);
+                        output = 'OK';
+                    }
+                } else if (cmd === 'GET') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'GET\' command';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            output = '\"' + mockDB.get(key) + '\"';
+                        } else {
+                            output = '(nil)';
+                        }
+                    }
+                } else if (cmd === 'DEL') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'DEL\' command';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            mockDB.delete(key);
+                            output = '(integer) 1';
+                        } else {
+                            output = '(integer) 0';
+                        }
+                    }
+                } else if (cmd === 'CLEAR') {
+                    document.getElementById('terminal-output').innerHTML = '';
+                    return;
+                } else {
+                    output = '(error) ERR unknown command \'' + cmd + '\'';
+                    isError = true;
+                }
+                
+                printToTerminal(val, output, isError);
+            }
+        }
+
     </script>
 
     <main class="flex-grow mesh-bg pt-32 pb-10 relative">
@@ -358,6 +694,34 @@
                 
             </div>
         </header>
+
+        <!-- Interactive Terminal -->
+        <section id="interactive-terminal" class="max-w-3xl mx-auto px-6 mb-32 relative z-10 pt-10 -mt-10">
+            <div class="bento-card rounded-2xl p-2 overflow-hidden shadow-2xl relative group">
+                <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
+                <div class="bg-[#0a0a0a] rounded-xl border border-border">
+                    <!-- Mac Header -->
+                    <div class="flex items-center px-4 py-3 border-b border-white/5 bg-[#111]">
+                        <div class="flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                            <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                            <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                        </div>
+                        <div class="mx-auto text-xs text-gray-500 font-mono font-medium tracking-widest">spindle-cli --interactive</div>
+                    </div>
+                    <!-- Terminal Content -->
+                    <div class="p-6 font-mono text-sm leading-relaxed h-[250px] overflow-y-auto flex flex-col" id="terminal-container" onclick="document.getElementById('terminal-input').focus()">
+                        <div class="text-gray-400 mb-4">Welcome to Spindle Interactive CLI! Type SET, GET, DEL, or PING.</div>
+                        <div id="terminal-output" class="flex flex-col gap-1"></div>
+                        <div class="flex items-center mt-1 text-gray-300">
+                            <span class="text-brand-400 mr-2 font-bold">&gt;</span>
+                            <input type="text" id="terminal-input" class="flex-1 bg-transparent border-none outline-none text-white font-mono" autocomplete="off" spellcheck="false" placeholder="SET mykey 123" onkeypress="handleTerminalInput(event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
         
         <!-- Installation Section -->
