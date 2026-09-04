@@ -227,7 +227,11 @@
         const themeIconMoon = document.getElementById('theme-icon-moon');
         const htmlElement = document.documentElement;
         const badge = document.getElementById('status-badge');
-        const badgeDark = "https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=000000&style=for-the-badge";
+        // Add a timestamp to bypass browser cache, forcing it to count every page load
+        const badgeDark = "https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=000000&style=for-the-badge&t=" + new Date().getTime();
+        if (badge) {
+            badge.src = badgeDark;
+        }
 
         function setLight() {
             htmlElement.classList.add('light');
