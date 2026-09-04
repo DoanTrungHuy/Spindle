@@ -982,7 +982,8 @@ client.close()</code></pre>
                     <button onclick="switchBenchmark('peak')" id="tab-peak" class="px-5 py-2.5 rounded-lg text-sm font-bold transition-all bg-white dark:bg-white/10 text-brand-600 dark:text-brand-400 shadow-sm">Peak Throughput</button>
                     <button onclick="switchBenchmark('real')" id="tab-real" class="px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">1KB Payload</button>
                     <button onclick="switchBenchmark('conn')" id="tab-conn" class="px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">1000 Connections</button>
-                    <button onclick="switchBenchmark('get')" id="tab-get" class="px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">Pure Reads (GET)</button>
+                    <button onclick="switchBenchmark('get')" id="tab-get" class="px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">Pure Reads</button>
+                    <button onclick="switchBenchmark('pingpong')" id="tab-pingpong" class="px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">Ping-Pong</button>
                 </div>
             </div>
 
@@ -1037,28 +1038,35 @@ client.close()</code></pre>
                         spindleWidth: "100%", redisWidth: "14%",
                         spindleP50: "0.53ms", spindleP99: "4.79ms",
                         redisP50: "2.51ms", redisP99: "8.54ms",
-                        desc: "Tested locally on an 8-core CPU using 100 concurrent connections with Pipelining (batch=100) and tiny payloads. Designed to measure theoretical max engine throughput."
+                        desc: "Tested locally using 100 concurrent connections with Pipelining (Batch=100) and 1B payloads. Designed to measure theoretical max engine throughput."
                     },
                     real: {
                         spindleOps: "1,290,672", redisOps: "120,208",
                         spindleWidth: "100%", redisWidth: "9.3%",
                         spindleP50: "6.41ms", spindleP99: "20.52ms",
                         redisP50: "78.09ms", redisP99: "101.29ms",
-                        desc: "Tested locally using 100 concurrent connections with realistic 1KB Data Payloads (Random Alphanumeric). Redis suffers severe CPU bottlenecking while Spindle scales gracefully."
+                        desc: "Tested locally using 100 concurrent connections with Pipelining (Batch=100) and realistic 1KB Random Data Payloads. Redis suffers severe CPU bottlenecking while Spindle scales gracefully."
                     },
                     conn: {
                         spindleOps: "11,125,916", redisOps: "968,221",
                         spindleWidth: "100%", redisWidth: "8.7%",
                         spindleP50: "7.98ms", spindleP99: "14.47ms",
                         redisP50: "75.33ms", redisP99: "151.61ms",
-                        desc: "Stress testing the network layer with 1,000 concurrent active connections. Spindle's epoll-based multi-threaded Reactor absorbs the storm with virtually no latency spike, while Redis P99 degrades severely."
+                        desc: "Stress testing network layer with 1,000 active connections + Pipelining (Batch=100). Spindle's epoll-based multi-threaded Reactor absorbs the storm with virtually no latency spike, while Redis degrades."
                     },
                     get: {
                         spindleOps: "25,056,697", redisOps: "679,584",
                         spindleWidth: "100%", redisWidth: "2.7%",
                         spindleP50: "0.29ms", spindleP99: "1.79ms",
                         redisP50: "6.91ms", redisP99: "13.25ms",
-                        desc: "Pure Read-Heavy Workload (100% GET commands). Without WAL/Disk writes holding it back, Spindle's Sharded Map shines, achieving an unbelievable 25 Million RPS. Redis is 37x slower here!"
+                        desc: "Pure Read-Heavy Workload (100% GET commands) with Pipelining (Batch=100). Without WAL/Disk writes, Spindle's Sharded Map shines, achieving an unbelievable 25 Million RPS. Redis is 37x slower here!"
+                    },
+                    pingpong: {
+                        spindleOps: "538,014", redisOps: "74,693",
+                        spindleWidth: "100%", redisWidth: "13.8%",
+                        spindleP50: "0.18ms", spindleP99: "0.45ms",
+                        redisP50: "1.34ms", redisP99: "2.12ms",
+                        desc: "Ping-Pong mode (Strictly Batch=1). Client waits for a reply before sending the next command. Used to test pure network round-trip latency. Spindle handles context switches flawlessly."
                     }
                 };
 
@@ -1084,7 +1092,7 @@ client.close()</code></pre>
                         rBar.style.width = data.redisWidth;
                     }, 50);
 
-                    const tabs = ['peak', 'real', 'conn', 'get'];
+                    const tabs = ['peak', 'real', 'conn', 'get', 'pingpong'];
                     const activeClasses = "bg-white dark:bg-white/10 text-brand-600 dark:text-brand-400 shadow-sm font-bold".split(" ");
                     const inactiveClasses = "text-gray-500 hover:text-gray-900 dark:hover:text-white font-medium".split(" ");
                     
