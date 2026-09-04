@@ -260,28 +260,32 @@
                         <div class="text-gray-500 mb-2"># 1. Start the Spindle Reactor Server</div>
                         <div class="flex text-gray-300 mb-6">
                             <span class="text-brand-400 mr-4">$</span>
-                            <span>./spindle-server --port <span class="text-blue-400">6379</span> --threads <span class="text-blue-400">8</span></span>
+                            <span>./spindle_app</span>
                         </div>
                         
                         <div class="text-gray-500 mb-2"># 2. Connect using the Python SDK</div>
                         <div class="flex text-gray-300">
                             <span class="text-brand-400 mr-4">>>></span>
-                            <span><span class="text-pink-400">import</span> spindle</span>
+                            <span><span class="text-pink-400">from</span> spindle <span class="text-pink-400">import</span> SpindleClient</span>
                         </div>
                         <div class="flex text-gray-300">
                             <span class="text-brand-400 mr-4">>>></span>
-                            <span>db = spindle.connect(<span class="text-green-400">"localhost"</span>, <span class="text-blue-400">6379</span>)</span>
+                            <span>client = SpindleClient(host=<span class="text-green-400">'127.0.0.1'</span>, port=<span class="text-blue-400">8888</span>)</span>
                         </div>
                         <div class="flex text-gray-300">
                             <span class="text-brand-400 mr-4">>>></span>
-                            <span>db.set(<span class="text-green-400">"session:1"</span>, <span class="text-green-400">"active"</span>, ex=<span class="text-blue-400">3600</span>)</span>
+                            <span>client.connect()</span>
                         </div>
-                        <div class="flex text-gray-400 font-bold mb-4 ml-8">OK</div>
                         <div class="flex text-gray-300">
                             <span class="text-brand-400 mr-4">>>></span>
-                            <span>db.get(<span class="text-green-400">"session:1"</span>)</span>
+                            <span>client.set(<span class="text-green-400">"session:1"</span>, <span class="text-green-400">"active"</span>, ex=<span class="text-blue-400">3600</span>)</span>
                         </div>
-                        <div class="flex text-green-400 font-bold ml-8">"active"</div>
+                        <div class="flex text-gray-400 font-bold mb-4 ml-8">True</div>
+                        <div class="flex text-gray-300">
+                            <span class="text-brand-400 mr-4">>>></span>
+                            <span>client.get(<span class="text-green-400">"session:1"</span>)</span>
+                        </div>
+                        <div class="flex text-green-400 font-bold ml-8">'active'</div>
                     </div>
                 </div>
             </div>
