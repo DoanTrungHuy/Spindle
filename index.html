@@ -282,55 +282,6 @@
             </div>
         </header>
 
-        <!-- Terminal / Code Showcase -->
-        <section id="quick-start" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
-            <div class="bento-card rounded-2xl p-2 overflow-hidden shadow-2xl shadow-brand-500/10 relative group">
-                <div class="absolute inset-0 bg-gradient-to-br from-brand-600/20 to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
-                <div class="bg-[#050505] rounded-xl border border-border">
-                    <!-- Mac Header -->
-                    <div class="flex items-center px-4 py-3 border-b border-border bg-[#0a0a0a]">
-                        <div class="flex gap-2">
-                            <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
-                            <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
-                            <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
-                        </div>
-                        <div class="mx-auto text-xs text-gray-500 font-mono">server.log</div>
-                    </div>
-                    <!-- Code Content -->
-                    <div class="p-6 font-mono text-sm md:text-base leading-relaxed overflow-x-auto">
-                        <div class="text-gray-500 mb-2"># 1. Start the Spindle Reactor Server</div>
-                        <div class="flex text-gray-300 mb-6">
-                            <span class="text-brand-400 mr-4">$</span>
-                            <span>./spindle_app --port <span class="text-blue-400">6379</span> --threads <span class="text-blue-400">8</span></span>
-                        </div>
-                        
-                        <div class="text-gray-500 mb-2"># 2. Connect using the Python SDK</div>
-                        <div class="flex text-gray-300">
-                            <span class="text-brand-400 mr-4">>>></span>
-                            <span><span class="text-pink-400">from</span> spindle <span class="text-pink-400">import</span> SpindleClient</span>
-                        </div>
-                        <div class="flex text-gray-300">
-                            <span class="text-brand-400 mr-4">>>></span>
-                            <span>client = SpindleClient(host=<span class="text-green-400">'127.0.0.1'</span>, port=<span class="text-blue-400">6379</span>)</span>
-                        </div>
-                        <div class="flex text-gray-300">
-                            <span class="text-brand-400 mr-4">>>></span>
-                            <span>client.connect()</span>
-                        </div>
-                        <div class="flex text-gray-300">
-                            <span class="text-brand-400 mr-4">>>></span>
-                            <span>client.set(<span class="text-green-400">"session:1"</span>, <span class="text-green-400">"active"</span>, ex=<span class="text-blue-400">3600</span>)</span>
-                        </div>
-                        <div class="flex text-gray-400 font-bold mb-4 ml-8">True</div>
-                        <div class="flex text-gray-300">
-                            <span class="text-brand-400 mr-4">>>></span>
-                            <span>client.get(<span class="text-green-400">"session:1"</span>)</span>
-                        </div>
-                        <div class="flex text-green-400 font-bold ml-8">'active'</div>
-                    </div>
-                </div>
-            </div>
-        </section>
         
         <!-- Installation Section -->
         <section id="installation" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
