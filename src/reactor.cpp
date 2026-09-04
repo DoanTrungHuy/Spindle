@@ -5,15 +5,15 @@
 #include <chrono>
 
 #include <sys/socket.h>
-#include <sys/socket.h>
+#include <arpa/inet.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/epoll.h>
 
-Reactor::Reactor(int port, ShardedMap& sharded_map, MPSCRingBuffer<4096>& ring_buffer)
-    : m_port(port), m_sharded_map(sharded_map), m_ring_buffer(ring_buffer), m_running(false) {
+Reactor::Reactor(const std::string& host, int port, ShardedMap& sharded_map, MPSCRingBuffer<4096>& ring_buffer)
+    : m_host(host), m_port(port), m_sharded_map(sharded_map), m_ring_buffer(ring_buffer), m_running(false) {
 }
 
 Reactor::~Reactor() {
@@ -43,11 +43,19 @@ void Reactor::start() {
 
     sockaddr_in address{};
     address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
+    if (m_host == "0.0.0.0" || m_host.empty()) {
+        address.sin_addr.s_addr = INADDR_ANY;
+    } else {
+        if (inet_pton(AF_INET, m_host.c_str(), &address.sin_addr) <= 0) {
+            std::cerr << "Invalid address/ Address not supported: " << m_host << "\n";
+            close(m_listen_fd);
+            return;
+        }
+    }
     address.sin_port = htons(m_port);
 
     if (bind(m_listen_fd, (struct sockaddr*)&address, sizeof(address)) < 0) {
-        std::cerr << "Failed to bind to port " << m_port << "\n";
+        std::cerr << "Failed to bind to " << m_host << ":" << m_port << "\n";
         close(m_listen_fd);
         return;
     }
@@ -77,7 +85,7 @@ void Reactor::start() {
 
     m_running = true;
     m_reactor_thread = std::thread(&Reactor::run_loop, this);
-    std::cout << "Reactor listening on TCP Port " << m_port << " using Epoll (Linux)\n";
+    std::cout << "Reactor listening on " << m_host << ":" << m_port << " using Epoll (Linux)\n";
 }
 
 void Reactor::stop() {

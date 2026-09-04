@@ -51,12 +51,28 @@ void verify_wal_log(const std::string& filepath) {
     std::cout << "=======================================\n";
 }
 
-int main() {
+int main(int argc, char* argv[]) {
     std::signal(SIGINT, signal_handler);
     std::signal(SIGTERM, signal_handler);
 
+    std::string host = "0.0.0.0";
+    int port = 8888;
+    int threads = 4;
+
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if (arg == "--host" && i + 1 < argc) {
+            host = argv[++i];
+        } else if (arg == "--port" && i + 1 < argc) {
+            port = std::stoi(argv[++i]);
+        } else if (arg == "--threads" && i + 1 < argc) {
+            threads = std::stoi(argv[++i]);
+        }
+    }
+
     std::cout << "========================================================\n";
     std::cout << "  Starting High-Performance Spindle Engine\n";
+    std::cout << "  Host: " << host << " | Port: " << port << " | Threads: " << threads << "\n";
     std::cout << "========================================================\n";
 
     std::string wal_path = "wal.log";
@@ -74,10 +90,10 @@ int main() {
     MPSCRingBuffer<4096> ring_buffer;
     WALFlusher wal_flusher(ring_buffer, wal_path);
 
-    std::cout << "[4/5] Initializing 4 Network Reactors (SO_REUSEPORT)...\n";
+    std::cout << "[4/5] Initializing " << threads << " Network Reactors (SO_REUSEPORT)...\n";
     std::vector<std::unique_ptr<Reactor>> reactors;
-    for (int i = 0; i < 4; ++i) {
-        reactors.push_back(std::make_unique<Reactor>(8888, kv_map, ring_buffer));
+    for (int i = 0; i < threads; ++i) {
+        reactors.push_back(std::make_unique<Reactor>(host, port, kv_map, ring_buffer));
     }
 
     std::cout << "[5/5] Initializing Expiry Cleaner (TTL background thread)...\n";

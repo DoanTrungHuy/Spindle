@@ -10,7 +10,7 @@
 
 class Reactor {
 public:
-    Reactor(int port, ShardedMap& sharded_map, MPSCRingBuffer<4096>& ring_buffer);
+    Reactor(const std::string& host, int port, ShardedMap& sharded_map, MPSCRingBuffer<4096>& ring_buffer);
     ~Reactor();
 
     // Start reactor event loop
@@ -29,6 +29,7 @@ public:
 private:
     void run_loop();
 
+    std::string m_host;
     int m_port;
     ShardedMap& m_sharded_map;
     MPSCRingBuffer<4096>& m_ring_buffer;
