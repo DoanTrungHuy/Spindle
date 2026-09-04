@@ -10,22 +10,25 @@
   ![Views](https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=Views&color=7c3aed&style=flat)
 </div>
 
-A high-performance, multithreaded Spindle engine written in Modern C++ (C++20).
+A high-performance, multithreaded Key-Value engine written in Modern C++ (C++20).
 
-## Features
-- **High Performance**: Optimized with low-level techniques (Slab Allocation, Spinlocks, Reactor pattern).
-- **Multithreaded**: Built to handle concurrent workloads efficiently.
-- **Persistent**: Includes a Write-Ahead Log (WAL) flusher for data safety.
-- **Easy to integrate**: CMake-friendly and exportable as a static/shared library.
+## Download & Installation
 
-## Installation and Usage
+### Option 1: Building from Source (Recommended)
+You can clone the repository and build it locally:
+```bash
+# 1. Clone the repository
+git clone https://github.com/DoanTrungHuy/Spindle.git
+cd Spindle
 
-You can easily use this library in your own CMake projects using `FetchContent`.
+# 2. Build the project
+mkdir build && cd build
+cmake ..
+make -j$(nproc)
+```
 
-### Using FetchContent in your CMake project
-
+### Option 2: Using FetchContent in your CMake project
 Add the following to your `CMakeLists.txt`:
-
 ```cmake
 include(FetchContent)
 FetchContent_Declare(
@@ -40,33 +43,107 @@ add_executable(my_app main.cpp)
 target_link_libraries(my_app PRIVATE spindle)
 ```
 
-### Building from Source
+## Running the Server
 
-```bash
-git clone https://github.com/DoanTrungHuy/Spindle.git
-cd spindle
-mkdir build && cd build
-cmake ..
-make -j$(nproc)
-```
-
-## Running the Example
-
-The project includes a sample application `spindle_app` that demonstrates how to use the library.
-
+Start the Spindle server from the build directory. By default, Spindle listens on **TCP socket 127.0.0.1:8888**.
 ```bash
 # Inside the build directory
 ./spindle_app
 ```
 
+## Usage Guides
+
+Spindle uses a simple text-based TCP protocol. You can connect to it using any language that supports TCP sockets. The default socket is `127.0.0.1:8888`. Commands are sent with a newline character (`\n`) at the end.
+
+### Python (using the provided SDK)
+A Python client is provided in the `clients/python/` directory.
+
+```python
+import sys
+# Assuming you are in the project root
+sys.path.append('clients/python')
+
+from spindle import SpindleClient
+
+# The default socket is 127.0.0.1:8888
+client = SpindleClient(host='127.0.0.1', port=8888)
+client.connect()
+
+client.set("session:1", "active", ex=3600) # Set key with expiration
+print(client.get("session:1"))
+
+client.delete("session:1")
+client.close()
+```
+
+### Node.js / JavaScript
+You can easily interact with Spindle using the built-in `net` module.
+
+```javascript
+const net = require('net');
+
+const client = new net.Socket();
+client.connect(8888, '127.0.0.1', () => {
+    console.log('Connected to Spindle');
+    
+    // Set a key
+    client.write('SET user:1 John\n');
+    
+    // Get a key
+    client.write('GET user:1\n');
+});
+
+client.on('data', (data) => {
+    console.log('Received: ' + data.toString().trim());
+});
+```
+
+### Go (Golang)
+Using the standard `net` package:
+
+```go
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "net"
+)
+
+func main() {
+    conn, err := net.Dial("tcp", "127.0.0.1:8888")
+    if err != nil {
+        panic(err)
+    }
+    defer conn.Close()
+
+    // Send command
+    fmt.Fprintf(conn, "SET session:go active\n")
+    
+    // Read response
+    response, _ := bufio.NewReader(conn).ReadString('\n')
+    fmt.Print("Response: ", response)
+}
+```
+
+### cURL / Netcat (Command Line)
+You can test the server directly from your terminal using `nc` (netcat):
+
+```bash
+# Connect to Spindle
+nc 127.0.0.1 8888
+# Then type commands:
+SET mykey hello
+GET mykey
+DEL mykey
+```
+
+## Features
+- **High Performance**: Optimized with low-level techniques (Slab Allocation, Spinlocks, Reactor pattern).
+- **Multithreaded**: Built to handle concurrent workloads efficiently.
+- **Persistent**: Includes a Write-Ahead Log (WAL) flusher for data safety.
+- **Easy to integrate**: CMake-friendly and exportable as a static/shared library.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-
-
-
-
-
-
-
