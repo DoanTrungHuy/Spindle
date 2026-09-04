@@ -136,11 +136,12 @@
         html.light #theme-toggle { color: #0f172a !important; }
         html.light .font-display.font-bold.text-xl { color: #0f172a !important; }
         /* Floating widget */
+        #status-badge { mix-blend-mode: screen; }
         html.light #status-widget { background: #ffffff !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04) !important; }
         html.light #status-text { color: #334155 !important; }
         html.light #status-separator { background-color: #e2e8f0 !important; }
         html.light #status-views { background: transparent !important; border: 1px solid #e2e8f0 !important; border-radius: 9999px !important; padding: 2px 8px !important; }
-        html.light #status-badge { filter: invert(1) brightness(1.08); clip-path: inset(2px); }
+        html.light #status-badge { filter: invert(1) brightness(1.08); mix-blend-mode: multiply !important; clip-path: inset(2px); }
     </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen selection:bg-brand-500/30 selection:text-brand-400">
@@ -180,7 +181,7 @@
         const themeIconMoon = document.getElementById('theme-icon-moon');
         const htmlElement = document.documentElement;
         const badge = document.getElementById('status-badge');
-        const badgeDark = "https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=0a0a0a&style=flat-square";
+        const badgeDark = "https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=000000&style=flat-square";
 
         function setLight() {
             htmlElement.classList.add('light');
@@ -399,7 +400,7 @@
             <div id="status-views" class="flex items-center gap-1.5 bg-transparent px-2 py-0.5 rounded border border-brand-500/20">
                 <svg class="w-3.5 h-3.5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                 <div class="overflow-hidden flex items-center justify-end h-[20px] ml-[-4px]">
-                    <img id="status-badge" src="https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=0a0a0a&style=flat-square" alt="Views" style="margin-left: -17px;" class="max-w-none opacity-90">
+                    <img id="status-badge" src="https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=000000&style=flat-square" alt="Views" style="margin-left: -17px;" class="max-w-none opacity-90">
                 </div>
             </div>
         </div>
