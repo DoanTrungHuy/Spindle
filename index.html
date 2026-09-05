@@ -772,12 +772,34 @@
         </header>
 
         <!-- Interactive Terminal -->
-        <section id="interactive-terminal" class="max-w-3xl mx-auto px-6 mb-32 relative z-10 pt-10 -mt-10">
+        
+
+
+        
+        <!-- Installation Section -->
+        
+
+        <!-- Multi-Language SDKs Section -->
+        
+
+                <!-- Commands Reference Section -->
+        
+
+        <!-- Benchmark Section -->
+        
+
+        <!-- Bento Grid Features -->
+        
+
+    </main>
+
+    <!-- Footer -->
+    <section id="interactive-terminal" class="max-w-3xl mx-auto px-6 mb-32 relative z-10 pt-10 -mt-10">
             <div class="bento-card rounded-2xl p-2 overflow-hidden shadow-2xl relative group">
                 <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
-                <div class="bg-[#0a0a0a] rounded-xl border border-border">
+                <div class="bg-gray-50 dark:bg-[#0a0a0a] rounded-xl border border-gray-200 dark:border-white/5">
                     <!-- Mac Header -->
-                    <div class="flex items-center px-4 py-3 border-b border-white/5 bg-[#111]">
+                    <div class="flex items-center px-4 py-3 border-b border-gray-200 dark:border-white/5 bg-gray-100 dark:bg-[#111]">
                         <div class="flex gap-2">
                             <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
                             <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
@@ -791,271 +813,90 @@
                         <div id="terminal-output" class="flex flex-col gap-1"></div>
                         <div class="flex items-center mt-1 text-gray-300">
                             <span class="text-brand-400 mr-2 font-bold">&gt;</span>
-                            <input type="text" id="terminal-input" class="flex-1 bg-transparent border-none outline-none text-white font-mono" autocomplete="off" spellcheck="false" placeholder="SET mykey 123" onkeypress="handleTerminalInput(event)">
+                            <input type="text" id="terminal-input" class="flex-1 bg-transparent border-none outline-none text-gray-900 dark:text-white font-mono" autocomplete="off" spellcheck="false" placeholder="SET mykey 123" onkeypress="handleTerminalInput(event)">
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-
-        
-        <!-- Installation Section -->
-        <section id="installation" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-5xl font-display font-bold text-white mb-6 tracking-tight">Installation &amp; Setup</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto text-lg">Get Spindle up and running in seconds. Build from source or include it directly in your CMake projects.</p>
-            </div>
+<section id="architecture" class="max-w-6xl mx-auto px-6 mb-10 pt-20 -mt-20">
+            <h2 class="font-display text-3xl md:text-4xl font-bold mb-12 text-center">Engineered for Performance</h2>
             
-            <div class="bento-card rounded-2xl p-2 overflow-hidden shadow-2xl shadow-brand-500/10 relative group">
-                <div class="absolute inset-0 bg-gradient-to-br from-brand-600/20 to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
-                <div class="bg-[#050505] rounded-xl border border-border flex flex-col md:flex-row h-[420px] md:h-[350px]">
-                    <!-- Sidebar Tabs -->
-                    <div class="w-full md:w-64 bg-[#0a0a0a] border-b md:border-b-0 md:border-r border-border flex flex-row md:flex-col overflow-x-auto rounded-tl-xl rounded-bl-none md:rounded-bl-xl shrink-0">
-                        <button onclick="switchInstallTab('source')" id="tab-install-source" class="install-tab text-sm font-semibold flex-1 md:flex-none text-left px-6 py-5 text-gray-400 hover:bg-white/5 hover:text-white transition-colors border-b-2 md:border-b-0 md:border-l-2 border-brand-500 text-white bg-white/5">Build from Source</button>
-                        <button onclick="switchInstallTab('cmake')" id="tab-install-cmake" class="install-tab text-sm font-semibold flex-1 md:flex-none text-left px-6 py-5 text-gray-400 hover:bg-white/5 hover:text-white transition-colors border-b-2 md:border-b-0 md:border-l-2 border-transparent">CMake FetchContent</button>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Medium Card (New) -->
+                <div class="md:col-span-1 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute left-0 bottom-0 w-64 h-64 bg-red-500/10 blur-[80px] rounded-full group-hover:bg-red-500/20 transition-colors"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center mb-6 border border-red-500/30">
+                            <svg class="w-6 h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-display font-bold mb-3 text-white">Write-Ahead Logging (WAL)</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Data durability is guaranteed via an asynchronous Write-Ahead Log, fueled by a lock-free MPSC Ring Buffer to eliminate I/O blocking.</p>
                     </div>
+                </div>
 
-                    <!-- Content Panels -->
-                    <div class="flex-1 relative overflow-y-auto bg-[#030303] rounded-tr-xl rounded-br-xl">
-                        <!-- Source Panel -->
-                        <div id="panel-install-source" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed block">
-<pre><code class="language-bash text-gray-300"><span class="text-gray-500"># 1. Clone the repository</span>
-<span class="text-brand-400">$</span> git clone https://github.com/DoanTrungHuy/Spindle.git
-<span class="text-brand-400">$</span> cd Spindle
-
-<span class="text-gray-500"># 2. Build the project using CMake</span>
-<span class="text-brand-400">$</span> mkdir build &amp;&amp; cd build
-<span class="text-brand-400">$</span> cmake ..
-<span class="text-brand-400">$</span> make -j4
-
-<span class="text-gray-500"># 3. Start the server!</span>
-<span class="text-brand-400">$</span> ./spindle_app --port 8888 --threads 4
-</code></pre>
+                <!-- Large Card (New) -->
+                <div class="md:col-span-2 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute right-1/4 top-0 w-64 h-64 bg-amber-500/10 blur-[80px] rounded-full group-hover:bg-amber-500/20 transition-colors"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center mb-6 border border-amber-500/30">
+                            <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                         </div>
+                        <h3 class="text-2xl font-display font-bold mb-3 text-white">Sharded Hash Map Architecture</h3>
+                        <p class="text-gray-400 leading-relaxed max-w-2xl">The core database is divided into multiple independent shards (partitions). This significantly reduces global lock contention, allowing multiple threads to read and write simultaneously for massive throughput.</p>
+                    </div>
+                </div>
 
-                        <!-- CMake Panel -->
-                        <div id="panel-install-cmake" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed hidden">
-<pre><code class="language-cmake text-gray-300"><span class="text-gray-500"># Add the following to your CMakeLists.txt:</span>
-
-<span class="text-pink-400">include</span>(FetchContent)
-
-<span class="text-blue-400">FetchContent_Declare</span>(
-  Spindle
-  GIT_REPOSITORY https://github.com/DoanTrungHuy/Spindle.git
-  GIT_TAG        master
-)
-<span class="text-blue-400">FetchContent_MakeAvailable</span>(Spindle)
-
-<span class="text-gray-500"># Link it to your executable</span>
-<span class="text-blue-400">add_executable</span>(my_app main.cpp)
-<span class="text-blue-400">target_link_libraries</span>(my_app PRIVATE spindle)
-</code></pre>
+                <!-- Large Card -->
+                <div class="md:col-span-2 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute right-0 top-0 w-64 h-64 bg-transparent blur-[80px] rounded-full group-hover:bg-brand-500/20 transition-colors"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-full bg-brand-500/20 flex items-center justify-center mb-6 border border-brand-500/30">
+                            <svg class="w-6 h-6 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         </div>
+                        <h3 class="text-2xl font-display font-bold mb-3 text-white">Userspace Spinlocks</h3>
+                        <p class="text-gray-400 leading-relaxed">By avoiding expensive OS-level mutex context switches, Spindle achieves ultra-fast lock-free multi-core synchronization. Perfect for high-contention environments.</p>
+                    </div>
+                </div>
+
+                <!-- Small Card -->
+                <div class="md:col-span-1 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute left-1/2 top-0 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full group-hover:bg-blue-500/20 transition-colors -translate-x-1/2"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center mb-6 border border-blue-500/30">
+                            <svg class="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-display font-bold mb-3 text-white">Slab Allocator</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Custom memory management that eliminates heap fragmentation and maximizes CPU cache locality.</p>
+                    </div>
+                </div>
+
+                <!-- Small Card -->
+                <div class="md:col-span-1 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute right-0 bottom-0 w-64 h-64 bg-green-500/10 blur-[80px] rounded-full group-hover:bg-green-500/20 transition-colors"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mb-6 border border-green-500/30">
+                            <svg class="w-6 h-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-display font-bold mb-3 text-white">Reactor Pattern</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Epoll-based architecture to multiplex thousands of concurrent TCP connections seamlessly.</p>
+                    </div>
+                </div>
+
+                <!-- Large Card -->
+                <div class="md:col-span-2 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute left-0 bottom-0 w-64 h-64 bg-pink-500/10 blur-[80px] rounded-full group-hover:bg-pink-500/20 transition-colors"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center mb-6 border border-pink-500/30">
+                            <svg class="w-6 h-6 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-display font-bold mb-3 text-white">Active & Lazy Expiry</h3>
+                        <p class="text-gray-400 leading-relaxed">TTL and key expiration is handled gracefully via background cleaner threads and on-demand lazy eviction, ensuring memory is freed without blocking readers.</p>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- Multi-Language SDKs Section -->
-        <section id="sdks" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-5xl font-display font-bold text-white mb-6 glow-text tracking-tight">Write in Your Favorite Language</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto text-lg">Spindle speaks raw TCP, so you can connect from anywhere. Use our official SDKs for Python, Java, and JavaScript, or drop down to raw sockets.</p>
-            </div>
-            
-            <div class="bento-card rounded-2xl p-2 overflow-hidden shadow-2xl shadow-brand-500/10 relative group">
-                <div class="absolute inset-0 bg-gradient-to-br from-brand-600/20 to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
-                <div class="bg-[#050505] rounded-xl border border-border flex flex-col md:flex-row h-[480px]">
-                    
-                    <!-- Sidebar Tabs -->
-                    <div class="w-full md:w-48 bg-[#0a0a0a] border-b md:border-b-0 md:border-r border-border flex flex-row md:flex-col overflow-x-auto rounded-tl-xl rounded-bl-none md:rounded-bl-xl shrink-0">
-                        <button onclick="switchTab('java')" id="tab-java" class="sdk-tab text-sm font-semibold flex-1 md:flex-none text-left px-6 py-4 text-gray-400 hover:bg-white/5 hover:text-white transition-colors border-b-2 md:border-b-0 md:border-l-2 border-transparent active-tab">Java</button>
-                        <button onclick="switchTab('javascript')" id="tab-javascript" class="sdk-tab text-sm font-semibold flex-1 md:flex-none text-left px-6 py-4 text-gray-400 hover:bg-white/5 hover:text-white transition-colors border-b-2 md:border-b-0 md:border-l-2 border-transparent">JavaScript</button>
-                        <button onclick="switchTab('python')" id="tab-python" class="sdk-tab text-sm font-semibold flex-1 md:flex-none text-left px-6 py-4 text-gray-400 hover:bg-white/5 hover:text-white transition-colors border-b-2 md:border-b-0 md:border-l-2 border-transparent">Python</button>
-                        <button onclick="switchTab('curl')" id="tab-curl" class="sdk-tab text-sm font-semibold flex-1 md:flex-none text-left px-6 py-4 text-gray-400 hover:bg-white/5 hover:text-white transition-colors border-b-2 md:border-b-0 md:border-l-2 border-transparent">Other / TCP</button>
-                    </div>
-
-                    <!-- Code Content Panels -->
-                    <div class="flex-1 relative overflow-y-auto bg-[#030303] rounded-tr-xl rounded-br-xl">
-                        
-                        <!-- Java Panel -->
-                        <div id="panel-java" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed block">
-<pre><code class="language-java text-gray-300"><span class="text-pink-400">import</span> clients.java.SpindleClient;
-
-<span class="text-pink-400">public class</span> <span class="text-blue-400">Main</span> {
-    <span class="text-pink-400">public static void</span> <span class="text-blue-400">main</span>(String[] args) {
-        SpindleClient client = <span class="text-pink-400">new</span> SpindleClient(<span class="text-green-400">"127.0.0.1"</span>, <span class="text-blue-400">8888</span>);
-        <span class="text-pink-400">try</span> {
-            client.connect();
-            
-            <span class="text-gray-500">// Set key with expiration (3600 seconds)</span>
-            client.setEx(<span class="text-green-400">"session:1"</span>, <span class="text-green-400">"active"</span>, <span class="text-blue-400">3600</span>);
-            System.out.println(client.get(<span class="text-green-400">"session:1"</span>));
-            
-            client.delete(<span class="text-green-400">"session:1"</span>);
-        } <span class="text-pink-400">catch</span> (Exception e) {
-            e.printStackTrace();
-        } <span class="text-pink-400">finally</span> {
-            client.close();
-        }
-    }
-}</code></pre>
-                        </div>
-
-                        <!-- JavaScript Panel -->
-                        <div id="panel-javascript" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden">
-<pre><code class="language-javascript text-gray-300"><span class="text-pink-400">const</span> SpindleClient = require(<span class="text-green-400">'./clients/javascript/spindle'</span>);
-
-<span class="text-pink-400">async function</span> <span class="text-blue-400">main</span>() {
-    <span class="text-pink-400">const</span> client = <span class="text-pink-400">new</span> SpindleClient(<span class="text-green-400">'127.0.0.1'</span>, <span class="text-blue-400">8888</span>);
-    
-    <span class="text-pink-400">try</span> {
-        <span class="text-pink-400">await</span> client.connect();
-        
-        <span class="text-gray-500">// Set key with expiration</span>
-        <span class="text-pink-400">await</span> client.set(<span class="text-green-400">"session:1"</span>, <span class="text-green-400">"active"</span>, { ex: <span class="text-blue-400">3600</span> });
-        console.log(<span class="text-pink-400">await</span> client.get(<span class="text-green-400">"session:1"</span>));
-        
-        <span class="text-pink-400">await</span> client.delete(<span class="text-green-400">"session:1"</span>);
-    } <span class="text-pink-400">catch</span> (err) {
-        console.error(err);
-    } <span class="text-pink-400">finally</span> {
-        client.close();
-    }
-}
-
-main();</code></pre>
-                        </div>
-
-                        <!-- Python Panel -->
-                        <div id="panel-python" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden">
-<pre><code class="language-python text-gray-300"><span class="text-pink-400">import</span> sys
-sys.path.append(<span class="text-green-400">'clients/python'</span>)
-
-<span class="text-pink-400">from</span> spindle <span class="text-pink-400">import</span> SpindleClient
-
-<span class="text-gray-500"># Connect to the server</span>
-client = SpindleClient(host=<span class="text-green-400">'127.0.0.1'</span>, port=<span class="text-blue-400">8888</span>)
-client.connect()
-
-<span class="text-gray-500"># Set key with expiration</span>
-client.set(<span class="text-green-400">"session:1"</span>, <span class="text-green-400">"active"</span>, ex=<span class="text-blue-400">3600</span>)
-<span class="text-pink-400">print</span>(client.get(<span class="text-green-400">"session:1"</span>))
-
-client.delete(<span class="text-green-400">"session:1"</span>)
-client.close()</code></pre>
-                        </div>
-
-                        <!-- cURL Panel -->
-                        <div id="panel-curl" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden">
-<pre><code class="language-bash text-gray-300"><span class="text-gray-500"># Other Languages (C#, PHP, Rust, C++, etc.)
-# Since Spindle is built on a raw TCP protocol,
-# you don't need any special database drivers. 
-# Just open a TCP socket, send a command with \n, and read!</span>
-
-<span class="text-gray-500"># Test directly from your terminal using netcat</span>
-<span class="text-brand-400">$</span> nc 127.0.0.1 8888
-
-<span class="text-green-400">SET</span> mykey hello
-<span class="text-gray-400">OK</span>
-
-<span class="text-green-400">GET</span> mykey
-<span class="text-gray-400">hello</span>
-
-<span class="text-green-400">DEL</span> mykey
-<span class="text-gray-400">OK</span></code></pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-                <!-- Commands Reference Section -->
-        <section id="commands" class="max-w-5xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-5xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight">Commands Reference</h2>
-                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">Spindle uses a simple, human-readable text protocol over TCP. Every command must be terminated with a newline (<code>\n</code>).</p>
-            </div>
-
-            <div class="bento-card rounded-2xl overflow-hidden shadow-xl bg-white dark:bg-[#0a0a0a] flex flex-col md:flex-row border border-gray-200 dark:border-white/5 relative group">
-                <div class="absolute inset-0 bg-gradient-to-br from-brand-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                
-                <!-- Sidebar Commands -->
-                <div class="md:w-1/3 bg-gray-50 dark:bg-[#111] border-r border-gray-200 dark:border-white/5 flex flex-col p-4 gap-2">
-                    <button onclick="switchCommand('set')" id="cmd-tab-set" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all">SET</button>
-                    <button onclick="switchCommand('get')" id="cmd-tab-get" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">GET</button>
-                    <button onclick="switchCommand('del')" id="cmd-tab-del" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">DEL</button>
-                    <button onclick="switchCommand('ttl')" id="cmd-tab-ttl" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">TTL</button>
-                    <button onclick="switchCommand('persist')" id="cmd-tab-persist" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">PERSIST</button>
-                </div>
-
-                <!-- Command Details -->
-                <div class="md:w-2/3 p-8 relative min-h-[300px]">
-                    <div id="cmd-details">
-                        <!-- Content will be injected here via JS -->
-                    </div>
-                </div>
-            </div>
-
-            <script>
-                const commandsData = {
-                    set: {
-                        syntax: "SET <key> <value> [EX seconds | PX milliseconds]",
-                        desc: "Stores a value with the specified key. If the key already exists, it is overwritten. You can optionally provide an expiration time.",
-                        example: "SET user:1 John\\n\n> OK\\n\nSET session:xyz active EX 3600\\n\n> OK\\n"
-                    },
-                    get: {
-                        syntax: "GET <key>",
-                        desc: "Retrieves the value associated with the specified key.",
-                        example: "GET user:1\\n\n> John\\n\nGET non_existent\\n\n> NOT_FOUND\\n"
-                    },
-                    del: {
-                        syntax: "DEL <key>",
-                        desc: "Deletes the specified key and its associated value from the database.",
-                        example: "DEL user:1\\n\n> OK\\n\nDEL already_deleted\\n\n> NOT_FOUND\\n"
-                    },
-                    ttl: {
-                        syntax: "TTL <key>",
-                        desc: "Returns the remaining time to live of a key that has a timeout, in milliseconds. Returns -1 if the key exists but has no associated expire. Returns -2 if the key does not exist.",
-                        example: "TTL session:xyz\\n\n> 3599000\\n\nTTL no_timeout_key\\n\n> -1\\n"
-                    },
-                    persist: {
-                        syntax: "PERSIST <key>",
-                        desc: "Removes the existing timeout on key, turning the key from volatile (a key with an expire set) to persistent.",
-                        example: "PERSIST session:xyz\\n\n> OK\\n"
-                    }
-                };
-
-                function switchCommand(cmd) {
-                    const data = commandsData[cmd];
-                    
-                    document.getElementById('cmd-details').innerHTML = `
-                        <h3 class="text-2xl font-mono font-bold text-gray-900 dark:text-white mb-2 uppercase">${cmd}</h3>
-                        <div class="bg-gray-100 dark:bg-[#111] p-3 rounded-lg border border-gray-200 dark:border-white/5 mb-6 overflow-x-auto">
-                            <code class="text-brand-600 dark:text-brand-400 font-bold whitespace-nowrap">${data.syntax.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>
-                        </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-6">${data.desc}</p>
-                        <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">Example Raw TCP Socket</h4>
-                        <div class="bg-[#1e1e1e] rounded-lg p-4 font-mono text-sm overflow-x-auto border border-white/10 shadow-inner">
-                            <pre><code class="text-gray-300">${data.example.replace(/\\n/g, '<span class="text-gray-500">\\n</span>').replace(/>/g, '<span class="text-green-400">></span>')}</code></pre>
-                        </div>
-                    `;
-
-                    document.querySelectorAll('.cmd-tab').forEach(el => {
-                        el.className = "cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent";
-                    });
-                    
-                    const activeTab = document.getElementById('cmd-tab-' + cmd);
-                    activeTab.className = "cmd-tab text-left px-4 py-3 rounded-lg font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all";
-                }
-
-                switchCommand('set');
-            </script>
-        </section>
-
-        <!-- Benchmark Section -->
-        <section id="benchmark" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-10 -mt-10">
+<section id="benchmark" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-10 -mt-10">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-5xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight">Crushing the Competition</h2>
                 <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg mb-8" id="benchmark-desc">Tested locally on an 8-core CPU using 100 concurrent connections with Pipelining (batch=100) and tiny payloads. Designed to measure theoretical max engine throughput.</p>
@@ -1192,90 +1033,304 @@ client.close()</code></pre>
                 }
             </script>
         </section>
+<section id="commands" class="max-w-5xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight">Commands Reference</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">Spindle uses a simple, human-readable text protocol over TCP. Every command must be terminated with a newline (<code>\n</code>).</p>
+            </div>
 
-        <!-- Bento Grid Features -->
-        <section id="architecture" class="max-w-6xl mx-auto px-6 mb-10 pt-20 -mt-20">
-            <h2 class="font-display text-3xl md:text-4xl font-bold mb-12 text-center">Engineered for Performance</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Medium Card (New) -->
-                <div class="md:col-span-1 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute left-0 bottom-0 w-64 h-64 bg-red-500/10 blur-[80px] rounded-full group-hover:bg-red-500/20 transition-colors"></div>
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center mb-6 border border-red-500/30">
-                            <svg class="w-6 h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
-                        </div>
-                        <h3 class="text-xl font-display font-bold mb-3 text-white">Write-Ahead Logging (WAL)</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Data durability is guaranteed via an asynchronous Write-Ahead Log, fueled by a lock-free MPSC Ring Buffer to eliminate I/O blocking.</p>
-                    </div>
+            <div class="bento-card rounded-2xl overflow-hidden shadow-xl bg-white dark:bg-[#0a0a0a] flex flex-col md:flex-row border border-gray-200 dark:border-white/5 relative group">
+                <div class="absolute inset-0 bg-gradient-to-br from-brand-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                
+                <!-- Sidebar Commands -->
+                <div class="md:w-1/3 bg-gray-50 dark:bg-[#111] border-r border-gray-200 dark:border-white/5 flex flex-col p-4 gap-2">
+                    <button onclick="switchCommand('set')" id="cmd-tab-set" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all">SET</button>
+                    <button onclick="switchCommand('get')" id="cmd-tab-get" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">GET</button>
+                    <button onclick="switchCommand('del')" id="cmd-tab-del" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">DEL</button>
+                    <button onclick="switchCommand('ttl')" id="cmd-tab-ttl" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">TTL</button>
+                    <button onclick="switchCommand('persist')" id="cmd-tab-persist" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">PERSIST</button>
                 </div>
 
-                <!-- Large Card (New) -->
-                <div class="md:col-span-2 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute right-1/4 top-0 w-64 h-64 bg-amber-500/10 blur-[80px] rounded-full group-hover:bg-amber-500/20 transition-colors"></div>
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center mb-6 border border-amber-500/30">
-                            <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                        </div>
-                        <h3 class="text-2xl font-display font-bold mb-3 text-white">Sharded Hash Map Architecture</h3>
-                        <p class="text-gray-400 leading-relaxed max-w-2xl">The core database is divided into multiple independent shards (partitions). This significantly reduces global lock contention, allowing multiple threads to read and write simultaneously for massive throughput.</p>
-                    </div>
-                </div>
-
-                <!-- Large Card -->
-                <div class="md:col-span-2 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute right-0 top-0 w-64 h-64 bg-transparent blur-[80px] rounded-full group-hover:bg-brand-500/20 transition-colors"></div>
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-full bg-brand-500/20 flex items-center justify-center mb-6 border border-brand-500/30">
-                            <svg class="w-6 h-6 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                        </div>
-                        <h3 class="text-2xl font-display font-bold mb-3 text-white">Userspace Spinlocks</h3>
-                        <p class="text-gray-400 leading-relaxed">By avoiding expensive OS-level mutex context switches, Spindle achieves ultra-fast lock-free multi-core synchronization. Perfect for high-contention environments.</p>
-                    </div>
-                </div>
-
-                <!-- Small Card -->
-                <div class="md:col-span-1 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute left-1/2 top-0 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full group-hover:bg-blue-500/20 transition-colors -translate-x-1/2"></div>
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center mb-6 border border-blue-500/30">
-                            <svg class="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4"></path></svg>
-                        </div>
-                        <h3 class="text-xl font-display font-bold mb-3 text-white">Slab Allocator</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Custom memory management that eliminates heap fragmentation and maximizes CPU cache locality.</p>
-                    </div>
-                </div>
-
-                <!-- Small Card -->
-                <div class="md:col-span-1 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute right-0 bottom-0 w-64 h-64 bg-green-500/10 blur-[80px] rounded-full group-hover:bg-green-500/20 transition-colors"></div>
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mb-6 border border-green-500/30">
-                            <svg class="w-6 h-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        </div>
-                        <h3 class="text-xl font-display font-bold mb-3 text-white">Reactor Pattern</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Epoll-based architecture to multiplex thousands of concurrent TCP connections seamlessly.</p>
-                    </div>
-                </div>
-
-                <!-- Large Card -->
-                <div class="md:col-span-2 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute left-0 bottom-0 w-64 h-64 bg-pink-500/10 blur-[80px] rounded-full group-hover:bg-pink-500/20 transition-colors"></div>
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center mb-6 border border-pink-500/30">
-                            <svg class="w-6 h-6 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        <h3 class="text-2xl font-display font-bold mb-3 text-white">Active & Lazy Expiry</h3>
-                        <p class="text-gray-400 leading-relaxed">TTL and key expiration is handled gracefully via background cleaner threads and on-demand lazy eviction, ensuring memory is freed without blocking readers.</p>
+                <!-- Command Details -->
+                <div class="md:w-2/3 p-8 relative min-h-[300px]">
+                    <div id="cmd-details">
+                        <!-- Content will be injected here via JS -->
                     </div>
                 </div>
             </div>
+
+            <script>
+                const commandsData = {
+                    set: {
+                        syntax: "SET <key> <value> [EX seconds | PX milliseconds]",
+                        desc: "Stores a value with the specified key. If the key already exists, it is overwritten. You can optionally provide an expiration time.",
+                        example: "SET user:1 John\\n\n> OK\\n\nSET session:xyz active EX 3600\\n\n> OK\\n"
+                    },
+                    get: {
+                        syntax: "GET <key>",
+                        desc: "Retrieves the value associated with the specified key.",
+                        example: "GET user:1\\n\n> John\\n\nGET non_existent\\n\n> NOT_FOUND\\n"
+                    },
+                    del: {
+                        syntax: "DEL <key>",
+                        desc: "Deletes the specified key and its associated value from the database.",
+                        example: "DEL user:1\\n\n> OK\\n\nDEL already_deleted\\n\n> NOT_FOUND\\n"
+                    },
+                    ttl: {
+                        syntax: "TTL <key>",
+                        desc: "Returns the remaining time to live of a key that has a timeout, in milliseconds. Returns -1 if the key exists but has no associated expire. Returns -2 if the key does not exist.",
+                        example: "TTL session:xyz\\n\n> 3599000\\n\nTTL no_timeout_key\\n\n> -1\\n"
+                    },
+                    persist: {
+                        syntax: "PERSIST <key>",
+                        desc: "Removes the existing timeout on key, turning the key from volatile (a key with an expire set) to persistent.",
+                        example: "PERSIST session:xyz\\n\n> OK\\n"
+                    }
+                };
+
+                function switchCommand(cmd) {
+                    const data = commandsData[cmd];
+                    
+                    document.getElementById('cmd-details').innerHTML = `
+                        <h3 class="text-2xl font-mono font-bold text-gray-900 dark:text-white mb-2 uppercase">${cmd}</h3>
+                        <div class="bg-gray-100 dark:bg-[#111] p-3 rounded-lg border border-gray-200 dark:border-white/5 mb-6 overflow-x-auto">
+                            <code class="text-brand-600 dark:text-brand-400 font-bold whitespace-nowrap">${data.syntax.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">${data.desc}</p>
+                        <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">Example Raw TCP Socket</h4>
+                        <div class="bg-[#1e1e1e] rounded-lg p-4 font-mono text-sm overflow-x-auto border border-white/10 shadow-inner">
+                            <pre><code class="text-gray-300">${data.example.replace(/\\n\n/g, '<br/>').replace(/\\n/g, '<span class="text-gray-500">\\n</span>').replace(/> /g, '<span class="text-green-400 font-bold">> </span>')}</code></pre>
+                        </div>
+                    `;
+
+                    document.querySelectorAll('.cmd-tab').forEach(el => {
+                        el.className = "cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent";
+                    });
+                    
+                    const activeTab = document.getElementById('cmd-tab-' + cmd);
+                    activeTab.className = "cmd-tab text-left px-4 py-3 rounded-lg font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all";
+                }
+
+                switchCommand('set');
+            </script>
         </section>
+<section id="sdks" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight">Multi-Language SDKs</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">Spindle speaks plain TCP. You can use our provided clients or easily write your own in any language.</p>
+            </div>
+            
+            <div class="bento-card rounded-2xl overflow-hidden shadow-2xl relative group bg-white dark:bg-[#050505] border border-gray-200 dark:border-white/10">
+                <div class="absolute inset-0 bg-gradient-to-br from-brand-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
+                
+                <!-- Mac OS Window Header -->
+                <div class="bg-gray-100 dark:bg-[#0a0a0a] border-b border-gray-200 dark:border-white/10 flex items-center px-4 py-3 gap-2">
+                    <div class="flex gap-2 mr-4">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    </div>
+                    <!-- Sidebar Tabs in Header -->
+                    <div class="flex overflow-x-auto gap-1">
+                        <button onclick="switchTab('java')" id="tab-java" class="sdk-tab text-xs font-bold px-4 py-1.5 rounded-md text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all">Java</button>
+                        <button onclick="switchTab('javascript')" id="tab-javascript" class="sdk-tab text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">JavaScript</button>
+                        <button onclick="switchTab('python')" id="tab-python" class="sdk-tab text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">Python</button>
+                        <button onclick="switchTab('curl')" id="tab-curl" class="sdk-tab text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">Other / TCP</button>
+                    </div>
+                </div>
 
-    </main>
+                <!-- Content Panels -->
+                <div class="relative overflow-y-auto bg-gray-50 dark:bg-[#030303] h-[350px]">
+                    <!-- Java Panel -->
+                    <div id="panel-java" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed block">
+<pre><code class="language-java text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">import</span> clients.java.SpindleClient;
 
-    <!-- Footer -->
-    <footer class="border-t border-border bg-[#020202] pt-8 pb-32 md:pb-8 relative overflow-hidden z-20">
+<span class="text-pink-500 dark:text-pink-400">public class</span> <span class="text-blue-600 dark:text-blue-400">Main</span> {
+    <span class="text-pink-500 dark:text-pink-400">public static void</span> <span class="text-blue-600 dark:text-blue-400">main</span>(String[] args) {
+        SpindleClient client = <span class="text-pink-500 dark:text-pink-400">new</span> SpindleClient(<span class="text-green-600 dark:text-green-400">"127.0.0.1"</span>, <span class="text-blue-600 dark:text-blue-400">8888</span>);
+        <span class="text-pink-500 dark:text-pink-400">try</span> {
+            client.connect();
+            
+            <span class="text-gray-500 dark:text-gray-500">// Set key with expiration (3600 seconds)</span>
+            client.setEx(<span class="text-green-600 dark:text-green-400">"session:1"</span>, <span class="text-green-600 dark:text-green-400">"active"</span>, <span class="text-blue-600 dark:text-blue-400">3600</span>);
+            System.out.println(client.get(<span class="text-green-600 dark:text-green-400">"session:1"</span>));
+            
+            client.delete(<span class="text-green-600 dark:text-green-400">"session:1"</span>);
+        } <span class="text-pink-500 dark:text-pink-400">catch</span> (Exception e) {
+            e.printStackTrace();
+        } <span class="text-pink-500 dark:text-pink-400">finally</span> {
+            client.close();
+        }
+    }
+}</code></pre>
+                    </div>
+
+                    <!-- JavaScript Panel -->
+                    <div id="panel-javascript" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden">
+<pre><code class="language-javascript text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">const</span> SpindleClient = require(<span class="text-green-600 dark:text-green-400">'./clients/javascript/spindle'</span>);
+
+<span class="text-pink-500 dark:text-pink-400">async function</span> <span class="text-blue-600 dark:text-blue-400">main</span>() {
+    <span class="text-pink-500 dark:text-pink-400">const</span> client = <span class="text-pink-500 dark:text-pink-400">new</span> SpindleClient(<span class="text-green-600 dark:text-green-400">'127.0.0.1'</span>, <span class="text-blue-600 dark:text-blue-400">8888</span>);
+    
+    <span class="text-pink-500 dark:text-pink-400">try</span> {
+        <span class="text-pink-500 dark:text-pink-400">await</span> client.connect();
+        
+        <span class="text-gray-500 dark:text-gray-500">// Set key with expiration</span>
+        <span class="text-pink-500 dark:text-pink-400">await</span> client.set(<span class="text-green-600 dark:text-green-400">"session:1"</span>, <span class="text-green-600 dark:text-green-400">"active"</span>, { ex: <span class="text-blue-600 dark:text-blue-400">3600</span> });
+        console.log(<span class="text-pink-500 dark:text-pink-400">await</span> client.get(<span class="text-green-600 dark:text-green-400">"session:1"</span>));
+        
+        <span class="text-pink-500 dark:text-pink-400">await</span> client.delete(<span class="text-green-600 dark:text-green-400">"session:1"</span>);
+    } <span class="text-pink-500 dark:text-pink-400">catch</span> (err) {
+        console.error(err);
+    } <span class="text-pink-500 dark:text-pink-400">finally</span> {
+        client.close();
+    }
+}
+
+main();</code></pre>
+                    </div>
+
+                    <!-- Python Panel -->
+                    <div id="panel-python" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden">
+<pre><code class="language-python text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">import</span> sys
+sys.path.append(<span class="text-green-600 dark:text-green-400">'clients/python'</span>)
+
+<span class="text-pink-500 dark:text-pink-400">from</span> spindle <span class="text-pink-500 dark:text-pink-400">import</span> SpindleClient
+
+<span class="text-gray-500 dark:text-gray-500"># Connect to the server</span>
+client = SpindleClient(host=<span class="text-green-600 dark:text-green-400">'127.0.0.1'</span>, port=<span class="text-blue-600 dark:text-blue-400">8888</span>)
+client.connect()
+
+<span class="text-gray-500 dark:text-gray-500"># Set key with expiration</span>
+client.set(<span class="text-green-600 dark:text-green-400">"session:1"</span>, <span class="text-green-600 dark:text-green-400">"active"</span>, ex=<span class="text-blue-600 dark:text-blue-400">3600</span>)
+<span class="text-pink-500 dark:text-pink-400">print</span>(client.get(<span class="text-green-600 dark:text-green-400">"session:1"</span>))
+
+client.delete(<span class="text-green-600 dark:text-green-400">"session:1"</span>)
+client.close()</code></pre>
+                    </div>
+
+                    <!-- cURL Panel -->
+                    <div id="panel-curl" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden">
+<pre><code class="language-bash text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># Other Languages (C#, PHP, Rust, C++, etc.)
+# Since Spindle is built on a raw TCP protocol,
+# you don't need any special database drivers. 
+# Just open a TCP socket, send a command with \n, and read!</span>
+
+<span class="text-gray-500 dark:text-gray-500"># Test directly from your terminal using netcat</span>
+<span class="text-brand-600 dark:text-brand-400">$</span> nc 127.0.0.1 8888
+
+<span class="text-green-600 dark:text-green-400">SET</span> mykey hello
+<span class="text-gray-800 dark:text-gray-400">OK</span>
+
+<span class="text-green-600 dark:text-green-400">GET</span> mykey
+<span class="text-gray-800 dark:text-gray-400">hello</span>
+
+<span class="text-green-600 dark:text-green-400">DEL</span> mykey
+<span class="text-gray-800 dark:text-gray-400">OK</span></code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                function switchTab(lang) {
+                    const tabs = ['java', 'javascript', 'python', 'curl'];
+                    tabs.forEach(t => {
+                        const panel = document.getElementById('panel-' + t);
+                        const tabBtn = document.getElementById('tab-' + t);
+                        if (t === lang) {
+                            panel.classList.remove('hidden');
+                            panel.classList.add('block');
+                            tabBtn.className = "sdk-tab text-xs font-bold px-4 py-1.5 rounded-md text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all";
+                        } else {
+                            panel.classList.add('hidden');
+                            panel.classList.remove('block');
+                            tabBtn.className = "sdk-tab text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent";
+                        }
+                    });
+                }
+            </script>
+        </section>
+<section id="installation" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight">Installation &amp; Setup</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">Get Spindle up and running in seconds. Build from source or include it directly in your CMake projects.</p>
+            </div>
+            
+            <div class="bento-card rounded-2xl overflow-hidden shadow-2xl relative group bg-white dark:bg-[#050505] border border-gray-200 dark:border-white/10">
+                <div class="absolute inset-0 bg-gradient-to-br from-brand-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
+                
+                <!-- Mac OS Window Header -->
+                <div class="bg-gray-100 dark:bg-[#0a0a0a] border-b border-gray-200 dark:border-white/10 flex items-center px-4 py-3 gap-2">
+                    <div class="flex gap-2 mr-4">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    </div>
+                    <!-- Sidebar Tabs in Header -->
+                    <div class="flex overflow-x-auto gap-1">
+                        <button onclick="switchInstallTab('source')" id="tab-install-source" class="install-tab text-xs font-bold px-4 py-1.5 rounded-md text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all">Build from Source</button>
+                        <button onclick="switchInstallTab('cmake')" id="tab-install-cmake" class="install-tab text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">CMake FetchContent</button>
+                    </div>
+                </div>
+
+                <!-- Content Panels -->
+                <div class="relative overflow-y-auto bg-gray-50 dark:bg-[#030303] h-[350px]">
+                    <!-- Source Panel -->
+                    <div id="panel-install-source" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed block">
+<pre><code class="language-bash text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># 1. Clone the repository</span>
+<span class="text-brand-600 dark:text-brand-400">$</span> git clone https://github.com/DoanTrungHuy/Spindle.git
+<span class="text-brand-600 dark:text-brand-400">$</span> cd Spindle
+
+<span class="text-gray-500 dark:text-gray-500"># 2. Build the project using CMake</span>
+<span class="text-brand-600 dark:text-brand-400">$</span> mkdir build &amp;&amp; cd build
+<span class="text-brand-600 dark:text-brand-400">$</span> cmake ..
+<span class="text-brand-600 dark:text-brand-400">$</span> make -j4
+
+<span class="text-gray-500 dark:text-gray-500"># 3. Start the server!</span>
+<span class="text-brand-600 dark:text-brand-400">$</span> ./spindle_app --port 8888 --threads 4
+</code></pre>
+                    </div>
+
+                    <!-- CMake Panel -->
+                    <div id="panel-install-cmake" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed hidden">
+<pre><code class="language-cmake text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># Add the following to your CMakeLists.txt:</span>
+
+<span class="text-pink-500 dark:text-pink-400">include</span>(FetchContent)
+
+<span class="text-blue-600 dark:text-blue-400">FetchContent_Declare</span>(
+  Spindle
+  GIT_REPOSITORY https://github.com/DoanTrungHuy/Spindle.git
+  GIT_TAG        master
+)
+<span class="text-blue-600 dark:text-blue-400">FetchContent_MakeAvailable</span>(Spindle)
+
+<span class="text-gray-500 dark:text-gray-500"># Link it to your executable</span>
+<span class="text-blue-600 dark:text-blue-400">add_executable</span>(my_app main.cpp)
+<span class="text-blue-600 dark:text-blue-400">target_link_libraries</span>(my_app PRIVATE spindle)
+</code></pre>
+                    </div>
+                </div>
+            </div>
+            <script>
+                function switchInstallTab(mode) {
+                    const tabs = ['source', 'cmake'];
+                    tabs.forEach(t => {
+                        const panel = document.getElementById('panel-install-' + t);
+                        const tabBtn = document.getElementById('tab-install-' + t);
+                        if (t === mode) {
+                            panel.classList.remove('hidden');
+                            panel.classList.add('block');
+                            tabBtn.className = "install-tab text-xs font-bold px-4 py-1.5 rounded-md text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all";
+                        } else {
+                            panel.classList.add('hidden');
+                            panel.classList.remove('block');
+                            tabBtn.className = "install-tab text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent";
+                        }
+                    });
+                }
+            </script>
+        </section>
+<footer class="border-t border-border bg-[#020202] pt-8 pb-32 md:pb-8 relative overflow-hidden z-20">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-brand-500/30 to-transparent"></div>
         
         <div class="max-w-6xl mx-auto px-6 flex flex-col items-center">
