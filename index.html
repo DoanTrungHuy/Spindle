@@ -136,6 +136,22 @@
                 } else if (cmd === 'CLEAR') {
                     document.getElementById('terminal-output').innerHTML = '';
                     return;
+                } else if (cmd === 'TTL') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'TTL\' command';
+                        isError = true;
+                    } else {
+                        if (mockDB.has(args[1])) output = '(integer) -1';
+                        else output = '(integer) -2';
+                    }
+                } else if (cmd === 'PERSIST') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'PERSIST\' command';
+                        isError = true;
+                    } else {
+                        if (mockDB.has(args[1])) output = '(integer) 1';
+                        else output = '(integer) 0';
+                    }
                 } else {
                     output = '(error) ERR unknown command \'' + cmd + '\'';
                     isError = true;
@@ -255,6 +271,22 @@
                 } else if (cmd === 'CLEAR') {
                     document.getElementById('terminal-output').innerHTML = '';
                     return;
+                } else if (cmd === 'TTL') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'TTL\' command';
+                        isError = true;
+                    } else {
+                        if (mockDB.has(args[1])) output = '(integer) -1';
+                        else output = '(integer) -2';
+                    }
+                } else if (cmd === 'PERSIST') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'PERSIST\' command';
+                        isError = true;
+                    } else {
+                        if (mockDB.has(args[1])) output = '(integer) 1';
+                        else output = '(integer) 0';
+                    }
                 } else {
                     output = '(error) ERR unknown command \'' + cmd + '\'';
                     isError = true;
@@ -465,6 +497,22 @@
                 } else if (cmd === 'CLEAR') {
                     document.getElementById('terminal-output').innerHTML = '';
                     return;
+                } else if (cmd === 'TTL') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'TTL\' command';
+                        isError = true;
+                    } else {
+                        if (mockDB.has(args[1])) output = '(integer) -1';
+                        else output = '(integer) -2';
+                    }
+                } else if (cmd === 'PERSIST') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'PERSIST\' command';
+                        isError = true;
+                    } else {
+                        if (mockDB.has(args[1])) output = '(integer) 1';
+                        else output = '(integer) 0';
+                    }
                 } else {
                     output = '(error) ERR unknown command \'' + cmd + '\'';
                     isError = true;
@@ -718,6 +766,22 @@
                 } else if (cmd === 'CLEAR') {
                     document.getElementById('terminal-output').innerHTML = '';
                     return;
+                } else if (cmd === 'TTL') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'TTL\' command';
+                        isError = true;
+                    } else {
+                        if (mockDB.has(args[1])) output = '(integer) -1';
+                        else output = '(integer) -2';
+                    }
+                } else if (cmd === 'PERSIST') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments for \'PERSIST\' command';
+                        isError = true;
+                    } else {
+                        if (mockDB.has(args[1])) output = '(integer) 1';
+                        else output = '(integer) 0';
+                    }
                 } else {
                     output = '(error) ERR unknown command \'' + cmd + '\'';
                     isError = true;
