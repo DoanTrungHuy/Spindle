@@ -100,7 +100,7 @@
                     output = 'PONG';
                 } else if (cmd === 'SET') {
                     if (args.length < 3) {
-                        output = '(error) ERR wrong number of arguments for \'SET\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: SET <key> <value> [EX seconds | PX milliseconds]';
                         isError = true;
                     } else {
                         const key = args[1];
@@ -110,19 +110,19 @@
                     }
                 } else if (cmd === 'GET') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'GET\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: GET <key>';
                         isError = true;
                     } else {
                         const key = args[1];
                         if (mockDB.has(key)) {
-                            output = '\"' + mockDB.get(key) + '\"';
+                            output = mockDB.get(key);
                         } else {
                             output = '(nil)';
                         }
                     }
                 } else if (cmd === 'DEL') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'DEL\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: DEL <key>';
                         isError = true;
                     } else {
                         const key = args[1];
@@ -138,7 +138,7 @@
                     return;
                 } else if (cmd === 'TTL') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'TTL\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: TTL <key>';
                         isError = true;
                     } else {
                         if (mockDB.has(args[1])) output = '-1';
@@ -146,7 +146,7 @@
                     }
                 } else if (cmd === 'PERSIST') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'PERSIST\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: PERSIST <key>';
                         isError = true;
                     } else {
                         if (mockDB.has(args[1])) output = 'OK';
@@ -235,7 +235,7 @@
                     output = 'PONG';
                 } else if (cmd === 'SET') {
                     if (args.length < 3) {
-                        output = '(error) ERR wrong number of arguments for \'SET\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: SET <key> <value> [EX seconds | PX milliseconds]';
                         isError = true;
                     } else {
                         const key = args[1];
@@ -245,19 +245,19 @@
                     }
                 } else if (cmd === 'GET') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'GET\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: GET <key>';
                         isError = true;
                     } else {
                         const key = args[1];
                         if (mockDB.has(key)) {
-                            output = '\"' + mockDB.get(key) + '\"';
+                            output = mockDB.get(key);
                         } else {
                             output = '(nil)';
                         }
                     }
                 } else if (cmd === 'DEL') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'DEL\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: DEL <key>';
                         isError = true;
                     } else {
                         const key = args[1];
@@ -273,7 +273,7 @@
                     return;
                 } else if (cmd === 'TTL') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'TTL\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: TTL <key>';
                         isError = true;
                     } else {
                         if (mockDB.has(args[1])) output = '-1';
@@ -281,7 +281,7 @@
                     }
                 } else if (cmd === 'PERSIST') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'PERSIST\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: PERSIST <key>';
                         isError = true;
                     } else {
                         if (mockDB.has(args[1])) output = 'OK';
@@ -461,7 +461,7 @@
                     output = 'PONG';
                 } else if (cmd === 'SET') {
                     if (args.length < 3) {
-                        output = '(error) ERR wrong number of arguments for \'SET\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: SET <key> <value> [EX seconds | PX milliseconds]';
                         isError = true;
                     } else {
                         const key = args[1];
@@ -471,19 +471,19 @@
                     }
                 } else if (cmd === 'GET') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'GET\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: GET <key>';
                         isError = true;
                     } else {
                         const key = args[1];
                         if (mockDB.has(key)) {
-                            output = '\"' + mockDB.get(key) + '\"';
+                            output = mockDB.get(key);
                         } else {
                             output = '(nil)';
                         }
                     }
                 } else if (cmd === 'DEL') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'DEL\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: DEL <key>';
                         isError = true;
                     } else {
                         const key = args[1];
@@ -499,7 +499,7 @@
                     return;
                 } else if (cmd === 'TTL') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'TTL\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: TTL <key>';
                         isError = true;
                     } else {
                         if (mockDB.has(args[1])) output = '-1';
@@ -507,7 +507,7 @@
                     }
                 } else if (cmd === 'PERSIST') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'PERSIST\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: PERSIST <key>';
                         isError = true;
                     } else {
                         if (mockDB.has(args[1])) output = 'OK';
@@ -730,7 +730,7 @@
                     output = 'PONG';
                 } else if (cmd === 'SET') {
                     if (args.length < 3) {
-                        output = '(error) ERR wrong number of arguments for \'SET\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: SET <key> <value> [EX seconds | PX milliseconds]';
                         isError = true;
                     } else {
                         const key = args[1];
@@ -740,19 +740,19 @@
                     }
                 } else if (cmd === 'GET') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'GET\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: GET <key>';
                         isError = true;
                     } else {
                         const key = args[1];
                         if (mockDB.has(key)) {
-                            output = '\"' + mockDB.get(key) + '\"';
+                            output = mockDB.get(key);
                         } else {
                             output = '(nil)';
                         }
                     }
                 } else if (cmd === 'DEL') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'DEL\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: DEL <key>';
                         isError = true;
                     } else {
                         const key = args[1];
@@ -768,7 +768,7 @@
                     return;
                 } else if (cmd === 'TTL') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'TTL\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: TTL <key>';
                         isError = true;
                     } else {
                         if (mockDB.has(args[1])) output = '-1';
@@ -776,7 +776,7 @@
                     }
                 } else if (cmd === 'PERSIST') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments for \'PERSIST\' command';
+                        output = '(error) ERR wrong number of arguments. Usage: PERSIST <key>';
                         isError = true;
                     } else {
                         if (mockDB.has(args[1])) output = 'OK';
@@ -858,31 +858,7 @@
     </main>
 
     <!-- Footer -->
-    <section id="interactive-terminal" class="max-w-3xl mx-auto px-6 mb-32 relative z-10 pt-10 -mt-10">
-            <div class="bento-card rounded-2xl p-2 overflow-hidden shadow-2xl relative group">
-                <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
-                <div class="bg-gray-50 dark:bg-[#0a0a0a] rounded-xl border border-gray-200 dark:border-white/5">
-                    <!-- Mac Header -->
-                    <div class="flex items-center px-4 py-3 border-b border-gray-200 dark:border-white/5 bg-gray-100 dark:bg-[#111]">
-                        <div class="flex gap-2">
-                            <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
-                            <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
-                            <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
-                        </div>
-                        <div class="mx-auto text-xs text-gray-500 font-mono font-medium tracking-widest">spindle-cli --interactive</div>
-                    </div>
-                    <!-- Terminal Content -->
-                    <div class="p-6 font-mono text-sm leading-relaxed h-[250px] overflow-y-auto flex flex-col" id="terminal-container" onclick="document.getElementById('terminal-input').focus()">
-                        <div class="text-gray-400 mb-4">Welcome to Spindle Interactive CLI! Type SET, GET, DEL, PING, TTL, or PERSIST.</div>
-                        <div id="terminal-output" class="flex flex-col gap-1"></div>
-                        <div class="flex items-center mt-1 text-gray-300">
-                            <span class="text-brand-400 mr-2 font-bold">&gt;</span>
-                            <input type="text" id="terminal-input" class="flex-1 bg-transparent border-none outline-none text-gray-900 dark:text-white font-mono" autocomplete="off" spellcheck="false" placeholder="SET mykey 123" onkeypress="handleTerminalInput(event)">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    
 <section id="architecture" class="max-w-6xl mx-auto px-6 mb-10 pt-20 -mt-20">
             <h2 class="font-display text-3xl md:text-4xl font-bold mb-12 text-center">Engineered for Performance</h2>
             
@@ -1103,6 +1079,31 @@
                 <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">Spindle uses a simple, human-readable text protocol over TCP. Every command must be terminated with a newline (<code>\n</code>).</p>
             </div>
 
+            <!-- Interactive Terminal Moved Here -->
+            <div class="mb-12">
+                <div class="bento-card rounded-2xl p-2 overflow-hidden shadow-2xl relative group">
+                <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
+                <div class="bg-gray-50 dark:bg-[#0a0a0a] rounded-xl border border-gray-200 dark:border-white/5">
+                    <!-- Mac Header -->
+                    <div class="flex items-center px-4 py-3 border-b border-gray-200 dark:border-white/5 bg-gray-100 dark:bg-[#111]">
+                        <div class="flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                            <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                            <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                        </div>
+                        <div class="mx-auto text-xs text-gray-500 font-mono font-medium tracking-widest">spindle-cli --interactive</div>
+                    </div>
+                    <!-- Terminal Content -->
+                    <div class="p-6 font-mono text-sm leading-relaxed h-[250px] overflow-y-auto flex flex-col" id="terminal-container" onclick="document.getElementById('terminal-input').focus()">
+                        <div class="text-gray-400 mb-4">Welcome to Spindle Interactive CLI! Type SET, GET, DEL, PING, TTL, or PERSIST.</div>
+                        <div id="terminal-output" class="flex flex-col gap-1"></div>
+                        <div class="flex items-center mt-1 text-gray-300">
+                            <span class="text-brand-400 mr-2 font-bold">&gt;</span>
+                            <input type="text" id="terminal-input" class="flex-1 bg-transparent border-none outline-none text-gray-900 dark:text-white font-mono" autocomplete="off" spellcheck="false" placeholder="SET mykey 123" onkeypress="handleTerminalInput(event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="bento-card rounded-2xl overflow-hidden shadow-xl bg-white dark:bg-[#0a0a0a] flex flex-col md:flex-row border border-gray-200 dark:border-white/5 relative group">
                 <div class="absolute inset-0 bg-gradient-to-br from-brand-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
                 
