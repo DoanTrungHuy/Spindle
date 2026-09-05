@@ -63,11 +63,11 @@ Spindle uses a simple text-based TCP protocol. You can connect to it using any l
 A Java client is provided in the `clients/java/` directory.
 
 ```java
-import clients.java.SpindleClient;
+import clients.java.Spindle;
 
 public class Main {
     public static void main(String[] args) {
-        SpindleClient client = new SpindleClient("127.0.0.1", 8888);
+        Spindle client = new Spindle("127.0.0.1", 8888);
         try {
             client.connect();
             

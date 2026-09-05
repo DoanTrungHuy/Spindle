@@ -6,14 +6,14 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
-public class SpindleClient {
+public class Spindle {
     private String host;
     private int port;
     private Socket socket;
     private OutputStream out;
     private BufferedReader in;
 
-    public SpindleClient(String host, int port) {
+    public Spindle(String host, int port) {
         this.host = host;
         this.port = port;
     }
@@ -69,7 +69,7 @@ public class SpindleClient {
     }
 
     public static void main(String[] args) {
-        SpindleClient client = new SpindleClient("127.0.0.1", 8888);
+        Spindle client = new Spindle("127.0.0.1", 8888);
         try {
             client.connect();
             
