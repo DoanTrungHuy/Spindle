@@ -971,7 +971,90 @@ client.close()</code></pre>
             </div>
         </section>
 
-                <!-- Benchmark Section -->
+                <!-- Commands Reference Section -->
+        <section id="commands" class="max-w-5xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight">Commands Reference</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">Spindle uses a simple, human-readable text protocol over TCP. Every command must be terminated with a newline (<code>\n</code>).</p>
+            </div>
+
+            <div class="bento-card rounded-2xl overflow-hidden shadow-xl bg-white dark:bg-[#0a0a0a] flex flex-col md:flex-row border border-gray-200 dark:border-white/5 relative group">
+                <div class="absolute inset-0 bg-gradient-to-br from-brand-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                
+                <!-- Sidebar Commands -->
+                <div class="md:w-1/3 bg-gray-50 dark:bg-[#111] border-r border-gray-200 dark:border-white/5 flex flex-col p-4 gap-2">
+                    <button onclick="switchCommand('set')" id="cmd-tab-set" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all">SET</button>
+                    <button onclick="switchCommand('get')" id="cmd-tab-get" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">GET</button>
+                    <button onclick="switchCommand('del')" id="cmd-tab-del" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">DEL</button>
+                    <button onclick="switchCommand('ttl')" id="cmd-tab-ttl" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">TTL</button>
+                    <button onclick="switchCommand('persist')" id="cmd-tab-persist" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">PERSIST</button>
+                </div>
+
+                <!-- Command Details -->
+                <div class="md:w-2/3 p-8 relative min-h-[300px]">
+                    <div id="cmd-details">
+                        <!-- Content will be injected here via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                const commandsData = {
+                    set: {
+                        syntax: "SET <key> <value> [EX seconds | PX milliseconds]",
+                        desc: "Stores a value with the specified key. If the key already exists, it is overwritten. You can optionally provide an expiration time.",
+                        example: "SET user:1 John\\n\n> OK\\n\nSET session:xyz active EX 3600\\n\n> OK\\n"
+                    },
+                    get: {
+                        syntax: "GET <key>",
+                        desc: "Retrieves the value associated with the specified key.",
+                        example: "GET user:1\\n\n> John\\n\nGET non_existent\\n\n> NOT_FOUND\\n"
+                    },
+                    del: {
+                        syntax: "DEL <key>",
+                        desc: "Deletes the specified key and its associated value from the database.",
+                        example: "DEL user:1\\n\n> OK\\n\nDEL already_deleted\\n\n> NOT_FOUND\\n"
+                    },
+                    ttl: {
+                        syntax: "TTL <key>",
+                        desc: "Returns the remaining time to live of a key that has a timeout, in milliseconds. Returns -1 if the key exists but has no associated expire. Returns -2 if the key does not exist.",
+                        example: "TTL session:xyz\\n\n> 3599000\\n\nTTL no_timeout_key\\n\n> -1\\n"
+                    },
+                    persist: {
+                        syntax: "PERSIST <key>",
+                        desc: "Removes the existing timeout on key, turning the key from volatile (a key with an expire set) to persistent.",
+                        example: "PERSIST session:xyz\\n\n> OK\\n"
+                    }
+                };
+
+                function switchCommand(cmd) {
+                    const data = commandsData[cmd];
+                    
+                    document.getElementById('cmd-details').innerHTML = `
+                        <h3 class="text-2xl font-mono font-bold text-gray-900 dark:text-white mb-2 uppercase">${cmd}</h3>
+                        <div class="bg-gray-100 dark:bg-[#111] p-3 rounded-lg border border-gray-200 dark:border-white/5 mb-6 overflow-x-auto">
+                            <code class="text-brand-600 dark:text-brand-400 font-bold whitespace-nowrap">${data.syntax.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">${data.desc}</p>
+                        <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">Example Raw TCP Socket</h4>
+                        <div class="bg-[#1e1e1e] rounded-lg p-4 font-mono text-sm overflow-x-auto border border-white/10 shadow-inner">
+                            <pre><code class="text-gray-300">${data.example.replace(/\\n/g, '<span class="text-gray-500">\\n</span>').replace(/>/g, '<span class="text-green-400">></span>')}</code></pre>
+                        </div>
+                    `;
+
+                    document.querySelectorAll('.cmd-tab').forEach(el => {
+                        el.className = "cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent";
+                    });
+                    
+                    const activeTab = document.getElementById('cmd-tab-' + cmd);
+                    activeTab.className = "cmd-tab text-left px-4 py-3 rounded-lg font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all";
+                }
+
+                switchCommand('set');
+            </script>
+        </section>
+
+        <!-- Benchmark Section -->
         <section id="benchmark" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-10 -mt-10">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-5xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight">Crushing the Competition</h2>
