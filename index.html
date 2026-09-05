@@ -104,8 +104,22 @@
                         isError = true;
                     } else {
                         const key = args[1];
-                        const value = args.slice(2).join(' ');
-                        mockDB.set(key, value);
+                        let value = args.slice(2).join(' ');
+                        let expireAt = null;
+                        
+                        // Parse EX / PX
+                        const exMatch = value.match(/ EX (\d+)$/i);
+                        const pxMatch = value.match(/ PX (\d+)$/i);
+                        
+                        if (exMatch) {
+                            value = value.substring(0, exMatch.index).trim();
+                            expireAt = Date.now() + parseInt(exMatch[1]) * 1000;
+                        } else if (pxMatch) {
+                            value = value.substring(0, pxMatch.index).trim();
+                            expireAt = Date.now() + parseInt(pxMatch[1]);
+                        }
+                        
+                        mockDB.set(key, { value: value, expireAt: expireAt });
                         output = 'OK';
                     }
                 } else if (cmd === 'GET') {
@@ -141,16 +155,44 @@
                         output = '(error) ERR wrong number of arguments. Usage: TTL <key>';
                         isError = true;
                     } else {
-                        if (mockDB.has(args[1])) output = '-1';
-                        else output = '-2';
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            const data = mockDB.get(key);
+                            if (data.expireAt) {
+                                const remaining = data.expireAt - Date.now();
+                                if (remaining < 0) {
+                                    mockDB.delete(key);
+                                    output = '-2';
+                                } else {
+                                    // Spindle returns nanoseconds, we simulate a large number (ms * 1,000,000)
+                                    output = (remaining * 1000000).toString();
+                                }
+                            } else {
+                                output = '-1';
+                            }
+                        } else {
+                            output = '-2';
+                        }
                     }
                 } else if (cmd === 'PERSIST') {
                     if (args.length !== 2) {
                         output = '(error) ERR wrong number of arguments. Usage: PERSIST <key>';
                         isError = true;
                     } else {
-                        if (mockDB.has(args[1])) output = 'OK';
-                        else output = 'NOT_FOUND';
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            const data = mockDB.get(key);
+                            if (data.expireAt && Date.now() > data.expireAt) {
+                                mockDB.delete(key);
+                                output = 'NOT_FOUND';
+                            } else {
+                                data.expireAt = null;
+                                mockDB.set(key, data);
+                                output = 'OK';
+                            }
+                        } else {
+                            output = 'NOT_FOUND';
+                        }
                     }
                 } else {
                     output = '(error) ERR unknown command \'' + cmd + '\'';
@@ -239,8 +281,22 @@
                         isError = true;
                     } else {
                         const key = args[1];
-                        const value = args.slice(2).join(' ');
-                        mockDB.set(key, value);
+                        let value = args.slice(2).join(' ');
+                        let expireAt = null;
+                        
+                        // Parse EX / PX
+                        const exMatch = value.match(/ EX (\d+)$/i);
+                        const pxMatch = value.match(/ PX (\d+)$/i);
+                        
+                        if (exMatch) {
+                            value = value.substring(0, exMatch.index).trim();
+                            expireAt = Date.now() + parseInt(exMatch[1]) * 1000;
+                        } else if (pxMatch) {
+                            value = value.substring(0, pxMatch.index).trim();
+                            expireAt = Date.now() + parseInt(pxMatch[1]);
+                        }
+                        
+                        mockDB.set(key, { value: value, expireAt: expireAt });
                         output = 'OK';
                     }
                 } else if (cmd === 'GET') {
@@ -276,16 +332,44 @@
                         output = '(error) ERR wrong number of arguments. Usage: TTL <key>';
                         isError = true;
                     } else {
-                        if (mockDB.has(args[1])) output = '-1';
-                        else output = '-2';
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            const data = mockDB.get(key);
+                            if (data.expireAt) {
+                                const remaining = data.expireAt - Date.now();
+                                if (remaining < 0) {
+                                    mockDB.delete(key);
+                                    output = '-2';
+                                } else {
+                                    // Spindle returns nanoseconds, we simulate a large number (ms * 1,000,000)
+                                    output = (remaining * 1000000).toString();
+                                }
+                            } else {
+                                output = '-1';
+                            }
+                        } else {
+                            output = '-2';
+                        }
                     }
                 } else if (cmd === 'PERSIST') {
                     if (args.length !== 2) {
                         output = '(error) ERR wrong number of arguments. Usage: PERSIST <key>';
                         isError = true;
                     } else {
-                        if (mockDB.has(args[1])) output = 'OK';
-                        else output = 'NOT_FOUND';
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            const data = mockDB.get(key);
+                            if (data.expireAt && Date.now() > data.expireAt) {
+                                mockDB.delete(key);
+                                output = 'NOT_FOUND';
+                            } else {
+                                data.expireAt = null;
+                                mockDB.set(key, data);
+                                output = 'OK';
+                            }
+                        } else {
+                            output = 'NOT_FOUND';
+                        }
                     }
                 } else {
                     output = '(error) ERR unknown command \'' + cmd + '\'';
@@ -465,8 +549,22 @@
                         isError = true;
                     } else {
                         const key = args[1];
-                        const value = args.slice(2).join(' ');
-                        mockDB.set(key, value);
+                        let value = args.slice(2).join(' ');
+                        let expireAt = null;
+                        
+                        // Parse EX / PX
+                        const exMatch = value.match(/ EX (\d+)$/i);
+                        const pxMatch = value.match(/ PX (\d+)$/i);
+                        
+                        if (exMatch) {
+                            value = value.substring(0, exMatch.index).trim();
+                            expireAt = Date.now() + parseInt(exMatch[1]) * 1000;
+                        } else if (pxMatch) {
+                            value = value.substring(0, pxMatch.index).trim();
+                            expireAt = Date.now() + parseInt(pxMatch[1]);
+                        }
+                        
+                        mockDB.set(key, { value: value, expireAt: expireAt });
                         output = 'OK';
                     }
                 } else if (cmd === 'GET') {
@@ -502,16 +600,44 @@
                         output = '(error) ERR wrong number of arguments. Usage: TTL <key>';
                         isError = true;
                     } else {
-                        if (mockDB.has(args[1])) output = '-1';
-                        else output = '-2';
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            const data = mockDB.get(key);
+                            if (data.expireAt) {
+                                const remaining = data.expireAt - Date.now();
+                                if (remaining < 0) {
+                                    mockDB.delete(key);
+                                    output = '-2';
+                                } else {
+                                    // Spindle returns nanoseconds, we simulate a large number (ms * 1,000,000)
+                                    output = (remaining * 1000000).toString();
+                                }
+                            } else {
+                                output = '-1';
+                            }
+                        } else {
+                            output = '-2';
+                        }
                     }
                 } else if (cmd === 'PERSIST') {
                     if (args.length !== 2) {
                         output = '(error) ERR wrong number of arguments. Usage: PERSIST <key>';
                         isError = true;
                     } else {
-                        if (mockDB.has(args[1])) output = 'OK';
-                        else output = 'NOT_FOUND';
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            const data = mockDB.get(key);
+                            if (data.expireAt && Date.now() > data.expireAt) {
+                                mockDB.delete(key);
+                                output = 'NOT_FOUND';
+                            } else {
+                                data.expireAt = null;
+                                mockDB.set(key, data);
+                                output = 'OK';
+                            }
+                        } else {
+                            output = 'NOT_FOUND';
+                        }
                     }
                 } else {
                     output = '(error) ERR unknown command \'' + cmd + '\'';
@@ -735,8 +861,22 @@
                         isError = true;
                     } else {
                         const key = args[1];
-                        const value = args.slice(2).join(' ');
-                        mockDB.set(key, value);
+                        let value = args.slice(2).join(' ');
+                        let expireAt = null;
+                        
+                        // Parse EX / PX
+                        const exMatch = value.match(/ EX (\d+)$/i);
+                        const pxMatch = value.match(/ PX (\d+)$/i);
+                        
+                        if (exMatch) {
+                            value = value.substring(0, exMatch.index).trim();
+                            expireAt = Date.now() + parseInt(exMatch[1]) * 1000;
+                        } else if (pxMatch) {
+                            value = value.substring(0, pxMatch.index).trim();
+                            expireAt = Date.now() + parseInt(pxMatch[1]);
+                        }
+                        
+                        mockDB.set(key, { value: value, expireAt: expireAt });
                         output = 'OK';
                     }
                 } else if (cmd === 'GET') {
@@ -772,16 +912,44 @@
                         output = '(error) ERR wrong number of arguments. Usage: TTL <key>';
                         isError = true;
                     } else {
-                        if (mockDB.has(args[1])) output = '-1';
-                        else output = '-2';
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            const data = mockDB.get(key);
+                            if (data.expireAt) {
+                                const remaining = data.expireAt - Date.now();
+                                if (remaining < 0) {
+                                    mockDB.delete(key);
+                                    output = '-2';
+                                } else {
+                                    // Spindle returns nanoseconds, we simulate a large number (ms * 1,000,000)
+                                    output = (remaining * 1000000).toString();
+                                }
+                            } else {
+                                output = '-1';
+                            }
+                        } else {
+                            output = '-2';
+                        }
                     }
                 } else if (cmd === 'PERSIST') {
                     if (args.length !== 2) {
                         output = '(error) ERR wrong number of arguments. Usage: PERSIST <key>';
                         isError = true;
                     } else {
-                        if (mockDB.has(args[1])) output = 'OK';
-                        else output = 'NOT_FOUND';
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            const data = mockDB.get(key);
+                            if (data.expireAt && Date.now() > data.expireAt) {
+                                mockDB.delete(key);
+                                output = 'NOT_FOUND';
+                            } else {
+                                data.expireAt = null;
+                                mockDB.set(key, data);
+                                output = 'OK';
+                            }
+                        } else {
+                            output = 'NOT_FOUND';
+                        }
                     }
                 } else {
                     output = '(error) ERR unknown command \'' + cmd + '\'';
@@ -1134,27 +1302,27 @@
                     set: {
                         syntax: "SET <key> <value> [EX seconds | PX milliseconds]",
                         desc: "Stores a value with the specified key. If the key already exists, it is overwritten. You can optionally provide an expiration time.",
-                        example: "SET user:1 John\\n\n> OK\\n\nSET session:xyz active EX 3600\\n\n> OK\\n"
+                        example: "SET mykey John\\n\n> OK\\n\nSET mykey active EX 3600\\n\n> OK\\n"
                     },
                     get: {
                         syntax: "GET <key>",
                         desc: "Retrieves the value associated with the specified key.",
-                        example: "GET user:1\\n\n> John\\n\nGET non_existent\\n\n> NOT_FOUND\\n"
+                        example: "GET mykey\\n\n> John\\n\nGET non_existent\\n\n> NOT_FOUND\\n"
                     },
                     del: {
                         syntax: "DEL <key>",
                         desc: "Deletes the specified key and its associated value from the database.",
-                        example: "DEL user:1\\n\n> OK\\n\nDEL already_deleted\\n\n> NOT_FOUND\\n"
+                        example: "DEL mykey\\n\n> OK\\n\nDEL already_deleted\\n\n> NOT_FOUND\\n"
                     },
                     ttl: {
                         syntax: "TTL <key>",
                         desc: "Returns the remaining time to live of a key that has a timeout, in milliseconds. Returns -1 if the key exists but has no associated expire. Returns -2 if the key does not exist.",
-                        example: "TTL session:xyz\\n\n> 3599000\\n\nTTL no_timeout_key\\n\n> -1\\n"
+                        example: "TTL mykey\\n\n> 3599000\\n\nTTL no_timeout_key\\n\n> -1\\n"
                     },
                     persist: {
                         syntax: "PERSIST <key>",
                         desc: "Removes the existing timeout on key, turning the key from volatile (a key with an expire set) to persistent.",
-                        example: "PERSIST session:xyz\\n\n> OK\\n"
+                        example: "PERSIST mykey\\n\n> OK\\n"
                     }
                 };
 
