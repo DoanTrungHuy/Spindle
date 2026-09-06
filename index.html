@@ -339,10 +339,10 @@
 <section id="benchmark" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-10 -mt-10">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-5xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight">Crushing the Competition</h2>
-                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg mb-8" id="benchmark-desc">Tested locally on an 8-core CPU using 100 concurrent connections with Pipelining (batch=100) and tiny payloads. Designed to measure theoretical max engine throughput.</p>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg mb-8" id="benchmark-desc" class="break-words">Tested locally on an 8-core CPU using 100 concurrent connections with Pipelining (batch=100) and tiny payloads. Designed to measure theoretical max engine throughput.</p>
                 
                 <!-- Tab Switcher -->
-                <div class="flex sm:inline-flex bg-gray-100 dark:bg-[#1a1a1a] p-1 rounded-xl border border-gray-200 dark:border-white/5 relative z-20 flex-nowrap overflow-x-auto snap-x custom-scrollbar justify-start sm:justify-center gap-1 w-full sm:w-auto">
+                <div class="flex max-w-full mx-auto w-fit bg-gray-100 dark:bg-[#1a1a1a] p-1 rounded-xl border border-gray-200 dark:border-white/5 relative z-20 flex-nowrap overflow-x-auto snap-x custom-scrollbar justify-start sm:justify-center gap-1">
                     <button onclick="switchBenchmark('peak')" id="tab-peak" class="whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm font-bold transition-all bg-white dark:bg-white/10 text-brand-600 dark:text-brand-400 shadow-sm">Peak Throughput</button>
                     <button onclick="switchBenchmark('real')" id="tab-real" class="whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">1KB Payload</button>
                     <button onclick="switchBenchmark('conn')" id="tab-conn" class="whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">1000 Connections</button>
@@ -376,7 +376,7 @@
                     
                     <!-- Redis Row -->
                     <div class="pt-2 border-t border-gray-200 dark:border-white/5">
-                        <div class="flex justify-between items-end mb-3 mt-4">
+                        <div class="flex flex-col sm:flex-row justify-start sm:justify-between items-start sm:items-end gap-2 sm:gap-0 mb-3 mt-4">
                             <div class="flex items-center gap-3">
                                 <span class="font-display font-bold text-xl text-gray-700 dark:text-gray-300">Redis 7.0</span>
                                 <span class="px-2 py-0.5 rounded text-xs font-bold bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20">1 Thread</span>
