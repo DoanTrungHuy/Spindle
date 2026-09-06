@@ -106,7 +106,7 @@
         html.light .glow-text { text-shadow: none !important; }
         html.light .text-white, html.light .font-bold.text-white { color: #0f172a !important; }
         html.light .text-gray-300 { color: #334155 !important; }
-        html.light .text-gray-400 { color: #475569 !important; }
+        html.light .text-gray-400 { color: #334155 !important; }
         html.light .text-gray-500 { color: #64748b !important; }
         html.light .text-pink-400 { color: #d946ef !important; }
         html.light .text-green-400 { color: #16a34a !important; }
@@ -220,8 +220,8 @@
                 v1.0.0 is now live
             </div>
             
-            <h1 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
-                Data processing at <br>
+            <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight px-2 sm:px-0">
+                Data processing at <br class="hidden sm:block">
                 <span class="hero-gradient-text">microsecond speed.</span>
             </h1>
             
@@ -811,7 +811,7 @@ client.close()</code></pre>
 
             </div></footer>
         <!-- Floating Status Widget -->
-    <div class="fixed bottom-6 right-6 z-50">
+    <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 scale-90 sm:scale-100 origin-bottom-right z-50">
         <div id="status-widget" onclick="toggleWidget()" class="cursor-pointer group flex items-center gap-3 bg-[#0a0a0a]/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/10 shadow-2xl hover:border-brand-500/40 hover:bg-[#111] transition-all duration-300">
             <span class="relative flex h-2.5 w-2.5 shrink-0" title="Click to collapse/expand">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
