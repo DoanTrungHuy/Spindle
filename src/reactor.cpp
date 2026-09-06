@@ -270,7 +270,7 @@ void Reactor::handle_client_data(int client_fd) {
                 if (m_sharded_map.get(key, res)) {
                     append_output(res + "\n");
                 } else {
-                    append_output("NOT_FOUND\n");
+                    append_output("(nil)\n");
                 }
             } else {
                 append_output("ERR INVALID_FORMAT\n");
@@ -283,9 +283,9 @@ void Reactor::handle_client_data(int client_fd) {
                         m_ring_buffer.push(log_entry);
                 });
                 if (success) {
-                    append_output("OK\n");
+                    append_output("(integer) 1\n");
                 } else {
-                    append_output("NOT_FOUND\n");
+                    append_output("(integer) 0\n");
                 }
             } else {
                 append_output("ERR INVALID_FORMAT\n");
@@ -293,16 +293,16 @@ void Reactor::handle_client_data(int client_fd) {
         } else if (cmd == "TTL") {
             if (!key.empty()) {
                 int64_t remaining = m_sharded_map.ttl(key);
-                append_output(std::to_string(remaining) + "\n");
+                append_output("(integer) " + std::to_string(remaining) + "\n");
             } else {
                 append_output("ERR INVALID_FORMAT\n");
             }
         } else if (cmd == "PERSIST") {
             if (!key.empty()) {
                 if (m_sharded_map.persist(key)) {
-                    append_output("OK\n");
+                    append_output("(integer) 1\n");
                 } else {
-                    append_output("NOT_FOUND\n");
+                    append_output("(integer) 0\n");
                 }
             } else {
                 append_output("ERR INVALID_FORMAT\n");
