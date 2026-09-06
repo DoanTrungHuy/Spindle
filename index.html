@@ -255,6 +255,24 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.2); border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.4); }
+
+        /* Hero text: gradient in dark mode, solid in light mode */
+        .hero-gradient-text {
+            color: transparent;
+            background-image: linear-gradient(to right, #a78bfa, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradient-x 15s ease infinite;
+            filter: drop-shadow(0 0 20px rgba(139,92,246,0.3));
+        }
+        html.light .hero-gradient-text {
+            color: #7c3aed !important; /* Solid brand-600 */
+            background-image: none !important;
+            -webkit-background-clip: border-box !important;
+            background-clip: border-box !important;
+            filter: none !important;
+        }
 </style>
     <style>
         /* Smooth transitions for theme switching */
@@ -389,7 +407,7 @@
             
             <h1 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
                 Data processing at <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-blue-600 to-brand-600 dark:from-brand-400 dark:via-blue-400 dark:to-brand-400 animate-gradient-x dark:drop-shadow-[0_0_20px_rgba(139,92,246,0.3)]">microsecond speed.</span>
+                <span class="hero-gradient-text">microsecond speed.</span>
             </h1>
             
             <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light">
