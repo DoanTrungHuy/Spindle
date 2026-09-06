@@ -250,7 +250,12 @@
                 radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
                 radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%);
         }
-    </style>
+    
+        .custom-scrollbar::-webkit-scrollbar { height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.2); border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.4); }
+</style>
     <style>
         /* Smooth transitions for theme switching */
         *, *::before, *::after {
@@ -635,33 +640,33 @@
                 }
             </script>
         </section>
-<section id="commands" class="max-w-7xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
+<section id="commands" class="max-w-7xl mx-auto px-4 sm:px-6 mb-32 relative z-10 pt-20 -mt-20 w-full overflow-hidden">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-5xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight">Commands Reference</h2>
                 <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">Spindle uses a simple, human-readable text protocol over TCP. Every command must be terminated with a newline (<code>\n</code>).</p>
             </div>
 
             
-            <div class="bento-card rounded-2xl overflow-hidden shadow-xl bg-white dark:bg-[#0a0a0a] flex flex-col md:flex-row border border-gray-200 dark:border-white/5 relative group">
+            <div class="bento-card rounded-2xl overflow-hidden shadow-xl bg-white dark:bg-[#0a0a0a] flex flex-col md:flex-row border border-gray-200 dark:border-white/5 relative group w-full">
                 <div class="absolute inset-0 bg-gradient-to-br from-brand-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
                 
                 <!-- Sidebar Commands -->
-                <div class="md:w-1/5 lg:w-1/6 bg-gray-50 dark:bg-[#111] border-b md:border-b-0 md:border-r border-gray-200 dark:border-white/5 flex flex-row md:flex-col overflow-x-auto p-4 gap-2 shrink-0">
-                    <button onclick="switchCommand('set')" id="cmd-tab-set" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all">SET</button>
-                    <button onclick="switchCommand('get')" id="cmd-tab-get" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">GET</button>
-                    <button onclick="switchCommand('del')" id="cmd-tab-del" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">DEL</button>
-                    <button onclick="switchCommand('ttl')" id="cmd-tab-ttl" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">TTL</button>
-                    <button onclick="switchCommand('persist')" id="cmd-tab-persist" class="cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">PERSIST</button>
+                <div class="w-full md:w-1/5 lg:w-1/6 bg-gray-50 dark:bg-[#111] border-b md:border-b-0 md:border-r border-gray-200 dark:border-white/5 flex flex-row md:flex-col overflow-x-auto p-4 gap-2 shrink-0 snap-x custom-scrollbar">
+                    <button onclick="switchCommand('set')" id="cmd-tab-set" class="cmd-tab snap-center whitespace-nowrap text-left px-4 py-3 rounded-lg font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all">SET</button>
+                    <button onclick="switchCommand('get')" id="cmd-tab-get" class="cmd-tab snap-center whitespace-nowrap text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">GET</button>
+                    <button onclick="switchCommand('del')" id="cmd-tab-del" class="cmd-tab snap-center whitespace-nowrap text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">DEL</button>
+                    <button onclick="switchCommand('ttl')" id="cmd-tab-ttl" class="cmd-tab snap-center whitespace-nowrap text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">TTL</button>
+                    <button onclick="switchCommand('persist')" id="cmd-tab-persist" class="cmd-tab snap-center whitespace-nowrap text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">PERSIST</button>
                 </div>
 
                 <!-- Command Details -->
-                <div class="flex-1 flex flex-col lg:flex-row">
-                    <div class="lg:w-1/2 p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-white/5 relative min-h-[300px]">
+                <div class="flex-1 flex flex-col lg:flex-row min-w-0 w-full">
+                    <div class="w-full lg:w-1/2 p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-white/5 relative min-h-[300px] min-w-0">
                         <div id="cmd-details">
                             <!-- Content will be injected here via JS -->
                         </div>
                     </div>
-                    <div class="lg:w-1/2 p-6 lg:p-8 bg-transparent flex flex-col">
+                    <div class="w-full lg:w-1/2 p-6 lg:p-8 bg-transparent flex flex-col min-w-0">
                         <div class="bento-card rounded-2xl overflow-hidden shadow-2xl relative group flex-1 flex flex-col border-0" style="background-color: #0a0a0a !important; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;">
                             <div class="absolute inset-0 bg-gradient-to-br from-brand-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
                             
@@ -733,11 +738,11 @@
                     `;
 
                     document.querySelectorAll('.cmd-tab').forEach(el => {
-                        el.className = "cmd-tab text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent";
+                        el.className = "cmd-tab snap-center whitespace-nowrap text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent";
                     });
                     
                     const activeTab = document.getElementById('cmd-tab-' + cmd);
-                    activeTab.className = "cmd-tab text-left px-4 py-3 rounded-lg font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all";
+                    activeTab.className = "cmd-tab snap-center whitespace-nowrap text-left px-4 py-3 rounded-lg font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all";
                 }
 
                 switchCommand('set');
@@ -760,11 +765,11 @@
                         <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
                     </div>
                     <!-- Sidebar Tabs in Header -->
-                    <div class="flex overflow-x-auto gap-1">
-                        <button onclick="switchTab('java')" id="tab-java" class="sdk-tab text-xs font-bold px-4 py-1.5 rounded-md text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all">Java</button>
-                        <button onclick="switchTab('javascript')" id="tab-javascript" class="sdk-tab text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">JavaScript</button>
-                        <button onclick="switchTab('python')" id="tab-python" class="sdk-tab text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">Python</button>
-                        <button onclick="switchTab('curl')" id="tab-curl" class="sdk-tab text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">Other / TCP</button>
+                    <div class="flex overflow-x-auto gap-1 custom-scrollbar w-full snap-x">
+                        <button onclick="switchTab('java')" id="tab-java" class="sdk-tab whitespace-nowrap snap-center text-xs font-bold px-4 py-1.5 rounded-md text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all">Java</button>
+                        <button onclick="switchTab('javascript')" id="tab-javascript" class="sdk-tab whitespace-nowrap snap-center text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">JavaScript</button>
+                        <button onclick="switchTab('python')" id="tab-python" class="sdk-tab whitespace-nowrap snap-center text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">Python</button>
+                        <button onclick="switchTab('curl')" id="tab-curl" class="sdk-tab whitespace-nowrap snap-center text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">Other / TCP</button>
                     </div>
                 </div>
 
@@ -869,11 +874,11 @@ client.close()</code></pre>
                         if (t === lang) {
                             panel.classList.remove('hidden');
                             panel.classList.add('block');
-                            tabBtn.className = "sdk-tab text-xs font-bold px-4 py-1.5 rounded-md text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all";
+                            tabBtn.className = "sdk-tab whitespace-nowrap snap-center text-xs font-bold px-4 py-1.5 rounded-md text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all";
                         } else {
                             panel.classList.add('hidden');
                             panel.classList.remove('block');
-                            tabBtn.className = "sdk-tab text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent";
+                            tabBtn.className = "sdk-tab whitespace-nowrap snap-center text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent";
                         }
                     });
                 }
@@ -896,9 +901,9 @@ client.close()</code></pre>
                         <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
                     </div>
                     <!-- Sidebar Tabs in Header -->
-                    <div class="flex overflow-x-auto gap-1">
-                        <button onclick="switchInstallTab('source')" id="tab-install-source" class="install-tab text-xs font-bold px-4 py-1.5 rounded-md text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all">Build from Source</button>
-                        <button onclick="switchInstallTab('cmake')" id="tab-install-cmake" class="install-tab text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">CMake FetchContent</button>
+                    <div class="flex overflow-x-auto gap-1 custom-scrollbar w-full snap-x">
+                        <button onclick="switchInstallTab('source')" id="tab-install-source" class="install-tab whitespace-nowrap snap-center text-xs font-bold px-4 py-1.5 rounded-md text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all">Build from Source</button>
+                        <button onclick="switchInstallTab('cmake')" id="tab-install-cmake" class="install-tab whitespace-nowrap snap-center text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">CMake FetchContent</button>
                     </div>
                 </div>
 
@@ -1009,7 +1014,7 @@ client.close()</code></pre>
             
             const activeTab = document.getElementById('tab-install-' + tabId);
             activeTab.classList.remove('border-transparent');
-            activeTab.classList.add('border-brand-500', 'text-white', 'bg-white/5');
+            // Add whitespace to active tab manually if needed 'text-white', 'bg-white/5');
         }
 
         function switchTab(tabId) {
@@ -1030,7 +1035,7 @@ client.close()</code></pre>
             // Activate selected tab
             const activeTab = document.getElementById('tab-' + tabId);
             activeTab.classList.remove('border-transparent');
-            activeTab.classList.add('border-brand-500', 'text-white', 'bg-white/5');
+            // Add whitespace to active tab manually if needed 'text-white', 'bg-white/5');
         }
         
         // Initialize active tabs on load
