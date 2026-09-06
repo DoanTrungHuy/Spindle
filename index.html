@@ -235,472 +235,10 @@
 
     </script>
 
-    <script src="https://cdn.tailwindcss.com">
-        function toggleWidget() {
-            const content = document.getElementById('status-content');
-            if (content.classList.contains('max-w-[200px]')) {
-                // Collapse
-                content.classList.remove('max-w-[200px]', 'opacity-100', 'gap-3');
-                content.classList.add('max-w-0', 'opacity-0', 'gap-0');
-            } else {
-                // Expand
-                content.classList.remove('max-w-0', 'opacity-0', 'gap-0');
-                content.classList.add('max-w-[200px]', 'opacity-100', 'gap-3');
-            }
-        }
-
     
-        // Mock In-Memory DB for Terminal
-        const mockDB = new Map();
-        
-        function printToTerminal(input, output, isError = false) {
-            const container = document.getElementById('terminal-output');
-            const inputLine = document.createElement('div');
-            inputLine.className = 'text-gray-300';
-            inputLine.innerHTML = '<span class="text-brand-400 mr-2 font-bold">&gt;</span>' + input;
-            
-            const outputLine = document.createElement('div');
-            outputLine.className = isError ? 'text-red-400 font-bold ml-4' : 'text-gray-400 font-bold ml-4';
-            outputLine.textContent = output;
-            
-            container.appendChild(inputLine);
-            if (output !== '') container.appendChild(outputLine);
-            
-            const term = document.getElementById('terminal-container');
-            term.scrollTop = term.scrollHeight;
-        }
-
-        function handleTerminalInput(e) {
-            if (e.key === 'Enter') {
-                const inputEl = document.getElementById('terminal-input');
-                const val = inputEl.value.trim();
-                inputEl.value = '';
-                
-                if (!val) return;
-                
-                const args = val.split(/\s+/);
-                const cmd = args[0].toUpperCase();
-                
-                let output = '';
-                let isError = false;
-                
-                if (cmd === 'PING') {
-                    output = 'PONG';
-                } else if (cmd === 'SET') {
-                    if (args.length < 3) {
-                        output = '(error) ERR wrong number of arguments. Usage: SET <key> <value> [EX seconds | PX milliseconds]';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        let value = args.slice(2).join(' ');
-                        let expireAt = null;
-                        
-                        // Parse EX / PX
-                        const exMatch = value.match(/ EX (\d+)$/i);
-                        const pxMatch = value.match(/ PX (\d+)$/i);
-                        
-                        if (exMatch) {
-                            value = value.substring(0, exMatch.index).trim();
-                            expireAt = Date.now() + parseInt(exMatch[1]) * 1000;
-                        } else if (pxMatch) {
-                            value = value.substring(0, pxMatch.index).trim();
-                            expireAt = Date.now() + parseInt(pxMatch[1]);
-                        }
-                        
-                        mockDB.set(key, { value: value, expireAt: expireAt });
-                        output = 'OK';
-                    }
-                                } else if (cmd === 'GET') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: GET <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            const data = mockDB.get(key);
-                            if (data.expireAt && Date.now() > data.expireAt) {
-                                mockDB.delete(key);
-                                output = '(nil)';
-                            } else {
-                                output = data.value !== undefined ? data.value : data;
-                            }
-                        } else {
-                            output = '(nil)';
-                        }
-                    }
-                }
-                    }
-                } else if (cmd === 'DEL') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: DEL <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            mockDB.delete(key);
-                            output = '(integer) 1';
-                        } else {
-                            output = '(integer) 0';
-                        }
-                    }
-                } else if (cmd === 'CLEAR') {
-                    document.getElementById('terminal-output').innerHTML = '';
-                    return;
-                } else if (cmd === 'TTL') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: TTL <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            const data = mockDB.get(key);
-                            if (data.expireAt) {
-                                const remaining = data.expireAt - Date.now();
-                                if (remaining < 0) {
-                                    mockDB.delete(key);
-                                    output = '(integer) -2';
-                                } else {
-                                    output = '(integer) ' + Math.ceil(remaining / 1000).toString();
-                                }
-                            } else {
-                                output = '(integer) -1';
-                            }
-                        } else {
-                            output = '(integer) -2';
-                        }
-                    }
-                } else if (cmd === 'PERSIST') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: PERSIST <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            const data = mockDB.get(key);
-                            if (data.expireAt && Date.now() > data.expireAt) {
-                                mockDB.delete(key);
-                                output = '(integer) 0';
-                            } else {
-                                if (data.expireAt) {
-                                    data.expireAt = null;
-                                    mockDB.set(key, data);
-                                    output = '(integer) 1';
-                                } else {
-                                    output = '(integer) 0';
-                                }
-                            }
-                        } else {
-                            output = '(integer) 0';
-                        }
-                    }
-                } else {
-                    output = '(error) ERR unknown command \'' + cmd + '\'';
-                    isError = true;
-                }
-                
-                printToTerminal(val, output, isError);
-            }
-        }
-
-    
-        // Benchmark Animation Observer
-        const benchObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const bars = entry.target.querySelectorAll('.benchmark-bar');
-                    bars.forEach(bar => {
-                        bar.style.width = bar.getAttribute('data-width');
-                    });
-                    benchObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        const benchContainer = document.getElementById('benchmark-container');
-        if (benchContainer) {
-            benchObserver.observe(benchContainer);
-        }
-
-    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
     
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Outfit', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    colors: {
-                        background: '#030303',
-                        surface: '#0a0a0a',
-                        surfaceHover: '#111111',
-                        border: 'rgba(255,255,255,0.08)',
-                        brand: {
-                            400: '#a78bfa',
-                            500: '#8b5cf6',
-                            600: '#7c3aed',
-                        }
-                    },
-                    animation: {
-                        'gradient-x': 'gradient-x 15s ease infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        'gradient-x': {
-                            '0%, 100%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'left center'
-                            },
-                            '50%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'right center'
-                            }
-                        },
-                        'float': {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' }
-                        }
-                    }
-                }
-            }
-        };
-        
-        function switchInstallTab(tabId) {
-            document.querySelectorAll('.install-panel').forEach(p => p.classList.add('hidden'));
-            document.querySelectorAll('.install-panel').forEach(p => p.classList.remove('block'));
-            
-            document.querySelectorAll('.install-tab').forEach(t => {
-                t.classList.remove('border-brand-500', 'text-white', 'bg-white/5');
-                t.classList.add('border-transparent');
-            });
-            
-            document.getElementById('panel-install-' + tabId).classList.remove('hidden');
-            document.getElementById('panel-install-' + tabId).classList.add('block');
-            
-            const activeTab = document.getElementById('tab-install-' + tabId);
-            activeTab.classList.remove('border-transparent');
-            activeTab.classList.add('border-brand-500', 'text-white', 'bg-white/5');
-        }
-
-        function switchTab(tabId) {
-            // Hide all panels
-            document.querySelectorAll('.sdk-panel').forEach(p => p.classList.add('hidden'));
-            document.querySelectorAll('.sdk-panel').forEach(p => p.classList.remove('block'));
-            
-            // Remove active classes from all tabs
-            document.querySelectorAll('.sdk-tab').forEach(t => {
-                t.classList.remove('border-brand-500', 'text-white', 'bg-white/5');
-                t.classList.add('border-transparent');
-            });
-            
-            // Show selected panel
-            document.getElementById('panel-' + tabId).classList.remove('hidden');
-            document.getElementById('panel-' + tabId).classList.add('block');
-            
-            // Activate selected tab
-            const activeTab = document.getElementById('tab-' + tabId);
-            activeTab.classList.remove('border-transparent');
-            activeTab.classList.add('border-brand-500', 'text-white', 'bg-white/5');
-        }
-        
-        // Initialize active tabs on load
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                switchTab('java');
-                switchInstallTab('source');
-            }, 50);
-        });
     
-        function toggleWidget() {
-            const content = document.getElementById('status-content');
-            if (content.classList.contains('max-w-[200px]')) {
-                // Collapse
-                content.classList.remove('max-w-[200px]', 'opacity-100', 'gap-3');
-                content.classList.add('max-w-0', 'opacity-0', 'gap-0');
-            } else {
-                // Expand
-                content.classList.remove('max-w-0', 'opacity-0', 'gap-0');
-                content.classList.add('max-w-[200px]', 'opacity-100', 'gap-3');
-            }
-        }
-
-    
-        // Mock In-Memory DB for Terminal
-        const mockDB = new Map();
-        
-        function printToTerminal(input, output, isError = false) {
-            const container = document.getElementById('terminal-output');
-            const inputLine = document.createElement('div');
-            inputLine.className = 'text-gray-300';
-            inputLine.innerHTML = '<span class="text-brand-400 mr-2 font-bold">&gt;</span>' + input;
-            
-            const outputLine = document.createElement('div');
-            outputLine.className = isError ? 'text-red-400 font-bold ml-4' : 'text-gray-400 font-bold ml-4';
-            outputLine.textContent = output;
-            
-            container.appendChild(inputLine);
-            if (output !== '') container.appendChild(outputLine);
-            
-            const term = document.getElementById('terminal-container');
-            term.scrollTop = term.scrollHeight;
-        }
-
-        function handleTerminalInput(e) {
-            if (e.key === 'Enter') {
-                const inputEl = document.getElementById('terminal-input');
-                const val = inputEl.value.trim();
-                inputEl.value = '';
-                
-                if (!val) return;
-                
-                const args = val.split(/\s+/);
-                const cmd = args[0].toUpperCase();
-                
-                let output = '';
-                let isError = false;
-                
-                if (cmd === 'PING') {
-                    output = 'PONG';
-                } else if (cmd === 'SET') {
-                    if (args.length < 3) {
-                        output = '(error) ERR wrong number of arguments. Usage: SET <key> <value> [EX seconds | PX milliseconds]';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        let value = args.slice(2).join(' ');
-                        let expireAt = null;
-                        
-                        // Parse EX / PX
-                        const exMatch = value.match(/ EX (\d+)$/i);
-                        const pxMatch = value.match(/ PX (\d+)$/i);
-                        
-                        if (exMatch) {
-                            value = value.substring(0, exMatch.index).trim();
-                            expireAt = Date.now() + parseInt(exMatch[1]) * 1000;
-                        } else if (pxMatch) {
-                            value = value.substring(0, pxMatch.index).trim();
-                            expireAt = Date.now() + parseInt(pxMatch[1]);
-                        }
-                        
-                        mockDB.set(key, { value: value, expireAt: expireAt });
-                        output = 'OK';
-                    }
-                                } else if (cmd === 'GET') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: GET <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            const data = mockDB.get(key);
-                            if (data.expireAt && Date.now() > data.expireAt) {
-                                mockDB.delete(key);
-                                output = '(nil)';
-                            } else {
-                                output = data.value !== undefined ? data.value : data;
-                            }
-                        } else {
-                            output = '(nil)';
-                        }
-                    }
-                }
-                    }
-                } else if (cmd === 'DEL') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: DEL <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            mockDB.delete(key);
-                            output = '(integer) 1';
-                        } else {
-                            output = '(integer) 0';
-                        }
-                    }
-                } else if (cmd === 'CLEAR') {
-                    document.getElementById('terminal-output').innerHTML = '';
-                    return;
-                } else if (cmd === 'TTL') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: TTL <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            const data = mockDB.get(key);
-                            if (data.expireAt) {
-                                const remaining = data.expireAt - Date.now();
-                                if (remaining < 0) {
-                                    mockDB.delete(key);
-                                    output = '(integer) -2';
-                                } else {
-                                    output = '(integer) ' + Math.ceil(remaining / 1000).toString();
-                                }
-                            } else {
-                                output = '(integer) -1';
-                            }
-                        } else {
-                            output = '(integer) -2';
-                        }
-                    }
-                } else if (cmd === 'PERSIST') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: PERSIST <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            const data = mockDB.get(key);
-                            if (data.expireAt && Date.now() > data.expireAt) {
-                                mockDB.delete(key);
-                                output = '(integer) 0';
-                            } else {
-                                if (data.expireAt) {
-                                    data.expireAt = null;
-                                    mockDB.set(key, data);
-                                    output = '(integer) 1';
-                                } else {
-                                    output = '(integer) 0';
-                                }
-                            }
-                        } else {
-                            output = '(integer) 0';
-                        }
-                    }
-                } else {
-                    output = '(error) ERR unknown command \'' + cmd + '\'';
-                    isError = true;
-                }
-                
-                printToTerminal(val, output, isError);
-            }
-        }
-
-    
-        // Benchmark Animation Observer
-        const benchObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const bars = entry.target.querySelectorAll('.benchmark-bar');
-                    bars.forEach(bar => {
-                        bar.style.width = bar.getAttribute('data-width');
-                    });
-                    benchObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        const benchContainer = document.getElementById('benchmark-container');
-        if (benchContainer) {
-            benchObserver.observe(benchContainer);
-        }
-
-    </script>
     <style>
         body { background-color: #030303; color: #ededed; overflow-x: hidden; }
         .glass { background: rgba(10, 10, 10, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
@@ -754,6 +292,53 @@
         html.light #status-views { background: transparent !important; border: 1px solid #e2e8f0 !important; border-radius: 9999px !important; padding: 2px 8px !important; }
         html.light #status-badge { filter: invert(1) brightness(1.08); mix-blend-mode: multiply !important; clip-path: inset(2px); }
     </style>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        background: '#030303',
+                        surface: '#0a0a0a',
+                        surfaceHover: '#111111',
+                        border: 'rgba(255,255,255,0.08)',
+                        brand: {
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                        }
+                    },
+                    animation: {
+                        'gradient-x': 'gradient-x 15s ease infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        'gradient-x': {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            }
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="antialiased flex flex-col min-h-screen selection:bg-brand-500/30 selection:text-brand-400">
     
@@ -787,248 +372,7 @@
         </div>
     </nav>
 
-    <script>
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const themeIconSun = document.getElementById('theme-icon-sun');
-        const themeIconMoon = document.getElementById('theme-icon-moon');
-        const htmlElement = document.documentElement;
-        const badge = document.getElementById('status-badge');
-        // Add a timestamp to bypass browser cache, forcing it to count every page load
-        const badgeDark = "https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=000000&style=for-the-badge&t=" + new Date().getTime();
-        if (badge) {
-            badge.src = badgeDark;
-        }
-
-        function setLight() {
-            htmlElement.classList.add('light');
-            htmlElement.classList.remove('dark');
-            themeIconSun.classList.add('hidden');
-            themeIconSun.classList.remove('block');
-            themeIconMoon.classList.add('block');
-            themeIconMoon.classList.remove('hidden');
-            if (badge) badge.src = badgeDark;
-        }
-
-        function setDark() {
-            htmlElement.classList.add('dark');
-            htmlElement.classList.remove('light');
-            themeIconMoon.classList.add('hidden');
-            themeIconMoon.classList.remove('block');
-            themeIconSun.classList.add('block');
-            themeIconSun.classList.remove('hidden');
-        }
-
-        // Default to Light Mode unless the user prefers Dark Mode
-        let isDarkMode = false;
-        try {
-            isDarkMode = localStorage.getItem('theme') === 'dark' || 
-                (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
-        } catch (e) {
-            isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        }
-
-        if (isDarkMode) {
-            setDark();
-        } else {
-            setLight();
-        }
-
-        themeToggleBtn.addEventListener('click', () => {
-            if (htmlElement.classList.contains('light')) {
-                try { localStorage.setItem('theme', 'dark'); } catch(e) {}
-                setDark();
-            } else {
-                try { localStorage.setItem('theme', 'light'); } catch(e) {}
-                setLight();
-            }
-        });
     
-        function toggleWidget() {
-            const content = document.getElementById('status-content');
-            if (content.classList.contains('max-w-[200px]')) {
-                // Collapse
-                content.classList.remove('max-w-[200px]', 'opacity-100', 'gap-3');
-                content.classList.add('max-w-0', 'opacity-0', 'gap-0');
-            } else {
-                // Expand
-                content.classList.remove('max-w-0', 'opacity-0', 'gap-0');
-                content.classList.add('max-w-[200px]', 'opacity-100', 'gap-3');
-            }
-        }
-
-    
-        // Mock In-Memory DB for Terminal
-        const mockDB = new Map();
-        
-        function printToTerminal(input, output, isError = false) {
-            const container = document.getElementById('terminal-output');
-            const inputLine = document.createElement('div');
-            inputLine.className = 'text-gray-300';
-            inputLine.innerHTML = '<span class="text-brand-400 mr-2 font-bold">&gt;</span>' + input;
-            
-            const outputLine = document.createElement('div');
-            outputLine.className = isError ? 'text-red-400 font-bold ml-4' : 'text-gray-400 font-bold ml-4';
-            outputLine.textContent = output;
-            
-            container.appendChild(inputLine);
-            if (output !== '') container.appendChild(outputLine);
-            
-            const term = document.getElementById('terminal-container');
-            term.scrollTop = term.scrollHeight;
-        }
-
-        function handleTerminalInput(e) {
-            if (e.key === 'Enter') {
-                const inputEl = document.getElementById('terminal-input');
-                const val = inputEl.value.trim();
-                inputEl.value = '';
-                
-                if (!val) return;
-                
-                const args = val.split(/\s+/);
-                const cmd = args[0].toUpperCase();
-                
-                let output = '';
-                let isError = false;
-                
-                if (cmd === 'PING') {
-                    output = 'PONG';
-                } else if (cmd === 'SET') {
-                    if (args.length < 3) {
-                        output = '(error) ERR wrong number of arguments. Usage: SET <key> <value> [EX seconds | PX milliseconds]';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        let value = args.slice(2).join(' ');
-                        let expireAt = null;
-                        
-                        // Parse EX / PX
-                        const exMatch = value.match(/ EX (\d+)$/i);
-                        const pxMatch = value.match(/ PX (\d+)$/i);
-                        
-                        if (exMatch) {
-                            value = value.substring(0, exMatch.index).trim();
-                            expireAt = Date.now() + parseInt(exMatch[1]) * 1000;
-                        } else if (pxMatch) {
-                            value = value.substring(0, pxMatch.index).trim();
-                            expireAt = Date.now() + parseInt(pxMatch[1]);
-                        }
-                        
-                        mockDB.set(key, { value: value, expireAt: expireAt });
-                        output = 'OK';
-                    }
-                                } else if (cmd === 'GET') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: GET <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            const data = mockDB.get(key);
-                            if (data.expireAt && Date.now() > data.expireAt) {
-                                mockDB.delete(key);
-                                output = '(nil)';
-                            } else {
-                                output = data.value !== undefined ? data.value : data;
-                            }
-                        } else {
-                            output = '(nil)';
-                        }
-                    }
-                }
-                    }
-                } else if (cmd === 'DEL') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: DEL <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            mockDB.delete(key);
-                            output = '(integer) 1';
-                        } else {
-                            output = '(integer) 0';
-                        }
-                    }
-                } else if (cmd === 'CLEAR') {
-                    document.getElementById('terminal-output').innerHTML = '';
-                    return;
-                } else if (cmd === 'TTL') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: TTL <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            const data = mockDB.get(key);
-                            if (data.expireAt) {
-                                const remaining = data.expireAt - Date.now();
-                                if (remaining < 0) {
-                                    mockDB.delete(key);
-                                    output = '(integer) -2';
-                                } else {
-                                    output = '(integer) ' + Math.ceil(remaining / 1000).toString();
-                                }
-                            } else {
-                                output = '(integer) -1';
-                            }
-                        } else {
-                            output = '(integer) -2';
-                        }
-                    }
-                } else if (cmd === 'PERSIST') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: PERSIST <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            const data = mockDB.get(key);
-                            if (data.expireAt && Date.now() > data.expireAt) {
-                                mockDB.delete(key);
-                                output = '(integer) 0';
-                            } else {
-                                if (data.expireAt) {
-                                    data.expireAt = null;
-                                    mockDB.set(key, data);
-                                    output = '(integer) 1';
-                                } else {
-                                    output = '(integer) 0';
-                                }
-                            }
-                        } else {
-                            output = '(integer) 0';
-                        }
-                    }
-                } else {
-                    output = '(error) ERR unknown command \'' + cmd + '\'';
-                    isError = true;
-                }
-                
-                printToTerminal(val, output, isError);
-            }
-        }
-
-    
-        // Benchmark Animation Observer
-        const benchObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const bars = entry.target.querySelectorAll('.benchmark-bar');
-                    bars.forEach(bar => {
-                        bar.style.width = bar.getAttribute('data-width');
-                    });
-                    benchObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        const benchContainer = document.getElementById('benchmark-container');
-        if (benchContainer) {
-            benchObserver.observe(benchContainer);
-        }
-
-    </script>
 
     <main class="flex-grow mesh-bg pt-32 pb-10 relative">
         <!-- Hero Section -->
@@ -1317,22 +661,22 @@
                             <!-- Content will be injected here via JS -->
                         </div>
                     </div>
-                    <div class="lg:w-1/2 p-6 bg-gray-50/50 dark:bg-transparent">
+                    <div class="lg:w-1/2 p-6 bg-[#050505] !important" style="background-color: #050505 !important;">
                         <div class="h-full flex flex-col">
                             <div class="bento-card rounded-2xl p-2 overflow-hidden shadow-2xl relative group">
                 <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
                 <div class="bg-gray-50 dark:bg-[#0a0a0a] rounded-xl border border-gray-200 dark:border-white/5">
                     <!-- Mac Header -->
-                    <div class="flex items-center px-4 py-3 border-b border-gray-200 dark:border-white/5 bg-gray-100 dark:bg-[#111]">
+                    <div class="flex items-center px-4 py-3 border-b border-white/5 bg-[#0a0a0a]" style="background-color: #0a0a0a !important; border-color: rgba(255,255,255,0.05) !important;">
                         <div class="flex gap-2">
                             <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
                             <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
                             <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
                         </div>
-                        <div class="mx-auto text-xs text-gray-500 font-mono font-medium tracking-widest truncate max-w-[150px] sm:max-w-none">spindle-cli --interactive</div>
+                        <div class="mx-auto text-xs font-mono font-medium tracking-widest truncate max-w-[150px] sm:max-w-none" style="color: #64748b !important;">spindle-cli --interactive</div>
                     </div>
                     <!-- Terminal Content -->
-                    <div class="p-6 font-mono text-sm leading-relaxed h-[250px] overflow-y-auto flex flex-col" id="terminal-container" onclick="document.getElementById('terminal-input').focus()">
+                    <div class="p-6 font-mono text-sm leading-relaxed h-[250px] overflow-y-auto flex flex-col text-gray-300" id="terminal-container" onclick="document.getElementById('terminal-input').focus()" style="color: #cbd5e1 !important;">
                         <div class="text-gray-400 mb-4">Welcome to Spindle Interactive CLI! Type SET, GET, DEL, PING, TTL, or PERSIST.</div>
                         <div id="terminal-output" class="flex flex-col gap-1"></div>
                         <div class="flex items-center mt-1 text-gray-300">
@@ -1651,6 +995,294 @@ client.close()</code></pre>
         </div>
     </div>
 
+
+    <script>
+        function switchInstallTab(tabId) {
+            document.querySelectorAll('.install-panel').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.install-panel').forEach(p => p.classList.remove('block'));
+            
+            document.querySelectorAll('.install-tab').forEach(t => {
+                t.classList.remove('border-brand-500', 'text-white', 'bg-white/5');
+                t.classList.add('border-transparent');
+            });
+            
+            document.getElementById('panel-install-' + tabId).classList.remove('hidden');
+            document.getElementById('panel-install-' + tabId).classList.add('block');
+            
+            const activeTab = document.getElementById('tab-install-' + tabId);
+            activeTab.classList.remove('border-transparent');
+            activeTab.classList.add('border-brand-500', 'text-white', 'bg-white/5');
+        }
+
+        function switchTab(tabId) {
+            // Hide all panels
+            document.querySelectorAll('.sdk-panel').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.sdk-panel').forEach(p => p.classList.remove('block'));
+            
+            // Remove active classes from all tabs
+            document.querySelectorAll('.sdk-tab').forEach(t => {
+                t.classList.remove('border-brand-500', 'text-white', 'bg-white/5');
+                t.classList.add('border-transparent');
+            });
+            
+            // Show selected panel
+            document.getElementById('panel-' + tabId).classList.remove('hidden');
+            document.getElementById('panel-' + tabId).classList.add('block');
+            
+            // Activate selected tab
+            const activeTab = document.getElementById('tab-' + tabId);
+            activeTab.classList.remove('border-transparent');
+            activeTab.classList.add('border-brand-500', 'text-white', 'bg-white/5');
+        }
+        
+        // Initialize active tabs on load
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                switchTab('java');
+                switchInstallTab('source');
+            }, 50);
+        });
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIconSun = document.getElementById('theme-icon-sun');
+        const themeIconMoon = document.getElementById('theme-icon-moon');
+        const htmlElement = document.documentElement;
+        const badge = document.getElementById('status-badge');
+        // Add a timestamp to bypass browser cache, forcing it to count every page load
+        const badgeDark = "https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=000000&style=for-the-badge&t=" + new Date().getTime();
+        if (badge) {
+            badge.src = badgeDark;
+        }
+
+        function setLight() {
+            htmlElement.classList.add('light');
+            htmlElement.classList.remove('dark');
+            themeIconSun.classList.add('hidden');
+            themeIconSun.classList.remove('block');
+            themeIconMoon.classList.add('block');
+            themeIconMoon.classList.remove('hidden');
+            if (badge) badge.src = badgeDark;
+        }
+
+        function setDark() {
+            htmlElement.classList.add('dark');
+            htmlElement.classList.remove('light');
+            themeIconMoon.classList.add('hidden');
+            themeIconMoon.classList.remove('block');
+            themeIconSun.classList.add('block');
+            themeIconSun.classList.remove('hidden');
+        }
+
+        // Default to Light Mode unless the user prefers Dark Mode
+        let isDarkMode = false;
+        try {
+            isDarkMode = localStorage.getItem('theme') === 'dark' || 
+                (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        } catch (e) {
+            isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+
+        if (isDarkMode) {
+            setDark();
+        } else {
+            setLight();
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (htmlElement.classList.contains('light')) {
+                try { localStorage.setItem('theme', 'dark'); } catch(e) {}
+                setDark();
+            } else {
+                try { localStorage.setItem('theme', 'light'); } catch(e) {}
+                setLight();
+            }
+        });
+    
+        function toggleWidget() {
+            const content = document.getElementById('status-content');
+            if (content.classList.contains('max-w-[200px]')) {
+                // Collapse
+                content.classList.remove('max-w-[200px]', 'opacity-100', 'gap-3');
+                content.classList.add('max-w-0', 'opacity-0', 'gap-0');
+            } else {
+                // Expand
+                content.classList.remove('max-w-0', 'opacity-0', 'gap-0');
+                content.classList.add('max-w-[200px]', 'opacity-100', 'gap-3');
+            }
+        }
+
+    
+        // Mock In-Memory DB for Terminal
+        const mockDB = new Map();
+        
+        function printToTerminal(input, output, isError = false) {
+            const container = document.getElementById('terminal-output');
+            const inputLine = document.createElement('div');
+            inputLine.className = 'text-gray-300';
+            inputLine.innerHTML = '<span class="text-brand-400 mr-2 font-bold">&gt;</span>' + input;
+            
+            const outputLine = document.createElement('div');
+            outputLine.className = isError ? 'text-red-400 font-bold ml-4' : 'text-gray-400 font-bold ml-4';
+            outputLine.textContent = output;
+            
+            container.appendChild(inputLine);
+            if (output !== '') container.appendChild(outputLine);
+            
+            const term = document.getElementById('terminal-container');
+            term.scrollTop = term.scrollHeight;
+        }
+
+        function handleTerminalInput(e) {
+            if (e.key === 'Enter') {
+                const inputEl = document.getElementById('terminal-input');
+                const val = inputEl.value.trim();
+                inputEl.value = '';
+                
+                if (!val) return;
+                
+                const args = val.split(/\s+/);
+                const cmd = args[0].toUpperCase();
+                
+                let output = '';
+                let isError = false;
+                
+                if (cmd === 'PING') {
+                    output = 'PONG';
+                } else if (cmd === 'SET') {
+                    if (args.length < 3) {
+                        output = '(error) ERR wrong number of arguments. Usage: SET <key> <value> [EX seconds | PX milliseconds]';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        let value = args.slice(2).join(' ');
+                        let expireAt = null;
+                        
+                        // Parse EX / PX
+                        const exMatch = value.match(/ EX (\d+)$/i);
+                        const pxMatch = value.match(/ PX (\d+)$/i);
+                        
+                        if (exMatch) {
+                            value = value.substring(0, exMatch.index).trim();
+                            expireAt = Date.now() + parseInt(exMatch[1]) * 1000;
+                        } else if (pxMatch) {
+                            value = value.substring(0, pxMatch.index).trim();
+                            expireAt = Date.now() + parseInt(pxMatch[1]);
+                        }
+                        
+                        mockDB.set(key, { value: value, expireAt: expireAt });
+                        output = 'OK';
+                    }
+                                } else if (cmd === 'GET') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments. Usage: GET <key>';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            const data = mockDB.get(key);
+                            if (data.expireAt && Date.now() > data.expireAt) {
+                                mockDB.delete(key);
+                                output = '(nil)';
+                            } else {
+                                output = data.value !== undefined ? data.value : data;
+                            }
+                        } else {
+                            output = '(nil)';
+                        }
+                    }
+                }
+                    }
+                } else if (cmd === 'DEL') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments. Usage: DEL <key>';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            mockDB.delete(key);
+                            output = '(integer) 1';
+                        } else {
+                            output = '(integer) 0';
+                        }
+                    }
+                } else if (cmd === 'CLEAR') {
+                    document.getElementById('terminal-output').innerHTML = '';
+                    return;
+                } else if (cmd === 'TTL') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments. Usage: TTL <key>';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            const data = mockDB.get(key);
+                            if (data.expireAt) {
+                                const remaining = data.expireAt - Date.now();
+                                if (remaining < 0) {
+                                    mockDB.delete(key);
+                                    output = '(integer) -2';
+                                } else {
+                                    output = '(integer) ' + Math.ceil(remaining / 1000).toString();
+                                }
+                            } else {
+                                output = '(integer) -1';
+                            }
+                        } else {
+                            output = '(integer) -2';
+                        }
+                    }
+                } else if (cmd === 'PERSIST') {
+                    if (args.length !== 2) {
+                        output = '(error) ERR wrong number of arguments. Usage: PERSIST <key>';
+                        isError = true;
+                    } else {
+                        const key = args[1];
+                        if (mockDB.has(key)) {
+                            const data = mockDB.get(key);
+                            if (data.expireAt && Date.now() > data.expireAt) {
+                                mockDB.delete(key);
+                                output = '(integer) 0';
+                            } else {
+                                if (data.expireAt) {
+                                    data.expireAt = null;
+                                    mockDB.set(key, data);
+                                    output = '(integer) 1';
+                                } else {
+                                    output = '(integer) 0';
+                                }
+                            }
+                        } else {
+                            output = '(integer) 0';
+                        }
+                    }
+                } else {
+                    output = '(error) ERR unknown command \'' + cmd + '\'';
+                    isError = true;
+                }
+                
+                printToTerminal(val, output, isError);
+            }
+        }
+
+    
+        // Benchmark Animation Observer
+        const benchObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bars = entry.target.querySelectorAll('.benchmark-bar');
+                    bars.forEach(bar => {
+                        bar.style.width = bar.getAttribute('data-width');
+                    });
+                    benchObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        const benchContainer = document.getElementById('benchmark-container');
+        if (benchContainer) {
+            benchObserver.observe(benchContainer);
+        } 
+    </script>
 </body>
 </html>
 
