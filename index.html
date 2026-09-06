@@ -819,8 +819,13 @@
         }
 
         // Default to Light Mode unless the user prefers Dark Mode
-        const isDarkMode = localStorage.getItem('theme') === 'dark' || 
-            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        let isDarkMode = false;
+        try {
+            isDarkMode = localStorage.getItem('theme') === 'dark' || 
+                (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        } catch (e) {
+            isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
 
         if (isDarkMode) {
             setDark();
@@ -830,10 +835,10 @@
 
         themeToggleBtn.addEventListener('click', () => {
             if (htmlElement.classList.contains('light')) {
-                localStorage.setItem('theme', 'dark');
+                try { localStorage.setItem('theme', 'dark'); } catch(e) {}
                 setDark();
             } else {
-                localStorage.setItem('theme', 'light');
+                try { localStorage.setItem('theme', 'light'); } catch(e) {}
                 setLight();
             }
         });
