@@ -47,193 +47,8 @@
         "priceCurrency": "USD"
       }
     }
-    
-        function toggleWidget() {
-            const content = document.getElementById('status-content');
-            if (content.classList.contains('max-w-[200px]')) {
-                // Collapse
-                content.classList.remove('max-w-[200px]', 'opacity-100', 'gap-3');
-                content.classList.add('max-w-0', 'opacity-0', 'gap-0');
-            } else {
-                // Expand
-                content.classList.remove('max-w-0', 'opacity-0', 'gap-0');
-                content.classList.add('max-w-[200px]', 'opacity-100', 'gap-3');
-            }
-        }
 
-    
-        // Mock In-Memory DB for Terminal
-        const mockDB = new Map();
-        
-        function printToTerminal(input, output, isError = false) {
-            const container = document.getElementById('terminal-output');
-            const inputLine = document.createElement('div');
-            inputLine.className = 'text-gray-300';
-            inputLine.innerHTML = '<span class="text-brand-400 mr-2 font-bold">&gt;</span>' + input;
-            
-            const outputLine = document.createElement('div');
-            outputLine.className = isError ? 'text-red-400 font-bold ml-4' : 'text-gray-400 font-bold ml-4';
-            outputLine.textContent = output;
-            
-            container.appendChild(inputLine);
-            if (output !== '') container.appendChild(outputLine);
-            
-            const term = document.getElementById('terminal-container');
-            term.scrollTop = term.scrollHeight;
-        }
-
-        function handleTerminalInput(e) {
-            if (e.key === 'Enter') {
-                const inputEl = document.getElementById('terminal-input');
-                const val = inputEl.value.trim();
-                inputEl.value = '';
-                
-                if (!val) return;
-                
-                const args = val.split(/\s+/);
-                const cmd = args[0].toUpperCase();
-                
-                let output = '';
-                let isError = false;
-                
-                if (cmd === 'PING') {
-                    output = 'PONG';
-                } else if (cmd === 'SET') {
-                    if (args.length < 3) {
-                        output = '(error) ERR wrong number of arguments. Usage: SET <key> <value> [EX seconds | PX milliseconds]';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        let value = args.slice(2).join(' ');
-                        let expireAt = null;
-                        
-                        // Parse EX / PX
-                        const exMatch = value.match(/ EX (\d+)$/i);
-                        const pxMatch = value.match(/ PX (\d+)$/i);
-                        
-                        if (exMatch) {
-                            value = value.substring(0, exMatch.index).trim();
-                            expireAt = Date.now() + parseInt(exMatch[1]) * 1000;
-                        } else if (pxMatch) {
-                            value = value.substring(0, pxMatch.index).trim();
-                            expireAt = Date.now() + parseInt(pxMatch[1]);
-                        }
-                        
-                        mockDB.set(key, { value: value, expireAt: expireAt });
-                        output = 'OK';
-                    }
-                                } else if (cmd === 'GET') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: GET <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            const data = mockDB.get(key);
-                            if (data.expireAt && Date.now() > data.expireAt) {
-                                mockDB.delete(key);
-                                output = '(nil)';
-                            } else {
-                                output = data.value !== undefined ? data.value : data;
-                            }
-                        } else {
-                            output = '(nil)';
-                        }
-                    }
-                }
-                    }
-                } else if (cmd === 'DEL') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: DEL <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            mockDB.delete(key);
-                            output = '(integer) 1';
-                        } else {
-                            output = '(integer) 0';
-                        }
-                    }
-                } else if (cmd === 'CLEAR') {
-                    document.getElementById('terminal-output').innerHTML = '';
-                    return;
-                } else if (cmd === 'TTL') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: TTL <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            const data = mockDB.get(key);
-                            if (data.expireAt) {
-                                const remaining = data.expireAt - Date.now();
-                                if (remaining < 0) {
-                                    mockDB.delete(key);
-                                    output = '(integer) -2';
-                                } else {
-                                    output = '(integer) ' + Math.ceil(remaining / 1000).toString();
-                                }
-                            } else {
-                                output = '(integer) -1';
-                            }
-                        } else {
-                            output = '(integer) -2';
-                        }
-                    }
-                } else if (cmd === 'PERSIST') {
-                    if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: PERSIST <key>';
-                        isError = true;
-                    } else {
-                        const key = args[1];
-                        if (mockDB.has(key)) {
-                            const data = mockDB.get(key);
-                            if (data.expireAt && Date.now() > data.expireAt) {
-                                mockDB.delete(key);
-                                output = '(integer) 0';
-                            } else {
-                                if (data.expireAt) {
-                                    data.expireAt = null;
-                                    mockDB.set(key, data);
-                                    output = '(integer) 1';
-                                } else {
-                                    output = '(integer) 0';
-                                }
-                            }
-                        } else {
-                            output = '(integer) 0';
-                        }
-                    }
-                } else {
-                    output = '(error) ERR unknown command \'' + cmd + '\'';
-                    isError = true;
-                }
-                
-                printToTerminal(val, output, isError);
-            }
-        }
-
-    
-        // Benchmark Animation Observer
-        const benchObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const bars = entry.target.querySelectorAll('.benchmark-bar');
-                    bars.forEach(bar => {
-                        bar.style.width = bar.getAttribute('data-width');
-                    });
-                    benchObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        const benchContainer = document.getElementById('benchmark-container');
-        if (benchContainer) {
-            benchObserver.observe(benchContainer);
-        }
-
-    </script>
+</script>
 
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
@@ -527,12 +342,12 @@
                 <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg mb-8" id="benchmark-desc">Tested locally on an 8-core CPU using 100 concurrent connections with Pipelining (batch=100) and tiny payloads. Designed to measure theoretical max engine throughput.</p>
                 
                 <!-- Tab Switcher -->
-                <div class="inline-flex bg-gray-100 dark:bg-[#1a1a1a] p-1 rounded-xl border border-gray-200 dark:border-white/5 relative z-20 flex-wrap justify-center gap-1">
-                    <button onclick="switchBenchmark('peak')" id="tab-peak" class="px-5 py-2.5 rounded-lg text-sm font-bold transition-all bg-white dark:bg-white/10 text-brand-600 dark:text-brand-400 shadow-sm">Peak Throughput</button>
-                    <button onclick="switchBenchmark('real')" id="tab-real" class="px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">1KB Payload</button>
-                    <button onclick="switchBenchmark('conn')" id="tab-conn" class="px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">1000 Connections</button>
-                    <button onclick="switchBenchmark('get')" id="tab-get" class="px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">Pure Reads</button>
-                    <button onclick="switchBenchmark('pingpong')" id="tab-pingpong" class="px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">Ping-Pong</button>
+                <div class="flex sm:inline-flex bg-gray-100 dark:bg-[#1a1a1a] p-1 rounded-xl border border-gray-200 dark:border-white/5 relative z-20 flex-nowrap overflow-x-auto snap-x custom-scrollbar justify-start sm:justify-center gap-1 w-full sm:w-auto">
+                    <button onclick="switchBenchmark('peak')" id="tab-peak" class="whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm font-bold transition-all bg-white dark:bg-white/10 text-brand-600 dark:text-brand-400 shadow-sm">Peak Throughput</button>
+                    <button onclick="switchBenchmark('real')" id="tab-real" class="whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">1KB Payload</button>
+                    <button onclick="switchBenchmark('conn')" id="tab-conn" class="whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">1000 Connections</button>
+                    <button onclick="switchBenchmark('get')" id="tab-get" class="whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">Pure Reads</button>
+                    <button onclick="switchBenchmark('pingpong')" id="tab-pingpong" class="whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">Ping-Pong</button>
                 </div>
             </div>
 
@@ -542,7 +357,7 @@
                 <div class="flex flex-col gap-8">
                     <!-- Spindle Row -->
                     <div>
-                        <div class="flex justify-between items-end mb-3">
+                        <div class="flex flex-col sm:flex-row justify-start sm:justify-between items-start sm:items-end gap-2 sm:gap-0 mb-3">
                             <div class="flex items-center gap-3">
                                 <span class="font-display font-bold text-2xl text-brand-600 dark:text-brand-400">Spindle</span>
                                 <span class="px-2 py-0.5 rounded text-xs font-bold bg-brand-500/10 dark:bg-brand-500/20 text-brand-600 dark:text-brand-400 border border-brand-500/20 dark:border-brand-500/30">8 Threads</span>
@@ -553,7 +368,7 @@
                             <div id="spindle-bar" class="absolute top-0 left-0 h-full bg-gradient-to-r from-brand-500 to-blue-500 rounded-full shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1)" style="width: 100%;"></div>
                         </div>
                         <!-- Spindle Latency Metrics -->
-                        <div class="flex gap-4 text-xs font-mono text-gray-500">
+                        <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 text-xs font-mono text-gray-500 mt-2 sm:mt-0">
                             <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>P50 Latency: <span id="spindle-p50" class="text-gray-800 dark:text-gray-300 font-semibold">0.53ms</span></div>
                             <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-yellow-500"></div>P99 Latency: <span id="spindle-p99" class="text-gray-800 dark:text-gray-300 font-semibold">4.79ms</span></div>
                         </div>
@@ -572,7 +387,7 @@
                             <div id="redis-bar" class="absolute top-0 left-0 h-full bg-red-500/80 rounded-full transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1)" style="width: 14%;"></div>
                         </div>
                         <!-- Redis Latency Metrics -->
-                        <div class="flex gap-4 text-xs font-mono text-gray-500">
+                        <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 text-xs font-mono text-gray-500 mt-2 sm:mt-0">
                             <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-green-500 opacity-50"></div>P50 Latency: <span id="redis-p50" class="text-gray-600 dark:text-gray-400 font-semibold">2.51ms</span></div>
                             <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-red-500 opacity-70"></div>P99 Latency: <span id="redis-p99" class="text-gray-600 dark:text-gray-400 font-semibold">8.54ms</span></div>
                         </div>
@@ -1032,7 +847,7 @@ client.close()</code></pre>
             
             const activeTab = document.getElementById('tab-install-' + tabId);
             activeTab.classList.remove('border-transparent');
-            // Add whitespace to active tab manually if needed 'text-white', 'bg-white/5');
+            activeTab.classList.add('border-brand-500', 'text-white', 'bg-white/5');
         }
 
         function switchTab(tabId) {
@@ -1053,7 +868,7 @@ client.close()</code></pre>
             // Activate selected tab
             const activeTab = document.getElementById('tab-' + tabId);
             activeTab.classList.remove('border-transparent');
-            // Add whitespace to active tab manually if needed 'text-white', 'bg-white/5');
+            activeTab.classList.add('border-brand-500', 'text-white', 'bg-white/5');
         }
         
         // Initialize active tabs on load
@@ -1158,15 +973,15 @@ client.close()</code></pre>
                 const inputEl = document.getElementById('terminal-input');
                 const val = inputEl.value.trim();
                 inputEl.value = '';
-                
+
                 if (!val) return;
-                
+
                 const args = val.split(/\s+/);
                 const cmd = args[0].toUpperCase();
-                
+
                 let output = '';
                 let isError = false;
-                
+
                 if (cmd === 'PING') {
                     output = 'PONG';
                 } else if (cmd === 'SET') {
@@ -1177,11 +992,11 @@ client.close()</code></pre>
                         const key = args[1];
                         let value = args.slice(2).join(' ');
                         let expireAt = null;
-                        
+
                         // Parse EX / PX
                         const exMatch = value.match(/ EX (\d+)$/i);
                         const pxMatch = value.match(/ PX (\d+)$/i);
-                        
+
                         if (exMatch) {
                             value = value.substring(0, exMatch.index).trim();
                             expireAt = Date.now() + parseInt(exMatch[1]) * 1000;
@@ -1189,11 +1004,11 @@ client.close()</code></pre>
                             value = value.substring(0, pxMatch.index).trim();
                             expireAt = Date.now() + parseInt(pxMatch[1]);
                         }
-                        
+
                         mockDB.set(key, { value: value, expireAt: expireAt });
                         output = 'OK';
                     }
-                                } else if (cmd === 'GET') {
+                } else if (cmd === 'GET') {
                     if (args.length !== 2) {
                         output = '(error) ERR wrong number of arguments. Usage: GET <key>';
                         isError = true;
@@ -1211,8 +1026,6 @@ client.close()</code></pre>
                             output = '(nil)';
                         }
                     }
-                }
-                    }
                 } else if (cmd === 'DEL') {
                     if (args.length !== 2) {
                         output = '(error) ERR wrong number of arguments. Usage: DEL <key>';
@@ -1226,9 +1039,6 @@ client.close()</code></pre>
                             output = '(integer) 0';
                         }
                     }
-                } else if (cmd === 'CLEAR') {
-                    document.getElementById('terminal-output').innerHTML = '';
-                    return;
                 } else if (cmd === 'TTL') {
                     if (args.length !== 2) {
                         output = '(error) ERR wrong number of arguments. Usage: TTL <key>';
@@ -1238,12 +1048,12 @@ client.close()</code></pre>
                         if (mockDB.has(key)) {
                             const data = mockDB.get(key);
                             if (data.expireAt) {
-                                const remaining = data.expireAt - Date.now();
-                                if (remaining < 0) {
+                                const ttl = Math.floor((data.expireAt - Date.now()) / 1000);
+                                if (ttl < 0) {
                                     mockDB.delete(key);
                                     output = '(integer) -2';
                                 } else {
-                                    output = '(integer) ' + Math.ceil(remaining / 1000).toString();
+                                    output = '(integer) ' + ttl;
                                 }
                             } else {
                                 output = '(integer) -1';
@@ -1260,32 +1070,26 @@ client.close()</code></pre>
                         const key = args[1];
                         if (mockDB.has(key)) {
                             const data = mockDB.get(key);
-                            if (data.expireAt && Date.now() > data.expireAt) {
-                                mockDB.delete(key);
-                                output = '(integer) 0';
+                            if (data.expireAt) {
+                                data.expireAt = null;
+                                mockDB.set(key, data);
+                                output = '(integer) 1';
                             } else {
-                                if (data.expireAt) {
-                                    data.expireAt = null;
-                                    mockDB.set(key, data);
-                                    output = '(integer) 1';
-                                } else {
-                                    output = '(integer) 0';
-                                }
+                                output = '(integer) 0';
                             }
                         } else {
                             output = '(integer) 0';
                         }
                     }
                 } else {
-                    output = '(error) ERR unknown command \'' + cmd + '\'';
+                    output = "(error) ERR unknown command '" + cmd + "'";
                     isError = true;
                 }
-                
+
                 printToTerminal(val, output, isError);
             }
         }
 
-    
         // Benchmark Animation Observer
         const benchObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
