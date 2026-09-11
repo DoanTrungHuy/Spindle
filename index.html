@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="light scroll-smooth">
+<html lang="en" class="scroll-smooth overflow-x-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,7 +92,44 @@
     <style>
         /* Smooth transitions for theme switching */
         *, *::before, *::after {
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+            transition:
+                background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                fill 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Don't slow down transform-based animations */
+        .bento-card, button, a, [class*="transition-all"] {
+            transition:
+                background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Tab buttons: NO transition, instant switch */
+        .sdk-tab, .install-tab, .benchmark-tab {
+            transition: none !important;
+            border: none !important;
+            border-bottom: none !important;
+            outline: none !important;
+            cursor: pointer;
+        }
+        .tab-active {
+            color: #e2e8f0 !important;
+            background: #2d3a52 !important;
+            font-weight: 600 !important;
+        }
+        .tab-inactive {
+            color: #64748b !important;
+            background: transparent !important;
+            font-weight: 400 !important;
+        }
+        .tab-inactive:hover {
+            color: #94a3b8 !important;
         }
         
         /* Light mode overrides using :root level class */
@@ -131,6 +168,7 @@
         html.light #status-badge { filter: invert(1) brightness(1.08); mix-blend-mode: multiply !important; clip-path: inset(2px); }
     </style>
 
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -176,7 +214,18 @@
             }
         };
     </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Prevent FOUC (Flash of Unstyled Content) by setting theme before body renders
+        try {
+            if (localStorage.getItem('theme') === 'light') {
+                document.documentElement.classList.add('light');
+                document.documentElement.classList.remove('dark');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            }
+        } catch (_) {}
+    </script>
 </head>
 <body class="antialiased flex flex-col min-h-screen selection:bg-brand-500/30 selection:text-brand-400">
     
@@ -212,13 +261,12 @@
 
     
 
-    <main class="flex-grow mesh-bg pt-32 pb-10 relative">
+    <main class="flex-grow w-full min-w-0 mesh-bg pt-32 pb-10 relative">
         <!-- Hero Section -->
         <header class="max-w-5xl mx-auto px-6 text-center mb-24 relative z-10">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-transparent border border-brand-500/20 text-brand-400 text-xs font-semibold tracking-wide uppercase mb-8 animate-float">
-                <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+            <a href="https://github.com/DoanTrungHuy/Spindle/releases" target="_blank" class="inline-flex items-center px-5 py-1.5 rounded-full bg-brand-50/50 dark:bg-transparent border border-brand-200 dark:border-brand-500/30 text-brand-600 dark:text-brand-400 text-xs font-bold tracking-wide uppercase mb-8 hover:bg-brand-50 dark:hover:bg-brand-500/10 transition-all shadow-sm">
                 v1.0.0 is now live
-            </div>
+            </a>
             
             <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight px-2 sm:px-0">
                 Data processing at <br class="hidden sm:block">
@@ -336,27 +384,27 @@
                 </div>
             </div>
         </section>
-<section id="benchmark" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-10 -mt-10">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-5xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight">Crushing the Competition</h2>
-                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg mb-8" id="benchmark-desc" class="break-words">Tested locally on an 8-core CPU using 100 concurrent connections with Pipelining (batch=100) and tiny payloads. Designed to measure theoretical max engine throughput.</p>
+<section id="benchmark" class="w-full max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-10 -mt-10">
+            <div class="text-center mb-12 overflow-hidden">
+                <h2 class="text-3xl md:text-5xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight break-words">Crushing the Competition</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-base sm:text-lg mb-8 break-words h-24 md:h-16" id="benchmark-desc">Tested locally on an 8-core CPU using 100 concurrent connections with Pipelining (batch=100) and tiny payloads. Designed to measure theoretical max engine throughput.</p>
                 
                 <!-- Tab Switcher -->
-                <div class="flex w-full mx-auto bg-gray-100 dark:bg-[#334155] p-1 rounded-xl border border-gray-200 dark:border-white/5 relative z-20 flex-nowrap overflow-x-auto snap-x custom-scrollbar justify-start sm:justify-center gap-1">
-                    <button onclick="switchBenchmark('peak')" id="tab-peak" class="whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm font-bold transition-all bg-white dark:bg-white/10 text-brand-600 dark:text-brand-400 shadow-sm">Peak Throughput</button>
-                    <button onclick="switchBenchmark('real')" id="tab-real" class="whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">1KB Payload</button>
-                    <button onclick="switchBenchmark('conn')" id="tab-conn" class="whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">1000 Connections</button>
-                    <button onclick="switchBenchmark('get')" id="tab-get" class="whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">Pure Reads</button>
-                    <button onclick="switchBenchmark('pingpong')" id="tab-pingpong" class="whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:text-gray-900 dark:hover:text-white">Ping-Pong</button>
+                <div class="w-full bg-gray-100 dark:bg-[#334155] p-1 rounded-xl border border-gray-200 dark:border-white/5 relative z-20 flex flex-nowrap overflow-x-auto snap-x custom-scrollbar gap-1">
+                    <button onclick="switchBenchmark('peak')" id="tab-peak" class="benchmark-tab tab-active whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm">Peak Throughput</button>
+                    <button onclick="switchBenchmark('real')" id="tab-real" class="benchmark-tab tab-inactive whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm">1KB Payload</button>
+                    <button onclick="switchBenchmark('conn')" id="tab-conn" class="benchmark-tab tab-inactive whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm">1000 Connections</button>
+                    <button onclick="switchBenchmark('get')" id="tab-get" class="benchmark-tab tab-inactive whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm">Pure Reads</button>
+                    <button onclick="switchBenchmark('pingpong')" id="tab-pingpong" class="benchmark-tab tab-inactive whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm">Ping-Pong</button>
                 </div>
             </div>
 
-            <div class="bento-card rounded-2xl p-8 overflow-hidden shadow-2xl relative group bg-white dark:bg-[#1e293b]">
+            <div class="bento-card w-full min-w-0 rounded-2xl p-5 sm:p-8 overflow-hidden shadow-2xl relative group bg-white dark:bg-[#1e293b]">
                 <div class="absolute inset-0 bg-gradient-to-r from-brand-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
                 
-                <div class="flex flex-col gap-8">
+                <div class="flex flex-col gap-8 min-w-0">
                     <!-- Spindle Row -->
-                    <div>
+                    <div class="min-w-0 w-full">
                         <div class="flex flex-col sm:flex-row justify-start sm:justify-between items-start sm:items-end gap-2 sm:gap-0 mb-3">
                             <div class="flex items-center gap-3">
                                 <span class="font-display font-bold text-2xl text-brand-600 dark:text-brand-400">Spindle</span>
@@ -375,7 +423,7 @@
                     </div>
                     
                     <!-- Redis Row -->
-                    <div class="pt-2 border-t border-gray-200 dark:border-white/5">
+                    <div class="min-w-0 w-full pt-2 border-t border-gray-200 dark:border-white/5">
                         <div class="flex flex-col sm:flex-row justify-start sm:justify-between items-start sm:items-end gap-2 sm:gap-0 mb-3 mt-4">
                             <div class="flex items-center gap-3">
                                 <span class="font-display font-bold text-xl text-gray-700 dark:text-gray-300">Redis 7.0</span>
@@ -457,18 +505,16 @@
                     }, 50);
 
                     const tabs = ['peak', 'real', 'conn', 'get', 'pingpong'];
-                    const activeClasses = "bg-white dark:bg-white/10 text-brand-600 dark:text-brand-400 shadow-sm font-bold".split(" ");
-                    const inactiveClasses = "text-gray-500 hover:text-gray-900 dark:hover:text-white font-medium".split(" ");
-                    
                     tabs.forEach(t => {
                         const tabBtn = document.getElementById('tab-' + t);
                         if (t === mode) {
-                            activeClasses.forEach(c => tabBtn.classList.add(c));
-                            inactiveClasses.forEach(c => tabBtn.classList.remove(c));
+                            tabBtn.classList.remove('tab-inactive');
+                            tabBtn.classList.add('tab-active');
                         } else {
-                            inactiveClasses.forEach(c => tabBtn.classList.add(c));
-                            activeClasses.forEach(c => tabBtn.classList.remove(c));
+                            tabBtn.classList.remove('tab-active');
+                            tabBtn.classList.add('tab-inactive');
                         }
+                        tabBtn.removeAttribute('style');
                     });
                 }
             </script>
@@ -480,11 +526,12 @@
             </div>
 
             
-            <div class="bento-card rounded-2xl overflow-hidden shadow-xl bg-white dark:bg-[#1e293b] flex flex-col md:flex-row border border-gray-200 dark:border-white/5 relative group w-full">
-                <div class="absolute inset-0 bg-gradient-to-br from-brand-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                
-                <!-- Sidebar Commands -->
-                <div class="w-full md:w-1/5 lg:w-1/6 bg-gray-50 dark:bg-[#020617] border-b md:border-b-0 md:border-r border-gray-200 dark:border-white/5 flex flex-row md:flex-col overflow-x-auto p-4 gap-2 shrink-0 snap-x custom-scrollbar min-w-0">
+                <!-- Command Details -->
+                <div class="bento-card rounded-2xl overflow-hidden shadow-xl bg-white dark:bg-[#0f172a] flex flex-col md:flex-row relative z-20 border border-gray-200 dark:border-white/10 min-w-0">
+                    <div class="absolute inset-0 bg-gradient-to-br from-brand-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                    
+                    <!-- Tabs Column -->
+                    <div class="w-full md:w-1/5 lg:w-1/6 bg-gray-50/50 dark:bg-transparent border-b md:border-b-0 md:border-r border-gray-200 dark:border-white/5 flex flex-row md:flex-col overflow-x-auto p-4 gap-2 shrink-0 snap-x custom-scrollbar min-w-0">
                     <button onclick="switchCommand('set')" id="cmd-tab-set" class="cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-lg font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all">SET</button>
                     <button onclick="switchCommand('get')" id="cmd-tab-get" class="cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">GET</button>
                     <button onclick="switchCommand('del')" id="cmd-tab-del" class="cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">DEL</button>
@@ -500,26 +547,30 @@
                         </div>
                     </div>
                     <div class="w-full lg:w-1/2 p-6 lg:p-8 bg-transparent flex flex-col min-w-0">
-                        <div class="bento-card rounded-2xl overflow-hidden shadow-2xl relative group flex-1 flex flex-col border-0" style="background-color: #1e293b !important; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;">
+                        <div class="bento-card rounded-2xl overflow-hidden shadow-2xl relative group flex-1 flex flex-col border-0 bg-gray-900 dark:bg-[#020617]">
                             <div class="absolute inset-0 bg-gradient-to-br from-brand-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
                             
                             <!-- Mac Header -->
-                            <div class="flex items-center px-4 py-3 border-b" style="background-color: #020617 !important; border-color: rgba(255,255,255,0.05) !important;">
+                            <div class="flex items-center px-4 py-3 border-b border-gray-800 bg-gray-950 dark:bg-[#0f172a]">
                                 <div class="flex gap-2">
                                     <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
                                     <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
                                     <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
                                 </div>
-                                <div class="mx-auto text-xs font-mono font-medium tracking-widest truncate max-w-[150px] sm:max-w-none" style="color: #94a3b8 !important;">spindle-cli --interactive</div>
+                                <div class="mx-auto text-xs font-mono font-medium tracking-widest text-gray-500 dark:text-slate-400">spindle-cli --interactive</div>
                             </div>
                             
                             <!-- Terminal Content -->
-                            <div class="p-6 font-mono text-sm leading-relaxed flex-1 h-[250px] lg:h-auto overflow-y-auto flex flex-col" id="terminal-container" onclick="document.getElementById('terminal-input').focus()">
-                                <div class="mb-4" style="color: #94a3b8 !important;">Welcome to Spindle Interactive CLI! Type SET, GET, DEL, PING, TTL, or PERSIST.</div>
-                                <div id="terminal-output" class="flex flex-col gap-1"></div>
-                                <div class="flex items-center mt-1">
-                                    <span class="font-bold mr-2" style="color: #8b5cf6 !important;">&gt;</span>
-                                    <input type="text" id="terminal-input" class="flex-1 bg-transparent border-none outline-none font-mono" autocomplete="off" spellcheck="false" placeholder="SET mykey 123" onkeypress="handleTerminalInput(event)" style="color: #cbd5e1 !important; box-shadow: none !important;">
+                            <div class="flex flex-col" id="terminal-container" onclick="document.getElementById('terminal-input').focus()">
+                                <!-- Scrollable output area: grows up to max-h then scrolls -->
+                                <div class="overflow-y-auto overflow-x-hidden p-5 font-mono text-sm leading-relaxed max-h-[240px]" id="terminal-scroll">
+                                    <div class="mb-3 text-gray-500 dark:text-slate-500 text-xs">Welcome to Spindle Interactive CLI! Type SET, GET, DEL, PING, TTL, or PERSIST. Type CLEAR to reset.</div>
+                                    <div id="terminal-output" class="flex flex-col gap-1"></div>
+                                </div>
+                                <!-- Input always right below content -->
+                                <div class="flex items-center px-5 py-3 border-t border-gray-800/50 bg-gray-900/50 dark:bg-black/20">
+                                    <span class="font-bold mr-2 font-mono text-brand-600 dark:text-brand-400">&gt;</span>
+                                    <input type="text" id="terminal-input" class="flex-1 bg-transparent border-none outline-none font-mono text-sm shadow-none text-gray-800 dark:text-slate-300 placeholder:text-gray-400 dark:placeholder:text-slate-600" autocomplete="off" spellcheck="false" placeholder="SET mykey 123" onkeypress="handleTerminalInput(event)">
                                 </div>
                             </div>
                         </div>
@@ -557,25 +608,25 @@
 
                 function switchCommand(cmd) {
                     const data = commandsData[cmd];
-                    
+
                     document.getElementById('cmd-details').innerHTML = `
-                        <h3 class="text-2xl font-mono font-bold text-gray-900 dark:text-white mb-2 uppercase">${cmd}</h3>
-                        <div class="bg-gray-100 dark:bg-[#020617] p-3 rounded-lg border border-gray-200 dark:border-white/5 mb-6 overflow-x-auto">
-                            <code class="text-brand-600 dark:text-brand-400 font-bold whitespace-nowrap">${data.syntax.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>
+                        <h3 class="text-2xl font-display font-bold text-gray-900 dark:text-white mb-3 uppercase tracking-tight">${cmd}</h3>
+                        <div class="bg-brand-50/50 dark:bg-brand-900/10 p-4 rounded-xl border border-brand-100 dark:border-brand-500/20 mb-6 overflow-x-auto">
+                            <code class="text-brand-600 dark:text-brand-400 font-bold whitespace-nowrap text-[15px]">${data.syntax.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-6">${data.desc}</p>
-                        <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">Example Raw TCP Socket</h4>
-                        <div class="bg-white dark:bg-[#020617] rounded-lg p-4 font-mono text-sm overflow-x-auto border border-gray-200 dark:border-white/10 shadow-inner">
-                            <pre><code class="text-gray-800 dark:text-gray-300">${data.example.replace(/\\n\n/g, '<br/>').replace(/\\n/g, '<span class="text-gray-400 dark:text-gray-500">\\n</span>').replace(/> /g, '<span class="text-green-600 dark:text-green-400 font-bold">> </span>')}</code></pre>
+                        <p class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">${data.desc}</p>
+                        <h4 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3">Example Raw TCP Socket</h4>
+                        <div class="bg-gray-50 dark:bg-[#020617]/50 rounded-xl p-5 font-mono text-sm overflow-x-auto border border-gray-200 dark:border-white/5 shadow-inner">
+                            <pre><code class="text-gray-800 dark:text-gray-300 leading-loose">${data.example.replace(/\\n\n/g, '<br/>').replace(/\\n/g, '<span class="text-gray-400 dark:text-gray-500">\\n</span>').replace(/> /g, '<span class="text-green-600 dark:text-green-400 font-bold">> </span>')}</code></pre>
                         </div>
                     `;
 
                     document.querySelectorAll('.cmd-tab').forEach(el => {
-                        el.className = "cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent";
+                        el.className = "cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-xl font-mono font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all border border-transparent";
                     });
-                    
+
                     const activeTab = document.getElementById('cmd-tab-' + cmd);
-                    activeTab.className = "cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-lg font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all";
+                    activeTab.className = "cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-xl font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-[#0f172a] shadow-sm border border-gray-200 dark:border-white/10 transition-all";
                 }
 
                 switchCommand('set');
@@ -591,18 +642,18 @@
                 <div class="absolute inset-0 bg-gradient-to-br from-brand-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
                 
                 <!-- Mac OS Window Header -->
-                <div class="bg-gray-100 dark:bg-[#1e293b] border-b border-gray-200 dark:border-white/10 flex items-center px-4 py-3 gap-2">
+                <div class="bg-[#1a2235] flex items-center px-4 py-2 gap-2 border-b border-white/5">
                     <div class="flex gap-2 mr-4">
                         <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
                         <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                         <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
                     </div>
-                    <!-- Sidebar Tabs in Header -->
-                    <div class="flex overflow-x-auto gap-1 custom-scrollbar w-full snap-x">
-                        <button onclick="switchTab('java')" id="tab-java" class="sdk-tab whitespace-nowrap snap-center text-xs font-bold px-4 py-1.5 rounded-md text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all">Java</button>
-                        <button onclick="switchTab('javascript')" id="tab-javascript" class="sdk-tab whitespace-nowrap snap-center text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">JavaScript</button>
-                        <button onclick="switchTab('python')" id="tab-python" class="sdk-tab whitespace-nowrap snap-center text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">Python</button>
-                        <button onclick="switchTab('curl')" id="tab-curl" class="sdk-tab whitespace-nowrap snap-center text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">Other / TCP</button>
+                    <!-- SDK Tabs -->
+                    <div class="flex overflow-x-auto custom-scrollbar w-full snap-x gap-1">
+                        <button onclick="switchTab('java')" id="tab-java" class="sdk-tab tab-active whitespace-nowrap text-xs px-3 py-1.5 rounded-md">Java</button>
+                        <button onclick="switchTab('javascript')" id="tab-javascript" class="sdk-tab tab-inactive whitespace-nowrap text-xs px-3 py-1.5 rounded-md">JavaScript</button>
+                        <button onclick="switchTab('python')" id="tab-python" class="sdk-tab tab-inactive whitespace-nowrap text-xs px-3 py-1.5 rounded-md">Python</button>
+                        <button onclick="switchTab('curl')" id="tab-curl" class="sdk-tab tab-inactive whitespace-nowrap text-xs px-3 py-1.5 rounded-md">Other / TCP</button>
                     </div>
                 </div>
 
@@ -698,24 +749,8 @@ client.close()</code></pre>
                 </div>
             </div>
             
-            <script>
-                function switchTab(lang) {
-                    const tabs = ['java', 'javascript', 'python', 'curl'];
-                    tabs.forEach(t => {
-                        const panel = document.getElementById('panel-' + t);
-                        const tabBtn = document.getElementById('tab-' + t);
-                        if (t === lang) {
-                            panel.classList.remove('hidden');
-                            panel.classList.add('block');
-                            tabBtn.className = "sdk-tab whitespace-nowrap snap-center text-xs font-bold px-4 py-1.5 rounded-md text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all";
-                        } else {
-                            panel.classList.add('hidden');
-                            panel.classList.remove('block');
-                            tabBtn.className = "sdk-tab whitespace-nowrap snap-center text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent";
-                        }
-                    });
-                }
-            </script>
+
+
         </section>
 <section id="installation" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
             <div class="text-center mb-12">
@@ -727,16 +762,16 @@ client.close()</code></pre>
                 <div class="absolute inset-0 bg-gradient-to-br from-brand-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
                 
                 <!-- Mac OS Window Header -->
-                <div class="bg-gray-100 dark:bg-[#1e293b] border-b border-gray-200 dark:border-white/10 flex items-center px-4 py-3 gap-2">
+                <div class="bg-[#1a2235] flex items-center px-4 py-2 gap-2 border-b border-white/5">
                     <div class="flex gap-2 mr-4">
                         <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
                         <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                         <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
                     </div>
-                    <!-- Sidebar Tabs in Header -->
-                    <div class="flex overflow-x-auto gap-1 custom-scrollbar w-full snap-x">
-                        <button onclick="switchInstallTab('source')" id="tab-install-source" class="install-tab whitespace-nowrap snap-center text-xs font-bold px-4 py-1.5 rounded-md text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all">Build from Source</button>
-                        <button onclick="switchInstallTab('cmake')" id="tab-install-cmake" class="install-tab whitespace-nowrap snap-center text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent">CMake FetchContent</button>
+                    <!-- Install Tabs -->
+                    <div class="flex overflow-x-auto custom-scrollbar w-full snap-x gap-1">
+                        <button onclick="switchInstallTab('source')" id="tab-install-source" class="install-tab tab-active whitespace-nowrap text-xs px-3 py-1.5 rounded-md">Build from Source</button>
+                        <button onclick="switchInstallTab('cmake')" id="tab-install-cmake" class="install-tab tab-inactive whitespace-nowrap text-xs px-3 py-1.5 rounded-md">CMake FetchContent</button>
                     </div>
                 </div>
 
@@ -778,35 +813,21 @@ client.close()</code></pre>
                     </div>
                 </div>
             </div>
-            <script>
-                function switchInstallTab(mode) {
-                    const tabs = ['source', 'cmake'];
-                    tabs.forEach(t => {
-                        const panel = document.getElementById('panel-install-' + t);
-                        const tabBtn = document.getElementById('tab-install-' + t);
-                        if (t === mode) {
-                            panel.classList.remove('hidden');
-                            panel.classList.add('block');
-                            tabBtn.className = "install-tab text-xs font-bold px-4 py-1.5 rounded-md text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all";
-                        } else {
-                            panel.classList.add('hidden');
-                            panel.classList.remove('block');
-                            tabBtn.className = "install-tab text-xs font-semibold px-4 py-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent";
-                        }
-                    });
-                }
-            </script>
+
+
         </section>
-<footer class="border-t border-border bg-[#020202] pt-8 pb-32 md:pb-8 relative overflow-hidden z-20">
+<footer class="border-t border-white/5 bg-gradient-to-b from-[#0f172a] to-[#0a0f1e] pt-8 pb-32 md:pb-8 relative overflow-hidden z-20">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-brand-500/30 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-brand-600/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
         
         <div class="max-w-6xl mx-auto px-6 flex flex-col items-center">
             
-            <div class="flex items-center justify-center gap-3 opacity-80 hover:opacity-100 transition-opacity">
-                <img src="favicon.png" class="w-8 h-8" alt="Spindle">
-                <span class="font-display font-bold text-xl tracking-tight text-white">Spindle</span>
+            <div class="flex items-center justify-center gap-3 hover:opacity-80 transition-opacity">
+                <img src="favicon.png" class="w-8 h-8 drop-shadow-sm" alt="Spindle">
+                <span class="font-display font-extrabold text-xl tracking-tight text-white">Spindle</span>
                 <div class="w-1 h-1 rounded-full bg-gray-600 mx-1"></div>
-                <span class="text-gray-400 text-sm">Released under the MIT License</span>
+                <span class="text-gray-500 font-medium text-sm">Released under the MIT License</span>
             </div>
 
             </div></footer>
@@ -832,45 +853,51 @@ client.close()</code></pre>
     </div>
 
 
+
+
+
     <script>
-        function switchInstallTab(tabId) {
-            document.querySelectorAll('.install-panel').forEach(p => p.classList.add('hidden'));
-            document.querySelectorAll('.install-panel').forEach(p => p.classList.remove('block'));
-            
-            document.querySelectorAll('.install-tab').forEach(t => {
-                t.classList.remove('border-brand-500', 'text-white', 'bg-white/5');
-                t.classList.add('border-transparent');
+        function switchTab(lang) {
+            const tabs = ['java', 'javascript', 'python', 'curl'];
+            tabs.forEach(t => {
+                const panel = document.getElementById('panel-' + t);
+                const tabBtn = document.getElementById('tab-' + t);
+                if (t === lang) {
+                    panel.classList.remove('hidden');
+                    panel.classList.add('block');
+                    tabBtn.classList.remove('tab-inactive');
+                    tabBtn.classList.add('tab-active');
+                } else {
+                    panel.classList.add('hidden');
+                    panel.classList.remove('block');
+                    tabBtn.classList.remove('tab-active');
+                    tabBtn.classList.add('tab-inactive');
+                }
+                // Clear any leftover inline styles
+                tabBtn.removeAttribute('style');
             });
-            
-            document.getElementById('panel-install-' + tabId).classList.remove('hidden');
-            document.getElementById('panel-install-' + tabId).classList.add('block');
-            
-            const activeTab = document.getElementById('tab-install-' + tabId);
-            activeTab.classList.remove('border-transparent');
-            activeTab.classList.add('border-brand-500', 'text-white', 'bg-white/5');
         }
 
-        function switchTab(tabId) {
-            // Hide all panels
-            document.querySelectorAll('.sdk-panel').forEach(p => p.classList.add('hidden'));
-            document.querySelectorAll('.sdk-panel').forEach(p => p.classList.remove('block'));
-            
-            // Remove active classes from all tabs
-            document.querySelectorAll('.sdk-tab').forEach(t => {
-                t.classList.remove('border-brand-500', 'text-white', 'bg-white/5');
-                t.classList.add('border-transparent');
+        function switchInstallTab(mode) {
+            const tabs = ['source', 'cmake'];
+            tabs.forEach(t => {
+                const panel = document.getElementById('panel-install-' + t);
+                const tabBtn = document.getElementById('tab-install-' + t);
+                if (t === mode) {
+                    panel.classList.remove('hidden');
+                    panel.classList.add('block');
+                    tabBtn.classList.remove('tab-inactive');
+                    tabBtn.classList.add('tab-active');
+                } else {
+                    panel.classList.add('hidden');
+                    panel.classList.remove('block');
+                    tabBtn.classList.remove('tab-active');
+                    tabBtn.classList.add('tab-inactive');
+                }
+                tabBtn.removeAttribute('style');
             });
-            
-            // Show selected panel
-            document.getElementById('panel-' + tabId).classList.remove('hidden');
-            document.getElementById('panel-' + tabId).classList.add('block');
-            
-            // Activate selected tab
-            const activeTab = document.getElementById('tab-' + tabId);
-            activeTab.classList.remove('border-transparent');
-            activeTab.classList.add('border-brand-500', 'text-white', 'bg-white/5');
         }
-        
+
         // Initialize active tabs on load
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
@@ -878,6 +905,7 @@ client.close()</code></pre>
                 switchInstallTab('source');
             }, 50);
         });
+
 
         const themeToggleBtn = document.getElementById('theme-toggle');
         const themeIconSun = document.getElementById('theme-icon-sun');
@@ -909,13 +937,14 @@ client.close()</code></pre>
             themeIconSun.classList.remove('hidden');
         }
 
-        // Default to Light Mode unless the user prefers Dark Mode
-        let isDarkMode = false;
+        // Default to Dark Mode
+        let isDarkMode = true;
         try {
-            isDarkMode = localStorage.getItem('theme') === 'dark' || 
-                (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            if (localStorage.getItem('theme') === 'light') {
+                isDarkMode = false;
+            }
         } catch (e) {
-            isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            // Ignore if localStorage is blocked
         }
 
         if (isDarkMode) {
@@ -954,17 +983,17 @@ client.close()</code></pre>
         function printToTerminal(input, output, isError = false) {
             const container = document.getElementById('terminal-output');
             const inputLine = document.createElement('div');
-            inputLine.className = 'text-gray-300';
-            inputLine.innerHTML = '<span class="text-brand-400 mr-2 font-bold">&gt;</span>' + input;
-            
+            inputLine.className = 'text-gray-800 dark:text-gray-300';
+            inputLine.innerHTML = '<span class="text-brand-600 dark:text-brand-400 mr-2 font-bold">&gt;</span>' + input;
+
             const outputLine = document.createElement('div');
-            outputLine.className = isError ? 'text-red-400 font-bold ml-4' : 'text-gray-400 font-bold ml-4';
+            outputLine.className = isError ? 'text-red-600 dark:text-red-400 font-bold ml-4' : 'text-gray-600 dark:text-gray-400 font-bold ml-4';
             outputLine.textContent = output;
             
             container.appendChild(inputLine);
             if (output !== '') container.appendChild(outputLine);
             
-            const term = document.getElementById('terminal-container');
+            const term = document.getElementById('terminal-scroll');
             term.scrollTop = term.scrollHeight;
         }
 
@@ -982,7 +1011,10 @@ client.close()</code></pre>
                 let output = '';
                 let isError = false;
 
-                if (cmd === 'PING') {
+                if (cmd === 'CLEAR' || cmd === 'CLS') {
+                    document.getElementById('terminal-output').innerHTML = '';
+                    return;
+                } else if (cmd === 'PING') {
                     output = 'PONG';
                 } else if (cmd === 'SET') {
                     if (args.length < 3) {
