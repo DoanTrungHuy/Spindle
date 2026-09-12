@@ -638,7 +638,7 @@
                 <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">Spindle speaks plain TCP. You can use our provided clients or easily write your own in any language.</p>
             </div>
             
-            <div class="bento-card rounded-2xl overflow-hidden shadow-2xl relative group bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-white/10">
+            <div class="bento-card w-full min-w-0 rounded-2xl overflow-hidden shadow-2xl relative group bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-white/10">
                 <div class="absolute inset-0 bg-gradient-to-br from-brand-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
                 
                 <!-- Mac OS Window Header -->
@@ -660,7 +660,7 @@
                 <!-- Content Panels -->
                 <div class="relative overflow-y-auto bg-gray-50 dark:bg-[#0f172a] h-[350px]">
                     <!-- Java Panel -->
-                    <div id="panel-java" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed block">
+                    <div id="panel-java" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed block overflow-x-auto">
 <pre><code class="language-java text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">import</span> clients.java.SpindleClient;
 
 <span class="text-pink-500 dark:text-pink-400">public class</span> <span class="text-blue-600 dark:text-blue-400">Main</span> {
@@ -684,7 +684,7 @@
                     </div>
 
                     <!-- JavaScript Panel -->
-                    <div id="panel-javascript" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden">
+                    <div id="panel-javascript" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden overflow-x-auto">
 <pre><code class="language-javascript text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">const</span> SpindleClient = require(<span class="text-green-600 dark:text-green-400">'./clients/javascript/spindle'</span>);
 
 <span class="text-pink-500 dark:text-pink-400">async function</span> <span class="text-blue-600 dark:text-blue-400">main</span>() {
@@ -709,7 +709,7 @@ main();</code></pre>
                     </div>
 
                     <!-- Python Panel -->
-                    <div id="panel-python" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden">
+                    <div id="panel-python" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden overflow-x-auto">
 <pre><code class="language-python text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">import</span> sys
 sys.path.append(<span class="text-green-600 dark:text-green-400">'clients/python'</span>)
 
@@ -728,7 +728,7 @@ client.close()</code></pre>
                     </div>
 
                     <!-- cURL Panel -->
-                    <div id="panel-curl" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden">
+                    <div id="panel-curl" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden overflow-x-auto">
 <pre><code class="language-bash text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># Other Languages (C#, PHP, Rust, C++, etc.)
 # Since Spindle is built on a raw TCP protocol,
 # you don't need any special database drivers. 
@@ -758,7 +758,7 @@ client.close()</code></pre>
                 <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">Get Spindle up and running in seconds. Build from source or include it directly in your CMake projects.</p>
             </div>
             
-            <div class="bento-card rounded-2xl overflow-hidden shadow-2xl relative group bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-white/10">
+            <div class="bento-card w-full min-w-0 rounded-2xl overflow-hidden shadow-2xl relative group bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-white/10">
                 <div class="absolute inset-0 bg-gradient-to-br from-brand-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
                 
                 <!-- Mac OS Window Header -->
@@ -778,7 +778,7 @@ client.close()</code></pre>
                 <!-- Content Panels -->
                 <div class="relative overflow-y-auto bg-gray-50 dark:bg-[#0f172a] h-[350px]">
                     <!-- Source Panel -->
-                    <div id="panel-install-source" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed block">
+                    <div id="panel-install-source" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed block overflow-x-auto">
 <pre><code class="language-bash text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># 1. Clone the repository</span>
 <span class="text-brand-600 dark:text-brand-400">$</span> git clone https://github.com/DoanTrungHuy/Spindle.git
 <span class="text-brand-600 dark:text-brand-400">$</span> cd Spindle
@@ -794,7 +794,7 @@ client.close()</code></pre>
                     </div>
 
                     <!-- CMake Panel -->
-                    <div id="panel-install-cmake" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed hidden">
+                    <div id="panel-install-cmake" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed hidden overflow-x-auto">
 <pre><code class="language-cmake text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># Add the following to your CMakeLists.txt:</span>
 
 <span class="text-pink-500 dark:text-pink-400">include</span>(FetchContent)
