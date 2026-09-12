@@ -668,8 +668,8 @@
                 <!-- Content Panels -->
                 <div class="relative overflow-y-auto bg-gray-50 dark:bg-[#0f172a] h-[350px]">
                     <!-- Java Panel -->
-                    <div id="panel-java" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed block overflow-x-auto">
-<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="language-java text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">import</span> clients.java.SpindleClient;
+                    <div id="panel-java" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed block overflow-x-hidden min-w-0">
+<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-java text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">import</span> clients.java.SpindleClient;
 
 <span class="text-pink-500 dark:text-pink-400">public class</span> <span class="text-blue-600 dark:text-blue-400">Main</span> {
     <span class="text-pink-500 dark:text-pink-400">public static void</span> <span class="text-blue-600 dark:text-blue-400">main</span>(String[] args) {
@@ -692,8 +692,8 @@
                     </div>
 
                     <!-- JavaScript Panel -->
-                    <div id="panel-javascript" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden overflow-x-auto">
-<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="language-javascript text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">const</span> SpindleClient = require(<span class="text-green-600 dark:text-green-400">'./clients/javascript/spindle'</span>);
+                    <div id="panel-javascript" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden overflow-x-hidden min-w-0">
+<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-javascript text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">const</span> SpindleClient = require(<span class="text-green-600 dark:text-green-400">'./clients/javascript/spindle'</span>);
 
 <span class="text-pink-500 dark:text-pink-400">async function</span> <span class="text-blue-600 dark:text-blue-400">main</span>() {
     <span class="text-pink-500 dark:text-pink-400">const</span> client = <span class="text-pink-500 dark:text-pink-400">new</span> SpindleClient(<span class="text-green-600 dark:text-green-400">'127.0.0.1'</span>, <span class="text-blue-600 dark:text-blue-400">8888</span>);
@@ -717,8 +717,8 @@ main();</code></pre>
                     </div>
 
                     <!-- Python Panel -->
-                    <div id="panel-python" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden overflow-x-auto">
-<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="language-python text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">import</span> sys
+                    <div id="panel-python" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden overflow-x-hidden min-w-0">
+<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-python text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">import</span> sys
 sys.path.append(<span class="text-green-600 dark:text-green-400">'clients/python'</span>)
 
 <span class="text-pink-500 dark:text-pink-400">from</span> spindle <span class="text-pink-500 dark:text-pink-400">import</span> SpindleClient
@@ -736,8 +736,8 @@ client.close()</code></pre>
                     </div>
 
                     <!-- cURL Panel -->
-                    <div id="panel-curl" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden overflow-x-auto">
-<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="language-bash text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># Other Languages (C#, PHP, Rust, C++, etc.)
+                    <div id="panel-curl" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden overflow-x-hidden min-w-0">
+<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-bash text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># Other Languages (C#, PHP, Rust, C++, etc.)
 # Since Spindle is built on a raw TCP protocol,
 # you don't need any special database drivers. 
 # Just open a TCP socket, send a command with \n, and read!</span>
@@ -786,8 +786,8 @@ client.close()</code></pre>
                 <!-- Content Panels -->
                 <div class="relative overflow-y-auto bg-gray-50 dark:bg-[#0f172a] h-[350px]">
                     <!-- Source Panel -->
-                    <div id="panel-install-source" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed block overflow-x-auto">
-<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="language-bash text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># 1. Clone the repository</span>
+                    <div id="panel-install-source" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed block overflow-x-hidden min-w-0">
+<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-bash text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># 1. Clone the repository</span>
 <span class="text-brand-600 dark:text-brand-400">$</span> git clone https://github.com/DoanTrungHuy/Spindle.git
 <span class="text-brand-600 dark:text-brand-400">$</span> cd Spindle
 
@@ -802,8 +802,8 @@ client.close()</code></pre>
                     </div>
 
                     <!-- CMake Panel -->
-                    <div id="panel-install-cmake" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed hidden overflow-x-auto">
-<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="language-cmake text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># Add the following to your CMakeLists.txt:</span>
+                    <div id="panel-install-cmake" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed hidden overflow-x-hidden min-w-0">
+<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-cmake text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># Add the following to your CMakeLists.txt:</span>
 
 <span class="text-pink-500 dark:text-pink-400">include</span>(FetchContent)
 
