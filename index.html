@@ -241,7 +241,7 @@
                 <!-- Theme Toggle Button -->
                 
                 
-                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200/10 transition-colors text-gray-900 dark:text-white">
+                <button id="theme-toggle" aria-label="Toggle dark mode" class="p-2 rounded-full hover:bg-gray-200/10 transition-colors text-gray-900 dark:text-white">
                     <!-- Sun Icon (Hidden in Light Mode) -->
                     <svg id="theme-icon-sun" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -840,7 +840,7 @@ client.close()</code></pre>
             </div></footer>
         <!-- Floating Status Widget -->
     <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 scale-90 sm:scale-100 origin-bottom-right z-50">
-        <div id="status-widget" onclick="toggleWidget()" class="cursor-pointer group flex items-center gap-3 bg-[#1e293b]/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/10 shadow-2xl hover:border-brand-500/40 hover:bg-[#020617] transition-all duration-300">
+        <button id="status-widget" aria-label="Toggle system status" onclick="toggleWidget()" class="cursor-pointer group flex items-center gap-3 bg-[#1e293b]/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/10 shadow-2xl hover:border-brand-500/40 hover:bg-[#020617] transition-all duration-300">
             <span class="relative flex h-2.5 w-2.5 shrink-0" title="Click to collapse/expand">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
@@ -856,7 +856,7 @@ client.close()</code></pre>
                     </div>
                 </div>
             </div>
-        </div>
+        </button>
     </div>
 
 
