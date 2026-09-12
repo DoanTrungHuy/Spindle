@@ -47,17 +47,17 @@ public class SpindleClient {
 
     public boolean set(String key, String value) throws Exception {
         String resp = sendCommand("SET " + key + " " + value);
-        return "OK".equals(resp);
+        return "(integer) 1".equals(resp);
     }
 
     public boolean setEx(String key, String value, int seconds) throws Exception {
         String resp = sendCommand("SET " + key + " " + value + " EX " + seconds);
-        return "OK".equals(resp);
+        return "(integer) 1".equals(resp);
     }
 
     public String get(String key) throws Exception {
         String resp = sendCommand("GET " + key);
-        if ("NOT_FOUND".equals(resp)) {
+        if ("(nil)".equals(resp)) {
             return null;
         }
         return resp;
@@ -65,7 +65,20 @@ public class SpindleClient {
 
     public boolean delete(String key) throws Exception {
         String resp = sendCommand("DEL " + key);
-        return "OK".equals(resp);
+        return resp != null && resp.startsWith("(integer) 1");
+    }
+
+    public int ttl(String key) throws Exception {
+        String resp = sendCommand("TTL " + key);
+        if (resp != null && resp.startsWith("(integer) ")) {
+            return Integer.parseInt(resp.substring(10).trim());
+        }
+        return -2; // or appropriate error/missing code
+    }
+
+    public boolean persist(String key) throws Exception {
+        String resp = sendCommand("PERSIST " + key);
+        return resp != null && resp.startsWith("(integer) 1");
     }
 
     public static void main(String[] args) {
@@ -75,10 +88,14 @@ public class SpindleClient {
             
             System.out.println("Saving data...");
             client.set("user:100", "Alice");
-            client.setEx("session:xyz", "active", 2);
+            client.setEx("session:xyz", "active", 100);
             
             System.out.println("Reading data...");
             System.out.println("user:100 -> " + client.get("user:100"));
+            
+            System.out.println("TTL for session:xyz -> " + client.ttl("session:xyz"));
+            System.out.println("Persist session:xyz -> " + client.persist("session:xyz"));
+            System.out.println("TTL for session:xyz after persist -> " + client.ttl("session:xyz"));
             
             System.out.println("Deleting data...");
             client.delete("user:100");

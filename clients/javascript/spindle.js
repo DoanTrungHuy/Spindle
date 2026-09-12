@@ -14,18 +14,24 @@ class SpindleClient {
         
         // Queue for handling asynchronous requests
         this.requestQueue = [];
+        this.buffer = '';
         
         this.client.on('data', (data) => {
-            const response = data.toString().trim();
-            // Resolve the oldest pending request
-            if (this.requestQueue.length > 0) {
-                const { resolve } = this.requestQueue.shift();
-                resolve(response);
+            this.buffer += data.toString();
+            let newlineIdx;
+            while ((newlineIdx = this.buffer.indexOf('\n')) !== -1) {
+                const response = this.buffer.substring(0, newlineIdx).trim();
+                this.buffer = this.buffer.substring(newlineIdx + 1);
+                
+                if (this.requestQueue.length > 0) {
+                    const { resolve } = this.requestQueue.shift();
+                    resolve(response);
+                }
             }
         });
 
         this.client.on('error', (err) => {
-            if (this.requestQueue.length > 0) {
+            while (this.requestQueue.length > 0) {
                 const { reject } = this.requestQueue.shift();
                 reject(err);
             }
@@ -33,6 +39,10 @@ class SpindleClient {
         
         this.client.on('close', () => {
             this.isConnected = false;
+            while (this.requestQueue.length > 0) {
+                const { reject } = this.requestQueue.shift();
+                reject(new Error('Connection closed'));
+            }
         });
     }
 
@@ -91,7 +101,7 @@ class SpindleClient {
         }
         
         const resp = await this._sendCommand(cmd);
-        return resp === 'OK';
+        return resp === '(integer) 1';
     }
 
     /**
@@ -101,7 +111,7 @@ class SpindleClient {
      */
     async get(key) {
         const resp = await this._sendCommand(`GET ${key}`);
-        if (resp === 'NOT_FOUND') {
+        if (resp === '(nil)') {
             return null;
         }
         return resp;
@@ -114,7 +124,30 @@ class SpindleClient {
      */
     async delete(key) {
         const resp = await this._sendCommand(`DEL ${key}`);
-        return resp === 'OK';
+        return resp && resp.startsWith('(integer) 1');
+    }
+
+    /**
+     * Get TTL of a key
+     * @param {string} key
+     * @returns {Promise<number>} TTL in seconds
+     */
+    async ttl(key) {
+        const resp = await this._sendCommand(`TTL ${key}`);
+        if (resp && resp.startsWith('(integer) ')) {
+            return parseInt(resp.substring(10), 10);
+        }
+        return -2;
+    }
+
+    /**
+     * Persist a key
+     * @param {string} key
+     * @returns {Promise<boolean>} True if timeout was removed
+     */
+    async persist(key) {
+        const resp = await this._sendCommand(`PERSIST ${key}`);
+        return resp && resp.startsWith('(integer) 1');
     }
 }
 
@@ -140,10 +173,14 @@ if (require.main === module) {
             console.log(`user:102 -> ${name}`);
             
             console.log(`session:abc -> ${await client.get('session:abc')} (before expire)`);
+
+            console.log(`TTL for session:abc -> ${await client.ttl('session:abc')}`);
+            await client.persist('session:abc');
+            console.log(`TTL for session:abc after persist -> ${await client.ttl('session:abc')}`);
             
-            console.log("Waiting 2.1 seconds for TTL to expire...");
+            console.log("Waiting 2.1 seconds to test if persist worked...");
             await new Promise(r => setTimeout(r, 2100));
-            console.log(`session:abc -> ${await client.get('session:abc')} (after expire)`);
+            console.log(`session:abc -> ${await client.get('session:abc')} (after wait)`);
             
             console.log("Deleting data...");
             await client.delete("user:102");

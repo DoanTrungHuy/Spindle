@@ -8,12 +8,13 @@ class SpindleClient:
     def __init__(self, host='127.0.0.1', port=8888):
         self.host = host
         self.port = port
-        self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.conn = None
         self.is_connected = False
 
     def connect(self):
         """Connect to the Spindle Server"""
         try:
+            self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.conn.connect((self.host, self.port))
             self.conn.settimeout(2.0)
             self.is_connected = True
@@ -24,7 +25,7 @@ class SpindleClient:
 
     def close(self):
         """Close the connection"""
-        if self.is_connected:
+        if self.is_connected and self.conn:
             self.conn.close()
             self.is_connected = False
 
@@ -53,19 +54,32 @@ class SpindleClient:
             cmd += f" PX {px}"
             
         resp = self._send_command(cmd)
-        return resp == "OK"
+        return resp == "(integer) 1"
 
     def get(self, key: str):
         """Retrieve a value by key. Returns None if not found."""
         resp = self._send_command(f"GET {key}")
-        if resp == "NOT_FOUND":
+        if resp == "(nil)":
             return None
         return resp
 
     def delete(self, key: str) -> bool:
         """Delete a key. Returns True on success."""
         resp = self._send_command(f"DEL {key}")
-        return resp == "OK"
+        return resp.startswith("(integer) 1")
+
+    def ttl(self, key: str) -> int:
+        """Get TTL of a key."""
+        resp = self._send_command(f"TTL {key}")
+        if resp.startswith("(integer) "):
+            return int(resp[10:])
+        return -2
+
+    def persist(self, key: str) -> bool:
+        """Persist a key."""
+        resp = self._send_command(f"PERSIST {key}")
+        return resp.startswith("(integer) 1")
+
 
 # ==========================================
 # USAGE EXAMPLE
@@ -82,7 +96,7 @@ if __name__ == "__main__":
         print("Saving data...")
         client.set("user:100", "Alice")
         client.set("user:101", "Bob")
-        client.set("session:xyz", "active", ex=2) # Expires in 2 seconds
+        client.set("session:xyz", "active", ex=100) # Expires in 100 seconds
         
         # 2. Read data
         print("Reading data...")
@@ -90,11 +104,10 @@ if __name__ == "__main__":
         print(f"user:100 -> {name}")
         print(f"session:xyz -> {client.get('session:xyz')} (before expire)")
         
-        # 3. Wait for TTL to expire
-        import time
-        print("Waiting 2.1 seconds for TTL to expire...")
-        time.sleep(2.1)
-        print(f"session:xyz -> {client.get('session:xyz')} (after expire)")
+        # 3. TTL and Persist
+        print(f"TTL for session:xyz -> {client.ttl('session:xyz')}")
+        print(f"Persist session:xyz -> {client.persist('session:xyz')}")
+        print(f"TTL for session:xyz after persist -> {client.ttl('session:xyz')}")
         
         # 4. Read non-existent data
         unknown = client.get("user:999")

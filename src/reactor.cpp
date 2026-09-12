@@ -156,16 +156,22 @@ void Reactor::handle_client_data(int client_fd) {
         ssize_t bytes_read = recv(client_fd, buf, sizeof(buf), 0);
         if (bytes_read > 0) {
             request_str.append(buf, bytes_read);
+            // Prevent DoS: limit per-client buffer to 16MB
+            if (request_str.size() > 16 * 1024 * 1024) {
+                close(client_fd);
+                m_client_buffers.erase(client_fd);
+                return;
+            }
         } else if (bytes_read < 0) {
             if (errno == EAGAIN || errno == EWOULDBLOCK) {
                 break; // All data read
             }
             close(client_fd);
-            request_str.clear();
+            m_client_buffers.erase(client_fd);
             return;
         } else {
             close(client_fd); // Client disconnected
-            request_str.clear();
+            m_client_buffers.erase(client_fd);
             return;
         }
     }
@@ -179,8 +185,15 @@ void Reactor::handle_client_data(int client_fd) {
 
     auto flush_output = [&]() {
         if (out_len > 0) {
-            send(client_fd, out_buf, out_len, 0);
-            out_len = 0;
+            ssize_t sent = send(client_fd, out_buf, out_len, 0);
+            if (sent > 0) {
+                if (static_cast<size_t>(sent) < out_len) {
+                    std::memmove(out_buf, out_buf + sent, out_len - sent);
+                    out_len -= sent;
+                } else {
+                    out_len = 0;
+                }
+            }
         }
     };
 
@@ -230,26 +243,36 @@ void Reactor::handle_client_data(int client_fd) {
                 uint64_t ttl_ns = 0;
                 std::string_view actual_val = val;
 
-                // Check if val contains EX or PX suffix: "myvalue EX 300" or "myvalue PX 5000"
-                size_t ex_pos = val.rfind(" EX ");
-                size_t px_pos = val.rfind(" PX ");
-
-                if (ex_pos != std::string_view::npos) {
-                    actual_val = val.substr(0, ex_pos);
-                    std::string_view ttl_str = val.substr(ex_pos + 4);
-                    uint64_t seconds = 0;
-                    for (char c : ttl_str) {
-                        if (c >= '0' && c <= '9') seconds = seconds * 10 + (c - '0');
+                size_t last_space = actual_val.rfind(' ');
+                if (last_space != std::string_view::npos) {
+                    std::string_view last_word = actual_val.substr(last_space + 1);
+                    bool is_number = true;
+                    for (char c : last_word) {
+                        if (c < '0' || c > '9') { is_number = false; break; }
                     }
-                    if (seconds > 0) ttl_ns = seconds * 1'000'000'000ULL;
-                } else if (px_pos != std::string_view::npos) {
-                    actual_val = val.substr(0, px_pos);
-                    std::string_view ttl_str = val.substr(px_pos + 4);
-                    uint64_t ms = 0;
-                    for (char c : ttl_str) {
-                        if (c >= '0' && c <= '9') ms = ms * 10 + (c - '0');
+                    if (is_number && !last_word.empty()) {
+                        size_t second_last_space = actual_val.rfind(' ', last_space - 1);
+                        if (second_last_space == std::string_view::npos && last_space > 0) {
+                            second_last_space = 0; // The whole string starts with EX/PX
+                        }
+                        
+                        if (second_last_space != std::string_view::npos) {
+                            size_t start_idx = (second_last_space == 0 && actual_val[0] != ' ') ? 0 : second_last_space + 1;
+                            std::string_view second_last_word = actual_val.substr(start_idx, last_space - start_idx);
+                            
+                            if (second_last_word == "EX") {
+                                uint64_t seconds = 0;
+                                for (char c : last_word) seconds = seconds * 10 + (c - '0');
+                                ttl_ns = seconds * 1'000'000'000ULL;
+                                actual_val = (start_idx == 0) ? "" : actual_val.substr(0, second_last_space);
+                            } else if (second_last_word == "PX") {
+                                uint64_t ms = 0;
+                                for (char c : last_word) ms = ms * 10 + (c - '0');
+                                ttl_ns = ms * 1'000'000ULL;
+                                actual_val = (start_idx == 0) ? "" : actual_val.substr(0, second_last_space);
+                            }
+                        }
                     }
-                    if (ms > 0) ttl_ns = ms * 1'000'000ULL;
                 }
 
                 bool evicted = false;
@@ -260,7 +283,7 @@ void Reactor::handle_client_data(int client_fd) {
                     if (log_entry.set_data(CommandType::SET, key, actual_val))
                         m_ring_buffer.push(log_entry);
                 }, ttl_ns);
-                append_output("OK\n");
+                append_output("(integer) 1\n");
             } else {
                 append_output("ERR INVALID_FORMAT\n");
             }
