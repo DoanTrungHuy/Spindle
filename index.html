@@ -119,17 +119,21 @@
             cursor: pointer;
         }
         .tab-active {
-            color: #e2e8f0 !important;
-            background: #2d3a52 !important;
+            color: #ffffff !important;
+            background: rgba(255, 255, 255, 0.1) !important;
             font-weight: 600 !important;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         .tab-inactive {
-            color: #64748b !important;
+            color: #94a3b8 !important;
             background: transparent !important;
-            font-weight: 400 !important;
+            font-weight: 500 !important;
+            border: 1px solid transparent;
         }
         .tab-inactive:hover {
-            color: #94a3b8 !important;
+            color: #f1f5f9 !important;
+            background: rgba(255, 255, 255, 0.03) !important;
         }
         
         /* Light mode overrides using :root level class */
@@ -152,8 +156,10 @@
         html.light .border-border { border-color: #e2e8f0 !important; }
         html.light [class*="bg-[#1e293b]"] { background-color: #f1f5f9 !important; }
         html.light [class*="bg-[#020202]"] { background-color: #f8fafc !important; }
-        html.light [class*="bg-[#1e293b]"] { background-color: #e2e8f0 !important; }
         html.light [class*="bg-[#0f172a]"] { background-color: #ffffff !important; }
+        html.light .tab-active { background: #ffffff !important; color: #0f172a !important; border-color: rgba(0,0,0,0.1) !important; box-shadow: 0 2px 10px rgba(0,0,0,0.05) !important; }
+        html.light .tab-inactive { color: #475569 !important; }
+        html.light .tab-inactive:hover { background: rgba(0,0,0,0.03) !important; color: #0f172a !important; }
         html.light .bg-white\/5, html.light .hover\:bg-white\/5:hover { background-color: rgba(0,0,0,0.05) !important; }
         html.light .bg-white.text-black { background-color: #0f172a !important; color: #ffffff !important; }
         html.light .bg-white.text-black:hover { background-color: #1e293b !important; }
@@ -390,7 +396,7 @@
                 <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-base sm:text-lg mb-8 break-words min-h-[240px] sm:min-h-[120px] md:min-h-[80px]" id="benchmark-desc">Tested locally on an 8-core CPU using 100 concurrent connections with Pipelining (batch=100) and tiny payloads. Designed to measure theoretical max engine throughput.</p>
                 
                 <!-- Tab Switcher -->
-                <div class="w-full bg-gray-100 dark:bg-[#334155] p-1 rounded-xl border border-gray-200 dark:border-white/5 relative z-20 flex flex-nowrap overflow-x-auto snap-x custom-scrollbar gap-1">
+                <div class="w-full bg-gray-100 dark:bg-[#1e293b]/60 dark:backdrop-blur-sm p-1 rounded-xl border border-gray-200 dark:border-white/5 relative z-20 flex flex-nowrap overflow-x-auto snap-x custom-scrollbar gap-1">
                     <button onclick="switchBenchmark('peak')" id="tab-peak" class="benchmark-tab tab-active whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm">Peak Throughput</button>
                     <button onclick="switchBenchmark('real')" id="tab-real" class="benchmark-tab tab-inactive whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm">1KB Payload</button>
                     <button onclick="switchBenchmark('conn')" id="tab-conn" class="benchmark-tab tab-inactive whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm">1000 Connections</button>
