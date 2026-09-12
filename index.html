@@ -66,7 +66,7 @@
                 radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%);
         }
     
-        .custom-scrollbar::-webkit-scrollbar { height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar { height: 4px; width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.2); border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.4); }
@@ -589,7 +589,7 @@
                             <!-- Terminal Content -->
                             <div class="flex flex-col" id="terminal-container" onclick="document.getElementById('terminal-input').focus()">
                                 <!-- Scrollable output area: grows up to max-h then scrolls -->
-                                <div class="overflow-y-auto overflow-x-hidden p-5 font-mono text-sm leading-relaxed max-h-[240px]" id="terminal-scroll">
+                                <div class="overflow-y-auto overflow-x-hidden custom-scrollbar p-5 font-mono text-sm leading-relaxed max-h-[240px]" id="terminal-scroll">
                                     <div class="mb-3 text-gray-500 dark:text-slate-500 text-xs">Welcome to Spindle Interactive CLI! Type SET, GET, DEL, PING, TTL, or PERSIST. Type CLEAR to reset.</div>
                                     <div id="terminal-output" class="flex flex-col gap-1"></div>
                                 </div>
@@ -675,7 +675,7 @@
                 <div class="absolute inset-0 bg-gradient-to-br from-brand-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
                 
                 <!-- Mac OS Window Header -->
-                <div class="bg-[#1a2235] flex items-center px-4 py-2 gap-2 border-b border-white/5">
+                <div class="bg-gray-100 dark:bg-[#09090b] flex items-center px-4 py-2 gap-2 border-b border-gray-200 dark:border-white/5">
                     <div class="flex gap-2 mr-4">
                         <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
                         <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
@@ -691,7 +691,7 @@
                 </div>
 
                 <!-- Content Panels -->
-                <div class="relative overflow-y-auto bg-gray-50 dark:bg-[#000000] h-[350px]">
+                <div class="relative overflow-y-auto custom-scrollbar bg-gray-50 dark:bg-[#000000] h-[350px]">
                     <!-- Java Panel -->
                     <div id="panel-java" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed block overflow-x-hidden min-w-0">
 <pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-java text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">import</span> clients.java.SpindleClient;
@@ -795,7 +795,7 @@ client.close()</code></pre>
                 <div class="absolute inset-0 bg-gradient-to-br from-brand-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
                 
                 <!-- Mac OS Window Header -->
-                <div class="bg-[#1a2235] flex items-center px-4 py-2 gap-2 border-b border-white/5">
+                <div class="bg-gray-100 dark:bg-[#09090b] flex items-center px-4 py-2 gap-2 border-b border-gray-200 dark:border-white/5">
                     <div class="flex gap-2 mr-4">
                         <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
                         <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
@@ -809,7 +809,7 @@ client.close()</code></pre>
                 </div>
 
                 <!-- Content Panels -->
-                <div class="relative overflow-y-auto bg-gray-50 dark:bg-[#000000] h-[350px]">
+                <div class="relative overflow-y-auto custom-scrollbar bg-gray-50 dark:bg-[#000000] h-[350px]">
                     <!-- Source Panel -->
                     <div id="panel-install-source" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed block overflow-x-hidden min-w-0">
 <pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-bash text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># 1. Clone the repository</span>
