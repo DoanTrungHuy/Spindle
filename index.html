@@ -482,11 +482,31 @@
                     }
                 };
 
+                function animateValue(id, endStr, duration) {
+                    const obj = document.getElementById(id);
+                    const end = parseInt(endStr.replace(/,/g, ''), 10);
+                    let startTimestamp = null;
+                    const step = (timestamp) => {
+                        if (!startTimestamp) startTimestamp = timestamp;
+                        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                        const easeProgress = 1 - Math.pow(1 - progress, 4); // easeOutQuart
+                        const current = Math.floor(0 + (end - 0) * easeProgress);
+                        obj.innerHTML = current.toLocaleString('en-US') + ' <span class="text-sm text-gray-500 font-normal">ops/sec</span>';
+                        if (progress < 1) {
+                            window.requestAnimationFrame(step);
+                        } else {
+                            obj.innerHTML = endStr + ' <span class="text-sm text-gray-500 font-normal">ops/sec</span>';
+                        }
+                    };
+                    window.requestAnimationFrame(step);
+                }
+
                 function switchBenchmark(mode) {
                     const data = benchData[mode];
                     
-                    document.getElementById('spindle-ops').innerHTML = data.spindleOps + ' <span class="text-sm text-gray-500 font-normal">ops/sec</span>';
-                    document.getElementById('redis-ops').innerHTML = data.redisOps + ' <span class="text-sm text-gray-500 font-normal">ops/sec</span>';
+                    animateValue('spindle-ops', data.spindleOps, 1000);
+                    animateValue('redis-ops', data.redisOps, 1000);
+                    
                     document.getElementById('benchmark-desc').innerText = data.desc;
                     
                     document.getElementById('spindle-p50').innerText = data.spindleP50;
