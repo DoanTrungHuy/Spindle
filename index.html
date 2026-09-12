@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth overflow-x-hidden">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -227,8 +227,7 @@
         } catch (_) {}
     </script>
 </head>
-<body class="antialiased w-full bg-white dark:bg-[#020617] text-gray-900 dark:text-gray-100">
-    <div class="flex flex-col min-h-screen w-full max-w-[100vw] overflow-x-hidden relative">
+<body class="antialiased bg-white dark:bg-[#020617] text-gray-900 dark:text-gray-100 min-h-screen">
     
     <!-- Navbar -->
     <nav class="fixed top-0 w-full z-50 bg-[#0f172a]/95 backdrop-blur-md border-b border-border">
@@ -831,7 +830,7 @@ client.close()</code></pre>
         
         <div class="max-w-6xl mx-auto px-6 flex flex-col items-center">
             
-            <div class="flex items-center justify-center gap-3 hover:opacity-80 transition-opacity">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity text-center">
                 <img src="favicon.png" class="w-8 h-8 drop-shadow-sm" alt="Spindle">
                 <span class="font-display font-extrabold text-xl tracking-tight text-gray-900 dark:text-[#f8fafc]">Spindle</span>
                 <div class="w-1 h-1 rounded-full bg-gray-300 dark:bg-[#475569] mx-1"></div>
@@ -1148,7 +1147,6 @@ client.close()</code></pre>
             benchObserver.observe(benchContainer);
         }
     </script>
-    </div>
 </body>
 </html>
 
