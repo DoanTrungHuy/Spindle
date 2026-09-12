@@ -582,31 +582,31 @@
                     set: {
                         syntax: "SET <key> <value> [EX seconds | PX milliseconds]",
                         desc: "Stores a value with the specified key. If the key already exists, it is overwritten. You can optionally provide an expiration time.",
-                        returns: "Simple String: <code>OK\\n</code> if successful, or <code>ERR INVALID_FORMAT\\n</code> if the syntax is incorrect.",
+                        returns: "Simple String: <code>OK</code> if successful, or <code>ERR INVALID_FORMAT</code> if the syntax is incorrect.",
                         example: `SET mykey John\n\n> OK\n\nSET mykey active EX 3600\n\n> OK\n`
                     },
                     get: {
                         syntax: "GET <key>",
                         desc: "Retrieves the value associated with the specified key.",
-                        returns: "Bulk String: The string value ending with <code>\\n</code>, or <code>(nil)\\n</code> if the key does not exist.",
+                        returns: "Bulk String: The string value, or <code>(nil)</code> if the key does not exist.",
                         example: `GET mykey\n\n> John\n\nGET non_existent\n\n> (nil)\n`
                     },
                     del: {
                         syntax: "DEL <key>",
                         desc: "Deletes the specified key and its associated value from the database.",
-                        returns: "Integer: <code>(integer) 1\\n</code> if the key was removed, or <code>(integer) 0\\n</code> if the key did not exist.",
+                        returns: "Integer: <code>(integer) 1</code> if the key was removed, or <code>(integer) 0</code> if the key did not exist.",
                         example: `DEL mykey\n\n> (integer) 1\n\nDEL already_deleted\n\n> (integer) 0\n`
                     },
                     ttl: {
                         syntax: "TTL <key>",
                         desc: "Returns the remaining time to live of a key that has a timeout, in seconds.",
-                        returns: "Integer: <code>(integer) &lt;remaining_seconds&gt;\\n</code>. Returns <code>(integer) -1\\n</code> if the key exists but has no associated expire. Returns <code>(integer) -2\\n</code> if the key does not exist.",
+                        returns: "Integer: <code>(integer) &lt;remaining_seconds&gt;</code>. Returns <code>(integer) -1</code> if the key exists but has no associated expire. Returns <code>(integer) -2</code> if the key does not exist.",
                         example: `TTL mykey\n\n> (integer) 3599\n\nTTL no_timeout_key\n\n> (integer) -1\n`
                     },
                     persist: {
                         syntax: "PERSIST <key>",
                         desc: "Removes the existing timeout on key, turning the key from volatile (a key with an expire set) to persistent.",
-                        returns: "Integer: <code>(integer) 1\\n</code> if the timeout was removed, or <code>(integer) 0\\n</code> if the key does not exist or does not have an associated timeout.",
+                        returns: "Integer: <code>(integer) 1</code> if the timeout was removed, or <code>(integer) 0</code> if the key does not exist or does not have an associated timeout.",
                         example: `PERSIST mykey\n\n> (integer) 1\n\nPERSIST no_timeout_key\n\n> (integer) 0\n`
                     }
                 };
@@ -1025,7 +1025,7 @@ client.close()</code></pre>
                     output = 'PONG';
                 } else if (cmd === 'SET') {
                     if (args.length < 3) {
-                        output = '(error) ERR wrong number of arguments. Usage: SET <key> <value> [EX seconds | PX milliseconds]';
+                        output = 'ERR INVALID_FORMAT';
                         isError = true;
                     } else {
                         const key = args[1];
@@ -1049,7 +1049,7 @@ client.close()</code></pre>
                     }
                 } else if (cmd === 'GET') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: GET <key>';
+                        output = 'ERR INVALID_FORMAT';
                         isError = true;
                     } else {
                         const key = args[1];
@@ -1067,7 +1067,7 @@ client.close()</code></pre>
                     }
                 } else if (cmd === 'DEL') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: DEL <key>';
+                        output = 'ERR INVALID_FORMAT';
                         isError = true;
                     } else {
                         const key = args[1];
@@ -1080,7 +1080,7 @@ client.close()</code></pre>
                     }
                 } else if (cmd === 'TTL') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: TTL <key>';
+                        output = 'ERR INVALID_FORMAT';
                         isError = true;
                     } else {
                         const key = args[1];
@@ -1103,7 +1103,7 @@ client.close()</code></pre>
                     }
                 } else if (cmd === 'PERSIST') {
                     if (args.length !== 2) {
-                        output = '(error) ERR wrong number of arguments. Usage: PERSIST <key>';
+                        output = 'ERR INVALID_FORMAT';
                         isError = true;
                     } else {
                         const key = args[1];
@@ -1121,7 +1121,7 @@ client.close()</code></pre>
                         }
                     }
                 } else {
-                    output = "(error) ERR unknown command '" + cmd + "'";
+                    output = "ERR UNKNOWN_COMMAND";
                     isError = true;
                 }
 
