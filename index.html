@@ -582,8 +582,8 @@
                     set: {
                         syntax: "SET <key> <value> [EX seconds | PX milliseconds]",
                         desc: "Stores a value with the specified key. If the key already exists, it is overwritten. You can optionally provide an expiration time.",
-                        returns: "Simple String: <code>OK</code> if successful, or <code>ERR INVALID_FORMAT</code> if the syntax is incorrect.",
-                        example: `SET mykey John\nOK\nSET mykey active EX 3600\nOK\n`
+                        returns: "Integer: <code>(integer) 1</code> if successful, or <code>ERR INVALID_FORMAT</code> if the syntax is incorrect.",
+                        example: `SET mykey John\n(integer) 1\nSET mykey active EX 3600\n(integer) 1\n`
                     },
                     get: {
                         syntax: "GET <key>",
@@ -1045,7 +1045,7 @@ client.close()</code></pre>
                         }
 
                         mockDB.set(key, { value: value, expireAt: expireAt });
-                        output = 'OK';
+                        output = '(integer) 1';
                     }
                 } else if (cmd === 'GET') {
                     if (args.length !== 2) {
