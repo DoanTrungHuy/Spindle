@@ -164,6 +164,12 @@ int64_t ShardedMap::ttl(std::string_view key) {
 
     // Return remaining time in seconds
     uint64_t now = get_current_time_ns();
+    if (node->expire_at <= now) {
+        shard.table.erase(it);
+        size_t total_size = sizeof(KVNode) + node->key_len + node->val_len;
+        m_allocator.deallocate(node, total_size);
+        return -2;
+    }
     uint64_t remaining_ns = node->expire_at - now;
     return static_cast<int64_t>(remaining_ns / 1'000'000'000ULL);
 }

@@ -5,7 +5,7 @@
 
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
   [![Language](https://img.shields.io/badge/Language-C%2B%2B20-purple.svg)]()
-  [![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS-lightgrey.svg)]()
+  [![Platform](https://img.shields.io/badge/Platform-Linux-lightgrey.svg)]()
   [![Build](https://img.shields.io/badge/Build-Passing-brightgreen.svg)]()
   ![Views](https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=Views&color=7c3aed&style=flat)
 </div>
@@ -58,6 +58,13 @@ Start the Spindle server from the build directory.
 ## Usage Guides
 
 Spindle uses a simple text-based TCP protocol. You can connect to it using any language that supports TCP sockets. The default server socket is `0.0.0.0:8888` (reachable via `127.0.0.1` locally). Commands are sent with a newline character (`\n`) at the end.
+
+### Protocol Reference
+- `SET <key> <value> [EX seconds | PX milliseconds]` -> Returns `OK\n`
+- `GET <key>` -> Returns `<value>\n` or `(nil)\n` if not found
+- `DEL <key>` -> Returns `(integer) 1\n` if deleted, `(integer) 0\n` if not found
+- `TTL <key>` -> Returns `(integer) <seconds>\n` (-1 if no TTL, -2 if not found)
+- `PERSIST <key>` -> Returns `(integer) 1\n` if TTL removed, `(integer) 0\n` if not found
 
 ### Java (using the provided SDK)
 A Java client is provided in the `clients/java/` directory.

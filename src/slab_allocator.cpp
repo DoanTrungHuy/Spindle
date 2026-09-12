@@ -14,7 +14,7 @@ SlabAllocator::SlabAllocator(size_t total_arena_size)
     // Define slab classes: 64B, 128B, 256B, 512B, 1024B, 2048B, 4096B
     std::vector<size_t> block_sizes = {64, 128, 256, 512, 1024, 2048, 4096};
     size_t num_classes = NUM_CLASSES;
-    size_t size_per_class = m_total_arena_size / num_classes;
+    size_t size_per_class = (m_total_arena_size / num_classes) & ~63ULL;
 
     char* current_ptr = m_arena_raw;
     for (size_t i = 0; i < num_classes; ++i) {
@@ -128,7 +128,7 @@ void SlabAllocator::deallocate(void* ptr, size_t size) {
     
     // Check if pointer is within the bounds of this slab class
     char* char_ptr = reinterpret_cast<char*>(ptr);
-    size_t size_per_class = m_total_arena_size / NUM_CLASSES;
+    size_t size_per_class = (m_total_arena_size / NUM_CLASSES) & ~63ULL;
     if (char_ptr < sc.arena_start || char_ptr >= sc.arena_start + size_per_class) {
         std::free(ptr);
         return;

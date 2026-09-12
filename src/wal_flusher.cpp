@@ -66,7 +66,12 @@ void WALFlusher::run() {
                 const LogEntry& entry = batch[i];
                 
                 if (entry.type == CommandType::SET) {
-                    std::fprintf(m_file, "SET %.*s %.*s\n", entry.key_len, entry.key, entry.val_len, entry.val);
+                    if (entry.dynamic_val) {
+                        std::fprintf(m_file, "SET %.*s %.*s\n", entry.key_len, entry.key, entry.val_len, entry.dynamic_val->data());
+                        delete entry.dynamic_val;
+                    } else {
+                        std::fprintf(m_file, "SET %.*s %.*s\n", entry.key_len, entry.key, entry.val_len, entry.val);
+                    }
                 } else if (entry.type == CommandType::DEL) {
                     std::fprintf(m_file, "DEL %.*s\n", entry.key_len, entry.key);
                 }
@@ -85,7 +90,12 @@ void WALFlusher::run() {
     LogEntry entry;
     while (m_ring_buffer.pop(entry)) {
         if (entry.type == CommandType::SET) {
-            std::fprintf(m_file, "SET %.*s %.*s\n", entry.key_len, entry.key, entry.val_len, entry.val);
+            if (entry.dynamic_val) {
+                std::fprintf(m_file, "SET %.*s %.*s\n", entry.key_len, entry.key, entry.val_len, entry.dynamic_val->data());
+                delete entry.dynamic_val;
+            } else {
+                std::fprintf(m_file, "SET %.*s %.*s\n", entry.key_len, entry.key, entry.val_len, entry.val);
+            }
         } else if (entry.type == CommandType::DEL) {
             std::fprintf(m_file, "DEL %.*s\n", entry.key_len, entry.key);
         }

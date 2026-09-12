@@ -17,7 +17,7 @@ using namespace std::chrono;
 
 struct Config {
     const char* host = "127.0.0.1";
-    int port = 8080, conns = 128, batch = 64, dur = 5, threads = 4;
+    int port = 8888, conns = 128, batch = 64, dur = 5, threads = 4;
     int payload_size = 1;
     const char* mode = "SET";
 } cfg;

@@ -13,9 +13,10 @@
 
 std::condition_variable cv_shutdown;
 std::mutex mtx_shutdown;
+static volatile std::sig_atomic_t g_shutdown_flag = 0;
 
 void signal_handler(int) {
-    std::cout << "\n[Graceful Shutdown] Received signal. Flushing WAL and stopping...\n";
+    g_shutdown_flag = 1;
     cv_shutdown.notify_all();
 }
 
@@ -54,6 +55,7 @@ void verify_wal_log(const std::string& filepath) {
 int main(int argc, char* argv[]) {
     std::signal(SIGINT, signal_handler);
     std::signal(SIGTERM, signal_handler);
+    std::signal(SIGPIPE, SIG_IGN); // Prevent server crash when client disconnects during write
 
     std::string host = "0.0.0.0";
     int port = 8888;
@@ -87,13 +89,14 @@ int main(int argc, char* argv[]) {
     ShardedMap kv_map(allocator);
 
     std::cout << "[3/4] Initializing Write-Ahead Log Flusher...\n";
-    MPSCRingBuffer<4096> ring_buffer;
-    WALFlusher wal_flusher(ring_buffer, wal_path);
+    // Heap-allocate ring buffer to avoid stack overflow (~2.45MB object)
+    auto ring_buffer = std::make_unique<MPSCRingBuffer<4096>>();
+    WALFlusher wal_flusher(*ring_buffer, wal_path);
 
     std::cout << "[4/5] Initializing " << threads << " Network Reactors (SO_REUSEPORT)...\n";
     std::vector<std::unique_ptr<Reactor>> reactors;
     for (int i = 0; i < threads; ++i) {
-        reactors.push_back(std::make_unique<Reactor>(host, port, kv_map, ring_buffer));
+        reactors.push_back(std::make_unique<Reactor>(host, port, kv_map, *ring_buffer));
     }
 
     std::cout << "[5/5] Initializing Expiry Cleaner (TTL background thread)...\n";
@@ -110,8 +113,9 @@ int main(int argc, char* argv[]) {
 
     // Block main thread, wait for Ctrl+C signal to proceed with cleanup
     std::unique_lock<std::mutex> lock(mtx_shutdown);
-    cv_shutdown.wait(lock);
+    cv_shutdown.wait(lock, [] { return g_shutdown_flag != 0; });
 
+    std::cout << "\n[Graceful Shutdown] Received signal. Flushing WAL and stopping...\n";
     std::cout << "\n>>> Shutting down Engine Subsystems...\n";
     for (auto& r : reactors) {
         r->stop();

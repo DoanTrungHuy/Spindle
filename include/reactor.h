@@ -7,6 +7,7 @@
 #include <thread>
 #include <atomic>
 #include <vector>
+#include <unordered_map>
 
 class Reactor {
 public:
@@ -43,8 +44,8 @@ private:
     std::atomic<size_t> m_connections_handled{0};
     std::atomic<size_t> m_requests_handled{0};
     
-    // Per-client TCP buffer for partial stream reads (Fix stream corruption bug)
-    std::string m_client_buffers[65536];
+    std::unordered_map<int, std::string> m_client_buffers;
+    std::unordered_map<int, std::string> m_client_out_buffers;
 
     void set_nonblocking(int fd);
     void handle_new_connection();

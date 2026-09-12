@@ -10,20 +10,28 @@ struct LogEntry {
     CommandType type;
     uint32_t key_len;
     uint32_t val_len;
-    char key[64];
-    char val[512];
+    char key[256];
+    char val[4096];
+    std::string* dynamic_val = nullptr; // For huge values
 
     bool set_data(CommandType t, std::string_view k, std::string_view v) {
-        if (k.size() >= sizeof(key) || v.size() >= sizeof(val)) {
-            return false; // Exceeds fixed buffers for zero-allocation path
+        if (k.size() >= sizeof(key)) {
+            return false; // Key too big is still rejected
         }
         type = t;
         key_len = static_cast<uint32_t>(k.size());
         val_len = static_cast<uint32_t>(v.size());
+        
         std::memcpy(key, k.data(), key_len);
         key[key_len] = '\0';
-        std::memcpy(val, v.data(), val_len);
-        val[val_len] = '\0';
+        
+        if (v.size() >= sizeof(val)) {
+            dynamic_val = new std::string(v);
+        } else {
+            std::memcpy(val, v.data(), val_len);
+            val[val_len] = '\0';
+            dynamic_val = nullptr;
+        }
         return true;
     }
 };

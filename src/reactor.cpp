@@ -160,6 +160,7 @@ void Reactor::handle_client_data(int client_fd) {
             if (request_str.size() > 16 * 1024 * 1024) {
                 close(client_fd);
                 m_client_buffers.erase(client_fd);
+                m_client_out_buffers.erase(client_fd);
                 return;
             }
         } else if (bytes_read < 0) {
@@ -168,10 +169,12 @@ void Reactor::handle_client_data(int client_fd) {
             }
             close(client_fd);
             m_client_buffers.erase(client_fd);
+            m_client_out_buffers.erase(client_fd);
             return;
         } else {
             close(client_fd); // Client disconnected
             m_client_buffers.erase(client_fd);
+            m_client_out_buffers.erase(client_fd);
             return;
         }
     }
@@ -179,28 +182,20 @@ void Reactor::handle_client_data(int client_fd) {
     std::string_view req_view(request_str);
     size_t start = 0;
     
-    static thread_local char out_buf[131072];
-    static thread_local size_t out_len = 0;
-    out_len = 0;
+    std::string& out_buf = m_client_out_buffers[client_fd];
 
     auto flush_output = [&]() {
-        if (out_len > 0) {
-            ssize_t sent = send(client_fd, out_buf, out_len, 0);
+        if (!out_buf.empty()) {
+            ssize_t sent = send(client_fd, out_buf.data(), out_buf.size(), MSG_NOSIGNAL);
             if (sent > 0) {
-                if (static_cast<size_t>(sent) < out_len) {
-                    std::memmove(out_buf, out_buf + sent, out_len - sent);
-                    out_len -= sent;
-                } else {
-                    out_len = 0;
-                }
+                out_buf.erase(0, sent);
             }
         }
     };
 
     auto append_output = [&](std::string_view msg) {
-        if (out_len + msg.size() > sizeof(out_buf)) flush_output();
-        std::memcpy(out_buf + out_len, msg.data(), msg.size());
-        out_len += msg.size();
+        out_buf.append(msg);
+        if (out_buf.size() > 65536) flush_output();
     };
 
     while (start < req_view.size()) {
@@ -280,8 +275,11 @@ void Reactor::handle_client_data(int client_fd) {
                 m_sharded_map.set(key, actual_val, evicted, evicted_key, [&]() {
                     // Write-Ahead Log via MPSC Ring Buffer
                     LogEntry log_entry;
-                    if (log_entry.set_data(CommandType::SET, key, actual_val))
-                        m_ring_buffer.push(log_entry);
+                    if (log_entry.set_data(CommandType::SET, key, actual_val)) {
+                        while (!m_ring_buffer.push(log_entry)) {
+                            std::this_thread::yield();
+                        }
+                    }
                 }, ttl_ns);
                 append_output("(integer) 1\n");
             } else {
@@ -302,8 +300,11 @@ void Reactor::handle_client_data(int client_fd) {
             if (!key.empty()) {
                 bool success = m_sharded_map.del(key, [&]() {
                     LogEntry log_entry;
-                    if (log_entry.set_data(CommandType::DEL, key, ""))
-                        m_ring_buffer.push(log_entry);
+                    if (log_entry.set_data(CommandType::DEL, key, "")) {
+                        while (!m_ring_buffer.push(log_entry)) {
+                            std::this_thread::yield();
+                        }
+                    }
                 });
                 if (success) {
                     append_output("(integer) 1\n");
