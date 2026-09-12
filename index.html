@@ -582,26 +582,31 @@
                     set: {
                         syntax: "SET <key> <value> [EX seconds | PX milliseconds]",
                         desc: "Stores a value with the specified key. If the key already exists, it is overwritten. You can optionally provide an expiration time.",
+                        returns: "Simple String: <code>OK\\n</code> if successful, or <code>ERR INVALID_FORMAT\\n</code> if the syntax is incorrect.",
                         example: `SET mykey John\n\n> OK\n\nSET mykey active EX 3600\n\n> OK\n`
                     },
                     get: {
                         syntax: "GET <key>",
                         desc: "Retrieves the value associated with the specified key.",
+                        returns: "Bulk String: The string value ending with <code>\\n</code>, or <code>(nil)\\n</code> if the key does not exist.",
                         example: `GET mykey\n\n> John\n\nGET non_existent\n\n> (nil)\n`
                     },
                     del: {
                         syntax: "DEL <key>",
                         desc: "Deletes the specified key and its associated value from the database.",
+                        returns: "Integer: <code>(integer) 1\\n</code> if the key was removed, or <code>(integer) 0\\n</code> if the key did not exist.",
                         example: `DEL mykey\n\n> (integer) 1\n\nDEL already_deleted\n\n> (integer) 0\n`
                     },
                     ttl: {
                         syntax: "TTL <key>",
-                        desc: "Returns the remaining time to live of a key that has a timeout, in seconds. Returns (integer) -1 if the key exists but has no associated expire. Returns (integer) -2 if the key does not exist.",
+                        desc: "Returns the remaining time to live of a key that has a timeout, in seconds.",
+                        returns: "Integer: <code>(integer) &lt;remaining_seconds&gt;\\n</code>. Returns <code>(integer) -1\\n</code> if the key exists but has no associated expire. Returns <code>(integer) -2\\n</code> if the key does not exist.",
                         example: `TTL mykey\n\n> (integer) 3599\n\nTTL no_timeout_key\n\n> (integer) -1\n`
                     },
                     persist: {
                         syntax: "PERSIST <key>",
                         desc: "Removes the existing timeout on key, turning the key from volatile (a key with an expire set) to persistent.",
+                        returns: "Integer: <code>(integer) 1\\n</code> if the timeout was removed, or <code>(integer) 0\\n</code> if the key does not exist or does not have an associated timeout.",
                         example: `PERSIST mykey\n\n> (integer) 1\n\nPERSIST no_timeout_key\n\n> (integer) 0\n`
                     }
                 };
@@ -614,7 +619,9 @@
                         <div class="bg-brand-50/50 dark:bg-brand-900/10 p-4 rounded-xl border border-brand-100 dark:border-brand-500/20 mb-6 overflow-x-auto">
                             <code class="text-brand-600 dark:text-brand-400 font-bold whitespace-nowrap text-[15px]">${data.syntax.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">${data.desc}</p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">${data.desc}</p>
+                        <h4 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2">Returns</h4>
+                        <p class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-sm">${data.returns}</p>
                         <h4 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3">Example Raw TCP Socket</h4>
                         <div class="bg-gray-50 dark:bg-[#020617]/50 rounded-xl p-5 font-mono text-sm overflow-x-auto border border-gray-200 dark:border-white/5 shadow-inner">
                             <pre><code class="text-gray-800 dark:text-gray-300 leading-loose">${data.example.replace(/\\n\n/g, '<br/>').replace(/\\n/g, '<span class="text-gray-400 dark:text-gray-500">\\n</span>').replace(/> /g, '<span class="text-green-600 dark:text-green-400 font-bold">> </span>')}</code></pre>
