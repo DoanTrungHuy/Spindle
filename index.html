@@ -55,7 +55,7 @@
     
     
     <style>
-        body { background-color: #0f172a; color: #ededed; overflow-x: hidden; }
+        body { background-color: #000000; color: #ededed; overflow-x: hidden; }
         .glass { background: rgba(10, 10, 10, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
         .bento-card { background: linear-gradient(145deg, rgba(20,20,20,0.8) 0%, rgba(10,10,10,0.8) 100%); border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s ease; }
         .bento-card:hover { border-color: rgba(139, 92, 246, 0.3); transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(139, 92, 246, 0.1); }
@@ -137,15 +137,15 @@
         }
         
         /* Light mode overrides using :root level class */
-        html.light body { background-color: #f8fafc !important; color: #1e293b !important; }
+        html.light body { background-color: #f8fafc !important; color: #09090b !important; }
         html.light .glass,
-        html.light [class*="bg-[#0f172a]"],
-        html.light [class*="bg-[#1e293b]"] { background: rgba(255,255,255,0.9) !important; border-color: #e2e8f0 !important; }
+        html.light [class*="bg-[#000000]"],
+        html.light [class*="bg-[#09090b]"] { background: rgba(255,255,255,0.9) !important; border-color: #e2e8f0 !important; }
         html.light .bento-card { background: #ffffff !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06); }
         html.light .bento-card:hover { border-color: rgba(139,92,246,0.5) !important; box-shadow: 0 10px 40px -10px rgba(139,92,246,0.15) !important; }
         html.light .mesh-bg { background-image: radial-gradient(at 0% 0%, rgba(124,58,237,0.08) 0px, transparent 50%), radial-gradient(at 100% 0%, rgba(59,130,246,0.08) 0px, transparent 50%) !important; }
         html.light .glow-text { text-shadow: none !important; }
-        html.light .text-white, html.light .font-bold.text-white { color: #0f172a !important; }
+        html.light .text-white, html.light .font-bold.text-white { color: #000000 !important; }
         html.light .text-gray-300 { color: #334155 !important; }
         html.light .text-gray-400 { color: #334155 !important; }
         html.light .text-gray-500 { color: #64748b !important; }
@@ -154,17 +154,17 @@
         html.light .text-blue-400 { color: #2563eb !important; }
         html.light .text-brand-400 { color: #7c3aed !important; }
         html.light .border-border { border-color: #e2e8f0 !important; }
-        html.light [class*="bg-[#1e293b]"] { background-color: #f1f5f9 !important; }
+        html.light [class*="bg-[#09090b]"] { background-color: #f1f5f9 !important; }
         html.light [class*="bg-[#020202]"] { background-color: #f8fafc !important; }
-        html.light [class*="bg-[#0f172a]"] { background-color: #ffffff !important; }
-        html.light .tab-active { background: #ffffff !important; color: #0f172a !important; border-color: rgba(0,0,0,0.1) !important; box-shadow: 0 2px 10px rgba(0,0,0,0.05) !important; }
+        html.light [class*="bg-[#000000]"] { background-color: #ffffff !important; }
+        html.light .tab-active { background: #ffffff !important; color: #000000 !important; border-color: rgba(0,0,0,0.1) !important; box-shadow: 0 2px 10px rgba(0,0,0,0.05) !important; }
         html.light .tab-inactive { color: #475569 !important; }
-        html.light .tab-inactive:hover { background: rgba(0,0,0,0.03) !important; color: #0f172a !important; }
+        html.light .tab-inactive:hover { background: rgba(0,0,0,0.03) !important; color: #000000 !important; }
         html.light .bg-white\/5, html.light .hover\:bg-white\/5:hover { background-color: rgba(0,0,0,0.05) !important; }
-        html.light .bg-white.text-black { background-color: #0f172a !important; color: #ffffff !important; }
-        html.light .bg-white.text-black:hover { background-color: #1e293b !important; }
-        html.light #theme-toggle { color: #0f172a !important; }
-        html.light .font-display.font-bold.text-xl { color: #0f172a !important; }
+        html.light .bg-white.text-black { background-color: #000000 !important; color: #ffffff !important; }
+        html.light .bg-white.text-black:hover { background-color: #09090b !important; }
+        html.light #theme-toggle { color: #000000 !important; }
+        html.light .font-display.font-bold.text-xl { color: #000000 !important; }
         /* Floating widget */
         #status-badge { mix-blend-mode: screen; }
         html.light #status-widget { background: #ffffff !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04) !important; }
@@ -186,9 +186,9 @@
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        background: '#0f172a',
-                        surface: '#1e293b',
-                        surfaceHover: '#020617',
+                        background: '#000000',
+                        surface: '#09090b',
+                        surfaceHover: '#000000',
                         border: 'rgba(255,255,255,0.08)',
                         brand: {
                             400: '#a78bfa',
@@ -233,10 +233,10 @@
         } catch (_) {}
     </script>
 </head>
-<body class="antialiased bg-white dark:bg-[#020617] text-gray-900 dark:text-gray-100 min-h-screen">
+<body class="antialiased bg-white dark:bg-[#000000] text-gray-900 dark:text-gray-100 min-h-screen">
     
     <!-- Navbar -->
-    <nav class="fixed top-0 w-full z-50 bg-[#0f172a]/95 backdrop-blur-md border-b border-border">
+    <nav class="fixed top-0 w-full z-50 bg-[#000000]/95 backdrop-blur-md border-b border-border">
         <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer group">
                 <img src="favicon.png" alt="Spindle" class="w-8 h-8 group-hover:scale-110 transition-transform duration-300">
@@ -396,7 +396,7 @@
                 <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-base sm:text-lg mb-8 break-words min-h-[240px] sm:min-h-[120px] md:min-h-[80px]" id="benchmark-desc">Tested locally on an 8-core CPU using 100 concurrent connections with Pipelining (batch=100) and tiny payloads. Designed to measure theoretical max engine throughput.</p>
                 
                 <!-- Tab Switcher -->
-                <div class="w-full bg-gray-100 dark:bg-[#1e293b]/60 dark:backdrop-blur-sm p-1 rounded-xl border border-gray-200 dark:border-white/5 relative z-20 flex flex-nowrap overflow-x-auto snap-x custom-scrollbar gap-1">
+                <div class="w-full bg-gray-100 dark:bg-[#09090b]/60 dark:backdrop-blur-sm p-1 rounded-xl border border-gray-200 dark:border-white/5 relative z-20 flex flex-nowrap overflow-x-auto snap-x custom-scrollbar gap-1">
                     <button onclick="switchBenchmark('peak')" id="tab-peak" class="benchmark-tab tab-active whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm">Peak Throughput</button>
                     <button onclick="switchBenchmark('real')" id="tab-real" class="benchmark-tab tab-inactive whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm">1KB Payload</button>
                     <button onclick="switchBenchmark('conn')" id="tab-conn" class="benchmark-tab tab-inactive whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm">1000 Connections</button>
@@ -405,7 +405,7 @@
                 </div>
             </div>
 
-            <div class="bento-card w-full min-w-0 rounded-2xl p-5 sm:p-8 overflow-hidden shadow-2xl relative group bg-white dark:bg-[#1e293b]">
+            <div class="bento-card w-full min-w-0 rounded-2xl p-5 sm:p-8 overflow-hidden shadow-2xl relative group bg-white dark:bg-[#09090b]">
                 <div class="absolute inset-0 bg-gradient-to-r from-brand-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
                 
                 <div class="flex flex-col gap-8 min-w-0">
@@ -418,7 +418,7 @@
                             </div>
                             <span class="text-brand-600 dark:text-brand-400 font-mono font-bold text-2xl" id="spindle-ops">10,712,298 <span class="text-sm text-gray-500 font-normal">ops/sec</span></span>
                         </div>
-                        <div class="h-8 w-full bg-gray-100 dark:bg-[#020617] rounded-full overflow-hidden border border-gray-200 dark:border-white/5 relative mb-3">
+                        <div class="h-8 w-full bg-gray-100 dark:bg-[#000000] rounded-full overflow-hidden border border-gray-200 dark:border-white/5 relative mb-3">
                             <div id="spindle-bar" class="absolute top-0 left-0 h-full bg-gradient-to-r from-brand-500 to-blue-500 rounded-full shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1)" style="width: 100%;"></div>
                         </div>
                         <!-- Spindle Latency Metrics -->
@@ -437,7 +437,7 @@
                             </div>
                             <span class="text-red-600 dark:text-red-400 font-mono font-medium text-xl" id="redis-ops">1,514,800 <span class="text-sm text-gray-500 font-normal">ops/sec</span></span>
                         </div>
-                        <div class="h-8 w-full bg-gray-100 dark:bg-[#020617] rounded-full overflow-hidden border border-gray-200 dark:border-white/5 relative mb-3">
+                        <div class="h-8 w-full bg-gray-100 dark:bg-[#000000] rounded-full overflow-hidden border border-gray-200 dark:border-white/5 relative mb-3">
                             <div id="redis-bar" class="absolute top-0 left-0 h-full bg-red-500/80 rounded-full transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1)" style="width: 14%;"></div>
                         </div>
                         <!-- Redis Latency Metrics -->
@@ -553,7 +553,7 @@
 
             
                 <!-- Command Details -->
-                <div class="bento-card rounded-2xl overflow-hidden shadow-xl bg-white dark:bg-[#0f172a] flex flex-col md:flex-row relative z-20 border border-gray-200 dark:border-white/10 min-w-0">
+                <div class="bento-card rounded-2xl overflow-hidden shadow-xl bg-white dark:bg-[#000000] flex flex-col md:flex-row relative z-20 border border-gray-200 dark:border-white/10 min-w-0">
                     <div class="absolute inset-0 bg-gradient-to-br from-brand-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
                     
                     <!-- Tabs Column -->
@@ -573,11 +573,11 @@
                         </div>
                     </div>
                     <div class="w-full lg:w-1/2 p-6 lg:p-8 bg-transparent flex flex-col min-w-0">
-                        <div class="bento-card rounded-2xl overflow-hidden shadow-2xl relative group flex-1 flex flex-col border-0 bg-gray-900 dark:bg-[#020617]">
+                        <div class="bento-card rounded-2xl overflow-hidden shadow-2xl relative group flex-1 flex flex-col border-0 bg-gray-900 dark:bg-[#000000]">
                             <div class="absolute inset-0 bg-gradient-to-br from-brand-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
                             
                             <!-- Mac Header -->
-                            <div class="flex items-center px-4 py-3 border-b border-gray-800 bg-gray-950 dark:bg-[#0f172a]">
+                            <div class="flex items-center px-4 py-3 border-b border-gray-800 bg-gray-950 dark:bg-[#000000]">
                                 <div class="flex gap-2">
                                     <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
                                     <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
@@ -649,7 +649,7 @@
                         <h4 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2">Returns</h4>
                         <p class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-sm">${data.returns}</p>
                         <h4 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3">Example Raw TCP Socket</h4>
-                        <div class="bg-gray-50 dark:bg-[#020617]/50 rounded-xl p-5 font-mono text-sm overflow-x-auto border border-gray-200 dark:border-white/5 shadow-inner">
+                        <div class="bg-gray-50 dark:bg-[#000000]/50 rounded-xl p-5 font-mono text-sm overflow-x-auto border border-gray-200 dark:border-white/5 shadow-inner">
                             <pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="text-gray-800 dark:text-gray-300 leading-loose">${data.example.replace(/\\n/g, '<br/>')}</code></pre>
                         </div>
                     `;
@@ -659,7 +659,7 @@
                     });
 
                     const activeTab = document.getElementById('cmd-tab-' + cmd);
-                    activeTab.className = "cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-xl font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-[#0f172a] shadow-sm border border-gray-200 dark:border-white/10 transition-all";
+                    activeTab.className = "cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-xl font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-[#000000] shadow-sm border border-gray-200 dark:border-white/10 transition-all";
                 }
 
                 switchCommand('set');
@@ -671,7 +671,7 @@
                 <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">Spindle speaks plain TCP. You can use our provided clients or easily write your own in any language.</p>
             </div>
             
-            <div class="bento-card w-full min-w-0 rounded-2xl overflow-hidden shadow-2xl relative group bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-white/10">
+            <div class="bento-card w-full min-w-0 rounded-2xl overflow-hidden shadow-2xl relative group bg-white dark:bg-[#09090b] border border-gray-200 dark:border-white/10">
                 <div class="absolute inset-0 bg-gradient-to-br from-brand-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
                 
                 <!-- Mac OS Window Header -->
@@ -691,7 +691,7 @@
                 </div>
 
                 <!-- Content Panels -->
-                <div class="relative overflow-y-auto bg-gray-50 dark:bg-[#0f172a] h-[350px]">
+                <div class="relative overflow-y-auto bg-gray-50 dark:bg-[#000000] h-[350px]">
                     <!-- Java Panel -->
                     <div id="panel-java" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed block overflow-x-hidden min-w-0">
 <pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-java text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">import</span> clients.java.SpindleClient;
@@ -791,7 +791,7 @@ client.close()</code></pre>
                 <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">Get Spindle up and running in seconds. Build from source or include it directly in your CMake projects.</p>
             </div>
             
-            <div class="bento-card w-full min-w-0 rounded-2xl overflow-hidden shadow-2xl relative group bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-white/10">
+            <div class="bento-card w-full min-w-0 rounded-2xl overflow-hidden shadow-2xl relative group bg-white dark:bg-[#09090b] border border-gray-200 dark:border-white/10">
                 <div class="absolute inset-0 bg-gradient-to-br from-brand-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
                 
                 <!-- Mac OS Window Header -->
@@ -809,7 +809,7 @@ client.close()</code></pre>
                 </div>
 
                 <!-- Content Panels -->
-                <div class="relative overflow-y-auto bg-gray-50 dark:bg-[#0f172a] h-[350px]">
+                <div class="relative overflow-y-auto bg-gray-50 dark:bg-[#000000] h-[350px]">
                     <!-- Source Panel -->
                     <div id="panel-install-source" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed block overflow-x-hidden min-w-0">
 <pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-bash text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># 1. Clone the repository</span>
@@ -849,7 +849,7 @@ client.close()</code></pre>
 
 
         </section>
-<footer class="border-t border-gray-200 dark:border-white/5 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-[#0f172a] dark:to-[#0a0f1e] pt-8 pb-32 md:pb-8 relative overflow-hidden z-20">
+<footer class="border-t border-gray-200 dark:border-white/5 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-[#000000] dark:to-[#0a0f1e] pt-8 pb-32 md:pb-8 relative overflow-hidden z-20">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-brand-500/30 to-transparent"></div>
         <div class="absolute bottom-0 left-0 w-64 h-64 bg-brand-600/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
         <div class="absolute bottom-0 right-0 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
@@ -866,7 +866,7 @@ client.close()</code></pre>
             </div></footer>
         <!-- Floating Status Widget -->
     <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 scale-90 sm:scale-100 origin-bottom-right z-50">
-        <button id="status-widget" aria-label="Toggle system status" onclick="toggleWidget()" class="cursor-pointer group flex items-center gap-3 bg-[#1e293b]/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/10 shadow-2xl hover:border-brand-500/40 hover:bg-[#020617] transition-all duration-300">
+        <button id="status-widget" aria-label="Toggle system status" onclick="toggleWidget()" class="cursor-pointer group flex items-center gap-3 bg-[#09090b]/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/10 shadow-2xl hover:border-brand-500/40 hover:bg-[#000000] transition-all duration-300">
             <span class="relative flex h-2.5 w-2.5 shrink-0" title="Click to collapse/expand">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
