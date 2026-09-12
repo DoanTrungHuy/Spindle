@@ -583,31 +583,31 @@
                         syntax: "SET <key> <value> [EX seconds | PX milliseconds]",
                         desc: "Stores a value with the specified key. If the key already exists, it is overwritten. You can optionally provide an expiration time.",
                         returns: "Simple String: <code>OK</code> if successful, or <code>ERR INVALID_FORMAT</code> if the syntax is incorrect.",
-                        example: `SET mykey John\n\n> OK\n\nSET mykey active EX 3600\n\n> OK\n`
+                        example: `SET mykey John\nOK\nSET mykey active EX 3600\nOK\n`
                     },
                     get: {
                         syntax: "GET <key>",
                         desc: "Retrieves the value associated with the specified key.",
                         returns: "Bulk String: The string value, or <code>(nil)</code> if the key does not exist.",
-                        example: `GET mykey\n\n> John\n\nGET non_existent\n\n> (nil)\n`
+                        example: `GET mykey\nJohn\nGET non_existent\n(nil)\n`
                     },
                     del: {
                         syntax: "DEL <key>",
                         desc: "Deletes the specified key and its associated value from the database.",
                         returns: "Integer: <code>(integer) 1</code> if the key was removed, or <code>(integer) 0</code> if the key did not exist.",
-                        example: `DEL mykey\n\n> (integer) 1\n\nDEL already_deleted\n\n> (integer) 0\n`
+                        example: `DEL mykey\n(integer) 1\nDEL already_deleted\n(integer) 0\n`
                     },
                     ttl: {
                         syntax: "TTL <key>",
                         desc: "Returns the remaining time to live of a key that has a timeout, in seconds.",
                         returns: "Integer: <code>(integer) &lt;remaining_seconds&gt;</code>. Returns <code>(integer) -1</code> if the key exists but has no associated expire. Returns <code>(integer) -2</code> if the key does not exist.",
-                        example: `TTL mykey\n\n> (integer) 3599\n\nTTL no_timeout_key\n\n> (integer) -1\n`
+                        example: `TTL mykey\n(integer) 3599\nTTL no_timeout_key\n(integer) -1\n`
                     },
                     persist: {
                         syntax: "PERSIST <key>",
                         desc: "Removes the existing timeout on key, turning the key from volatile (a key with an expire set) to persistent.",
                         returns: "Integer: <code>(integer) 1</code> if the timeout was removed, or <code>(integer) 0</code> if the key does not exist or does not have an associated timeout.",
-                        example: `PERSIST mykey\n\n> (integer) 1\n\nPERSIST no_timeout_key\n\n> (integer) 0\n`
+                        example: `PERSIST mykey\n(integer) 1\nPERSIST no_timeout_key\n(integer) 0\n`
                     }
                 };
 
@@ -624,7 +624,7 @@
                         <p class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-sm">${data.returns}</p>
                         <h4 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3">Example Raw TCP Socket</h4>
                         <div class="bg-gray-50 dark:bg-[#020617]/50 rounded-xl p-5 font-mono text-sm overflow-x-auto border border-gray-200 dark:border-white/5 shadow-inner">
-                            <pre><code class="text-gray-800 dark:text-gray-300 leading-loose">${data.example.replace(/\\n\n/g, '<br/>').replace(/\\n/g, '<span class="text-gray-400 dark:text-gray-500">\\n</span>').replace(/> /g, '<span class="text-green-600 dark:text-green-400 font-bold">> </span>')}</code></pre>
+                            <pre><code class="text-gray-800 dark:text-gray-300 leading-loose">${data.example.replace(/\\n/g, '<br/>')}</code></pre>
                         </div>
                     `;
 
