@@ -60,7 +60,7 @@ Start the Spindle server from the build directory.
 Spindle uses a simple text-based TCP protocol. You can connect to it using any language that supports TCP sockets. The default server socket is `0.0.0.0:8888` (reachable via `127.0.0.1` locally). Commands are sent with a newline character (`\n`) at the end.
 
 ### Protocol Reference
-- `SET <key> <value> [EX seconds | PX milliseconds]` -> Returns `OK\n`
+- `SET <key> <value> [EX seconds | PX milliseconds]` -> Returns `(integer) 1\n`
 - `GET <key>` -> Returns `<value>\n` or `(nil)\n` if not found
 - `DEL <key>` -> Returns `(integer) 1\n` if deleted, `(integer) 0\n` if not found
 - `TTL <key>` -> Returns `(integer) <seconds>\n` (-1 if no TTL, -2 if not found)
@@ -148,8 +148,11 @@ You can test the server directly from your terminal using `nc` (netcat):
 nc 127.0.0.1 8888
 # Then type commands:
 SET mykey hello
+(integer) 1
 GET mykey
+hello
 DEL mykey
+(integer) 1
 ```
 
 ### Other Languages (C#, PHP, Rust, C++, etc.)
