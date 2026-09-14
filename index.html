@@ -51,128 +51,11 @@
 </script>
 
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
     
     
-    <style>
-        body { background-color: #0f172a; color: #ededed; overflow-x: hidden; }
-        .glass { background: rgba(10, 10, 10, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
-        .bento-card { background: linear-gradient(145deg, rgba(20,20,20,0.8) 0%, rgba(10,10,10,0.8) 100%); border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s ease; }
-        .bento-card:hover { border-color: rgba(139, 92, 246, 0.3); transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(139, 92, 246, 0.1); }
-        .glow-text { text-shadow: 0 0 30px rgba(139, 92, 246, 0.4); }
-        .mesh-bg {
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%);
-        }
     
-        .custom-scrollbar::-webkit-scrollbar { height: 4px; width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.2); border-radius: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.4); }
-
-        /* Hero text: gradient in dark mode, solid in light mode */
-        .hero-gradient-text {
-            color: transparent;
-            background-image: linear-gradient(to right, #a78bfa, #60a5fa, #a78bfa);
-            -webkit-background-clip: text;
-            background-clip: text;
-            background-size: 200% 200%;
-            animation: gradient-x 15s ease infinite;
-            filter: drop-shadow(0 0 20px rgba(139,92,246,0.3));
-        }
-        html.light .hero-gradient-text {
-            color: #7c3aed !important; /* Solid brand-600 */
-            background-image: none !important;
-            -webkit-background-clip: border-box !important;
-            background-clip: border-box !important;
-            filter: none !important;
-        }
-</style>
-    <style>
-        /* Smooth transitions for theme switching */
-        *, *::before, *::after {
-            transition:
-                background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                fill 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        /* Don't slow down transform-based animations */
-        .bento-card, button, a, [class*="transition-all"] {
-            transition:
-                background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        /* Tab buttons: NO transition, instant switch */
-        .sdk-tab, .install-tab, .benchmark-tab {
-            transition: none !important;
-            border: none !important;
-            border-bottom: none !important;
-            outline: none !important;
-            cursor: pointer;
-        }
-        .tab-active {
-            color: #ffffff !important;
-            background: rgba(255, 255, 255, 0.1) !important;
-            font-weight: 600 !important;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        .tab-inactive {
-            color: #94a3b8 !important;
-            background: transparent !important;
-            font-weight: 500 !important;
-            border: 1px solid transparent;
-        }
-        .tab-inactive:hover {
-            color: #f1f5f9 !important;
-            background: rgba(255, 255, 255, 0.03) !important;
-        }
-        
-        /* Light mode overrides using :root level class */
-        html.light body { background-color: #f8fafc !important; color: #1e293b !important; }
-        html.light .glass,
-        html.light [class*="bg-[#0f172a]"],
-        html.light [class*="bg-[#1e293b]"] { background: rgba(255,255,255,0.9) !important; border-color: #e2e8f0 !important; }
-        html.light .bento-card { background: #ffffff !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06); }
-        html.light .bento-card:hover { border-color: rgba(139,92,246,0.5) !important; box-shadow: 0 10px 40px -10px rgba(139,92,246,0.15) !important; }
-        html.light .mesh-bg { background-image: radial-gradient(at 0% 0%, rgba(124,58,237,0.08) 0px, transparent 50%), radial-gradient(at 100% 0%, rgba(59,130,246,0.08) 0px, transparent 50%) !important; }
-        html.light .glow-text { text-shadow: none !important; }
-        html.light .text-white, html.light .font-bold.text-white { color: #0f172a !important; }
-        html.light .text-gray-300 { color: #334155 !important; }
-        html.light .text-gray-400 { color: #334155 !important; }
-        html.light .text-gray-500 { color: #64748b !important; }
-        html.light .text-pink-400 { color: #d946ef !important; }
-        html.light .text-green-400 { color: #16a34a !important; }
-        html.light .text-blue-400 { color: #2563eb !important; }
-        html.light .text-brand-400 { color: #7c3aed !important; }
-        html.light .border-border { border-color: #e2e8f0 !important; }
-        html.light [class*="bg-[#1e293b]"] { background-color: #f1f5f9 !important; }
-        html.light [class*="bg-[#020202]"] { background-color: #f8fafc !important; }
-        html.light [class*="bg-[#0f172a]"] { background-color: #ffffff !important; }
-        html.light .tab-active { background: #ffffff !important; color: #0f172a !important; border-color: rgba(0,0,0,0.1) !important; box-shadow: 0 2px 10px rgba(0,0,0,0.05) !important; }
-        html.light .tab-inactive { color: #475569 !important; }
-        html.light .tab-inactive:hover { background: rgba(0,0,0,0.03) !important; color: #0f172a !important; }
-        html.light .bg-white\/5, html.light .hover\:bg-white\/5:hover { background-color: rgba(0,0,0,0.05) !important; }
-        html.light .bg-white.text-black { background-color: #0f172a !important; color: #ffffff !important; }
-        html.light .bg-white.text-black:hover { background-color: #1e293b !important; }
-        html.light #theme-toggle { color: #0f172a !important; }
-        html.light .font-display.font-bold.text-xl { color: #0f172a !important; }
-        /* Floating widget */
-        #status-badge { mix-blend-mode: screen; }
-        html.light #status-widget { background: #ffffff !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04) !important; }
-        html.light #status-text { color: #334155 !important; }
-        html.light #status-separator { background-color: #e2e8f0 !important; }
-        html.light #status-views { background: transparent !important; border: 1px solid #e2e8f0 !important; border-radius: 9999px !important; padding: 2px 8px !important; }
-        html.light #status-badge { filter: invert(1) brightness(1.08); mix-blend-mode: multiply !important; clip-path: inset(2px); }
-    </style>
+    
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -182,18 +65,26 @@
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        display: ['Outfit', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        background: '#0f172a',
-                        surface: '#1e293b',
-                        surfaceHover: '#020617',
-                        border: 'rgba(255,255,255,0.08)',
+                        background: '#f3f4f6',
+                        surface: '#ffffff',
+                        border: '#e5e7eb',
                         brand: {
-                            400: '#a78bfa',
-                            500: '#8b5cf6',
-                            600: '#7c3aed',
+                            50: '#f0f4f8',
+                            100: '#d9e2ec',
+                            400: '#334e68',
+                            500: '#243b53',
+                            600: '#002147',
+                            900: '#102a43',
+                        },
+                        red: {
+                            400: '#c53030',
+                            500: '#9b2c2c',
+                            600: '#8b0000',
+                            900: '#63171b',
                         }
                     },
                     animation: {
@@ -220,44 +111,195 @@
             }
         };
     </script>
-    <script>
-        // Prevent FOUC (Flash of Unstyled Content) by setting theme before body renders
-        try {
-            if (localStorage.getItem('theme') === 'light') {
-                document.documentElement.classList.add('light');
-                document.documentElement.classList.remove('dark');
-            } else {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-            }
-        } catch (_) {}
-    </script>
+    
+
+
+
+
+<style>
+    body { overflow-x: hidden; }
+    
+    /* Academic List Design for Architecture */
+    .architecture-grid {
+        
+        gap: 2rem !important;
+    }
+    .bento-card {
+        background-color: transparent !important;
+        border: none !important;
+        border-top: 2px solid #e5e7eb !important;
+        border-radius: 0 !important;
+        padding: 1.5rem 0 0 0 !important;
+        box-shadow: none !important;
+    }
+    .bento-card:hover {
+        transform: none !important;
+        border-top-color: #002147 !important; /* Oxford Blue */
+    }
+    .bento-card h3 {
+        display: flex;
+        align-items: flex-start;
+        font-size: 1.25rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+    
+    
+    
+    /* Tab Styling */
+    .tab-active, .cmd-tab.tab-active, .sdk-tab.tab-active { 
+        background-color: #002147 !important; 
+        color: #ffffff !important; 
+        border-color: #002147 !important;
+        font-weight: 600 !important;
+    }
+    .tab-inactive, .cmd-tab.tab-inactive, .sdk-tab.tab-inactive { 
+        background-color: #ffffff !important; 
+        color: #555555 !important; 
+        border-color: #e5e7eb !important; 
+    }
+
+    /* Status widget hover */
+    #status-widget:hover {
+        background-color: #f8fafc !important;
+        color: #111111 !important;
+        border-color: #cbd5e1 !important;
+    }
+    
+    /* Disable all gradient backgrounds */
+    [class*="bg-gradient-"], .mesh-bg {
+        background-image: none !important;
+        background-color: #ffffff !important;
+    }
+    
+    /* Custom Scrollbar */
+    .custom-scrollbar::-webkit-scrollbar { height: 6px; width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    
+    /* RESPONSIVE & UX OPTIMIZATIONS */
+    
+    /* A4 Paper Layout */
+    body {
+        padding: 2rem 1rem !important;
+        background-color: #e5e7eb !important;
+    }
+    #document-wrapper {
+        max-width: 900px !important;
+        margin: 0 auto !important;
+        background-color: #ffffff !important;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.15) !important;
+        padding: 4rem 5rem !important;
+        min-height: 100vh;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+
+    pre, code, .overflow-x-auto {
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        box-sizing: border-box !important;
+    }
+    
+    p, h1, h2, h3, h4, span, div {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+    }
+
+    p {
+        text-align: left !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    header.text-center p {
+        text-align: center !important;
+    }
+    
+    .abstract {
+        font-style: italic;
+        margin: 2rem 3rem !important;
+        text-align: justify !important;
+        hyphens: auto;
+    }
+
+    /* Academic Headers */
+    h2 {
+        border-bottom: 1px solid #dddddd;
+        padding-bottom: 0.5rem !important;
+        margin-top: 3rem !important;
+        margin-bottom: 1.5rem !important;
+        font-size: 1.5rem !important;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 900 !important;
+        text-align: left !important;
+    }
+    
+    h1 {
+        text-align: center !important;
+        margin-bottom: 1rem !important;
+        margin-top: 2rem !important;
+    }
+    
+    nav {
+        border-bottom: 2px solid #111111 !important;
+        background: transparent !important;
+        backdrop-filter: none !important;
+        margin-bottom: 3rem !important;
+        padding-bottom: 1rem !important;
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding: 0 !important;
+            background-color: #ffffff !important;
+        }
+        #document-wrapper {
+            padding: 1.5rem 1rem !important;
+            box-shadow: none !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+        }
+        main, section, header, footer {
+            margin: 0 0 2rem 0 !important;
+        }
+        .abstract {
+            margin: 1.5rem 0.5rem !important;
+            text-align: left !important;
+        }
+        h2 {
+            margin-top: 2rem !important;
+            font-size: 1.25rem !important;
+        }
+        h1 {
+            font-size: 2rem !important;
+        }
+        .architecture-grid, .grid {
+            gap: 1.5rem !important;
+        }
+        .bento-card {
+            padding: 1rem 0 0 0 !important;
+        }
+    }
+</style>
 </head>
-<body class="antialiased bg-white dark:bg-[#020617] text-gray-900 dark:text-gray-100 min-h-screen">
+<body class="antialiased bg-slate-50 -slate-900 text-slate-800 -slate-200 min-h-screen">
+<div id="document-wrapper">
     
     <!-- Navbar -->
-    <nav class="fixed top-0 w-full z-50 bg-[#0f172a]/95 backdrop-blur-md border-b border-border">
-        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <nav class="w-full relative  bg-white/90 -slate-900/90 backdrop-blur-md border-b border-border">
+        <div class="w-full  px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer group">
                 <img src="favicon.png" alt="Spindle" class="w-8 h-8 group-hover:scale-110 transition-transform duration-300">
-                <span class="font-display font-bold text-xl tracking-tight text-white">Spindle</span>
+                <span class="font-serif font-bold text-xl tracking-tight text-slate-900 -slate-100">Spindle</span>
             </div>
             
             <div class="flex items-center gap-4 text-sm font-medium text-gray-400">
                 <!-- Theme Toggle Button -->
                 
                 
-                <button id="theme-toggle" aria-label="Toggle dark mode" class="p-2 rounded-full hover:bg-gray-200/10 transition-colors text-gray-900 dark:text-white">
-                    <!-- Sun Icon (Hidden in Light Mode) -->
-                    <svg id="theme-icon-sun" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                    <!-- Moon Icon (Hidden in Dark Mode) -->
-                    <svg id="theme-icon-moon" class="w-5 h-5 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
-                </button>
-                <a href="https://github.com/DoanTrungHuy/Spindle" class="flex items-center gap-2 bg-white text-black px-4 py-2 rounded-full hover:bg-gray-200 transition-colors">
+                
+                <a href="https://github.com/DoanTrungHuy/Spindle" class="flex items-center gap-2 bg-brand-900 text-white -white -slate-900 px-4 py-2 rounded-md hover:bg-slate-800 -gray-200 transition-colors">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
                     <span class="hidden sm:inline">GitHub</span>
                 </a>
@@ -267,24 +309,24 @@
 
     
 
-    <main class="flex-grow w-full min-w-0 mesh-bg pt-32 pb-10 relative">
+    <main class="flex-grow w-full min-w-0 mesh-bg   relative">
         <!-- Hero Section -->
-        <header class="max-w-5xl mx-auto px-6 text-center mb-24 relative z-10">
-            <a href="https://github.com/DoanTrungHuy/Spindle/releases" target="_blank" class="inline-flex items-center px-5 py-1.5 rounded-full bg-brand-50/50 dark:bg-transparent border border-brand-200 dark:border-brand-500/30 text-brand-600 dark:text-brand-400 text-xs font-bold tracking-wide uppercase mb-8 hover:bg-brand-50 dark:hover:bg-brand-500/10 transition-all shadow-sm">
-                v1.0.0 is now live
+        <header class="w-full  px-6 text-center  relative ">
+            <a href="https://github.com/DoanTrungHuy/Spindle/releases" target="_blank" class="inline-flex items-center px-5 py-1.5 rounded-full bg-gray-50/50 -transparent border border-brand-200 -brand-500/30 text-brand-600 -brand-400 text-xs font-bold tracking-wide uppercase  hover:bg-gray-50 -brand-500/10 transition-all shadow-sm">
+                v1.0.0 Release Notes
             </a>
             
-            <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight px-2 sm:px-0">
-                Data processing at <br class="hidden sm:block">
-                <span class="hero-gradient-text">microsecond speed.</span>
+            <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight  leading-tight px-2 sm:px-0">
+                A High-Performance Architecture for <br class="hidden sm:block">
+                <span class="text-brand-600 -blue-400 font-bold">In-Memory Data Processing</span>
             </h1>
             
-            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+            <p class="abstract text-gray-600 text-sm"><strong>Abstract</strong> — 
                 Spindle is a high-performance, multithreaded Key-Value store engineered in Modern C++20. Designed for developers who demand absolute control over concurrency and memory.
             </p>
 
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#architecture" class="px-8 py-4 rounded-xl bg-white text-black font-semibold hover:scale-105 transition-transform duration-300 w-full sm:w-auto">Explore Architecture</a>
+                <a href="#architecture" class="px-8 py-4 rounded-md bg-brand-900 text-slate-900 -slate-100 -white -slate-900 shadow-md font-semibold hover:scale-105 transition-transform duration-300 w-full sm:w-auto">Explore Architecture</a>
                 
             </div>
         </header>
@@ -306,97 +348,85 @@
         <!-- Benchmark Section -->
         
 
-        <!-- Bento Grid Features -->
+        <!-- Architectural Components -->
         
 
     </main>
 
     <!-- Footer -->
     
-<section id="architecture" class="max-w-6xl mx-auto px-6 mb-10 pt-20 -mt-20">
-            <h2 class="font-display text-3xl md:text-4xl font-bold mb-12 text-center">Engineered for Performance</h2>
+<section id="architecture" class="w-full  px-6   -">
+            <h2 class="font-serif text-3xl md:text-4xl font-bold  text-center">System Architecture & Design</h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 architecture-grid gap-6">
                 <!-- Medium Card (New) -->
-                <div class="md:col-span-1 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute left-0 bottom-0 w-64 h-64 bg-red-500/10 blur-[80px] rounded-full group-hover:bg-red-500/20 transition-colors"></div>
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center mb-6 border border-red-500/30">
-                            <svg class="w-6 h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
-                        </div>
-                        <h3 class="text-xl font-display font-bold mb-3 text-white">Write-Ahead Logging (WAL)</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Data durability is guaranteed via an asynchronous Write-Ahead Log, fueled by a lock-free MPSC Ring Buffer to eliminate I/O blocking.</p>
+                <div class="md:col-span-1 bento-card rounded-lg p-8 flex flex-col justify-between relative overflow-hidden group">
+                    
+                    <div class="relative ">
+                        
+                        <h3 class="text-xl font-serif font-bold  text-slate-900 -slate-100">Write-Ahead Logging (WAL)</h3>
+                        <p class="text-gray-600 text-sm">Data durability is guaranteed via an asynchronous Write-Ahead Log, fueled by a lock-free MPSC Ring Buffer to eliminate I/O blocking.</p>
                     </div>
                 </div>
 
                 <!-- Large Card (New) -->
-                <div class="md:col-span-2 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute right-1/4 top-0 w-64 h-64 bg-amber-500/10 blur-[80px] rounded-full group-hover:bg-amber-500/20 transition-colors"></div>
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center mb-6 border border-amber-500/30">
-                            <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                        </div>
-                        <h3 class="text-2xl font-display font-bold mb-3 text-white">Sharded Hash Map Architecture</h3>
-                        <p class="text-gray-400 leading-relaxed max-w-2xl">The core database is divided into multiple independent shards (partitions). This significantly reduces global lock contention, allowing multiple threads to read and write simultaneously for massive throughput.</p>
+                <div class="md:col-span-1 bento-card rounded-lg p-8 flex flex-col justify-between relative overflow-hidden group">
+                    
+                    <div class="relative ">
+                        
+                        <h3 class="text-2xl font-serif font-bold  text-slate-900 -slate-100">Sharded Hash Map Architecture</h3>
+                        <p class="text-gray-600 text-sm">The core database is divided into multiple independent shards (partitions). This significantly reduces global lock contention, allowing multiple threads to read and write simultaneously for massive throughput.</p>
                     </div>
                 </div>
 
                 <!-- Large Card -->
-                <div class="md:col-span-2 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute right-0 top-0 w-64 h-64 bg-transparent blur-[80px] rounded-full group-hover:bg-brand-500/20 transition-colors"></div>
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-full bg-brand-500/20 flex items-center justify-center mb-6 border border-brand-500/30">
-                            <svg class="w-6 h-6 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                        </div>
-                        <h3 class="text-2xl font-display font-bold mb-3 text-white">Userspace Spinlocks</h3>
-                        <p class="text-gray-400 leading-relaxed">By avoiding expensive OS-level mutex context switches, Spindle achieves ultra-fast lock-free multi-core synchronization. Perfect for high-contention environments.</p>
+                <div class="md:col-span-1 bento-card rounded-lg p-8 flex flex-col justify-between relative overflow-hidden group">
+                    
+                    <div class="relative ">
+                        
+                        <h3 class="text-2xl font-serif font-bold  text-slate-900 -slate-100">Userspace Spinlocks</h3>
+                        <p class="text-gray-600 text-sm">By avoiding expensive OS-level mutex context switches, Spindle achieves ultra-fast lock-free multi-core synchronization. Perfect for high-contention environments.</p>
                     </div>
                 </div>
 
                 <!-- Small Card -->
-                <div class="md:col-span-1 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute left-1/2 top-0 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full group-hover:bg-blue-500/20 transition-colors -translate-x-1/2"></div>
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center mb-6 border border-blue-500/30">
-                            <svg class="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4"></path></svg>
-                        </div>
-                        <h3 class="text-xl font-display font-bold mb-3 text-white">Slab Allocator</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Custom memory management that eliminates heap fragmentation and maximizes CPU cache locality.</p>
+                <div class="md:col-span-1 bento-card rounded-lg p-8 flex flex-col justify-between relative overflow-hidden group">
+                    
+                    <div class="relative ">
+                        
+                        <h3 class="text-xl font-serif font-bold  text-slate-900 -slate-100">Slab Allocator</h3>
+                        <p class="text-gray-600 text-sm">Custom memory management that eliminates heap fragmentation and maximizes CPU cache locality.</p>
                     </div>
                 </div>
 
                 <!-- Small Card -->
-                <div class="md:col-span-1 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute right-0 bottom-0 w-64 h-64 bg-green-500/10 blur-[80px] rounded-full group-hover:bg-green-500/20 transition-colors"></div>
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mb-6 border border-green-500/30">
-                            <svg class="w-6 h-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        </div>
-                        <h3 class="text-xl font-display font-bold mb-3 text-white">Reactor Pattern</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Epoll-based architecture to multiplex thousands of concurrent TCP connections seamlessly.</p>
+                <div class="md:col-span-1 bento-card rounded-lg p-8 flex flex-col justify-between relative overflow-hidden group">
+                    
+                    <div class="relative ">
+                        
+                        <h3 class="text-xl font-serif font-bold  text-slate-900 -slate-100">Reactor Pattern</h3>
+                        <p class="text-gray-600 text-sm">Epoll-based architecture to multiplex thousands of concurrent TCP connections seamlessly.</p>
                     </div>
                 </div>
 
                 <!-- Large Card -->
-                <div class="md:col-span-2 bento-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group">
-                    <div class="absolute left-0 bottom-0 w-64 h-64 bg-pink-500/10 blur-[80px] rounded-full group-hover:bg-pink-500/20 transition-colors"></div>
-                    <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center mb-6 border border-pink-500/30">
-                            <svg class="w-6 h-6 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        <h3 class="text-2xl font-display font-bold mb-3 text-white">Active & Lazy Expiry</h3>
-                        <p class="text-gray-400 leading-relaxed">TTL and key expiration is handled gracefully via background cleaner threads and on-demand lazy eviction, ensuring memory is freed without blocking readers.</p>
+                <div class="md:col-span-1 bento-card rounded-lg p-8 flex flex-col justify-between relative overflow-hidden group">
+                    
+                    <div class="relative ">
+                        
+                        <h3 class="text-2xl font-serif font-bold  text-slate-900 -slate-100">Active & Lazy Expiry</h3>
+                        <p class="text-gray-600 text-sm">TTL and key expiration is handled gracefully via background cleaner threads and on-demand lazy eviction, ensuring memory is freed without blocking readers.</p>
                     </div>
                 </div>
             </div>
         </section>
-<section id="benchmark" class="w-full max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-10 -mt-10">
-            <div class="text-center mb-12 overflow-hidden">
-                <h2 class="text-3xl md:text-5xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight break-words">Crushing the Competition</h2>
-                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-base sm:text-lg mb-8 break-words min-h-[240px] sm:min-h-[120px] md:min-h-[80px]" id="benchmark-desc">Tested locally on an 8-core CPU using 100 concurrent connections with Pipelining (batch=100) and tiny payloads. Designed to measure theoretical max engine throughput.</p>
+<section id="benchmark" class="w-full w-full  px-6  relative   -">
+            <div class="text-center  overflow-hidden">
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 -slate-100  tracking-tight break-words">Performance Benchmarks</h2>
+                <p class="text-gray-600 -gray-400 w-full  text-base sm:text-lg  break-words mb-6" id="benchmark-desc">Tested locally on an 8-core CPU using 100 concurrent connections with Pipelining (batch=100) and tiny payloads. Designed to measure theoretical max engine throughput.</p>
                 
                 <!-- Tab Switcher -->
-                <div class="w-full bg-gray-100 dark:bg-[#1e293b]/60 dark:backdrop-blur-sm p-1 rounded-xl border border-gray-200 dark:border-white/5 relative z-20 flex flex-nowrap overflow-x-auto snap-x custom-scrollbar gap-1">
+                <div class="w-full bg-gray-100/60 -blur-sm p-1 rounded-xl border border-gray-200 -white/5 relative  flex flex-nowrap overflow-x-auto snap-x custom-scrollbar gap-1">
                     <button onclick="switchBenchmark('peak')" id="tab-peak" class="benchmark-tab tab-active whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm">Peak Throughput</button>
                     <button onclick="switchBenchmark('real')" id="tab-real" class="benchmark-tab tab-inactive whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm">1KB Payload</button>
                     <button onclick="switchBenchmark('conn')" id="tab-conn" class="benchmark-tab tab-inactive whitespace-nowrap snap-center px-5 py-2.5 rounded-lg text-sm">1000 Connections</button>
@@ -405,45 +435,45 @@
                 </div>
             </div>
 
-            <div class="bento-card w-full min-w-0 rounded-2xl p-5 sm:p-8 overflow-hidden shadow-2xl relative group bg-white dark:bg-[#1e293b]">
-                <div class="absolute inset-0 bg-gradient-to-r from-brand-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
+            <div class="bento-card w-full min-w-0 rounded-lg p-5 sm:p-8 overflow-hidden shadow-2xl relative group bg-white">
+                
                 
                 <div class="flex flex-col gap-8 min-w-0">
                     <!-- Spindle Row -->
                     <div class="min-w-0 w-full">
-                        <div class="flex flex-col sm:flex-row justify-start sm:justify-between items-start sm:items-end gap-2 sm:gap-0 mb-3">
+                        <div class="flex flex-col sm:flex-row justify-start sm:justify-between items-start sm:items-end gap-2 sm:gap-0 ">
                             <div class="flex items-center gap-3">
-                                <span class="font-display font-bold text-2xl text-brand-600 dark:text-brand-400">Spindle</span>
-                                <span class="px-2 py-0.5 rounded text-xs font-bold bg-brand-500/10 dark:bg-brand-500/20 text-brand-600 dark:text-brand-400 border border-brand-500/20 dark:border-brand-500/30">8 Threads</span>
+                                <span class="font-serif font-bold text-2xl text-brand-600 -brand-400">Spindle</span>
+                                <span class="px-2 py-0.5 rounded text-xs font-bold bg-gray-100 -brand-500/20 text-brand-600 -brand-400 border border-gray-200 -brand-500/30">4 Threads</span>
                             </div>
-                            <span class="text-brand-600 dark:text-brand-400 font-mono font-bold text-2xl" id="spindle-ops">10,712,298 <span class="text-sm text-gray-500 font-normal">ops/sec</span></span>
+                            <span class="text-brand-600 -brand-400 font-mono font-bold text-2xl" id="spindle-ops">6,812,298 <span class="text-sm text-gray-500 font-normal">ops/sec</span></span>
                         </div>
-                        <div class="h-8 w-full bg-gray-100 dark:bg-[#020617] rounded-full overflow-hidden border border-gray-200 dark:border-white/5 relative mb-3">
-                            <div id="spindle-bar" class="absolute top-0 left-0 h-full bg-gradient-to-r from-brand-500 to-blue-500 rounded-full shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1)" style="width: 100%;"></div>
+                        <div class="h-8 w-full bg-gray-100 rounded-none overflow-hidden border border-gray-200 -white/5 relative ">
+                            <div id="spindle-bar" class="absolute top-0 left-0 h-full bg-brand-600 rounded-none shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1)" style="width: 100%;"></div>
                         </div>
                         <!-- Spindle Latency Metrics -->
-                        <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 text-xs font-mono text-gray-500 mt-2 sm:mt-0">
-                            <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>P50 Latency: <span id="spindle-p50" class="text-gray-800 dark:text-gray-300 font-semibold">0.53ms</span></div>
-                            <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-yellow-500"></div>P99 Latency: <span id="spindle-p99" class="text-gray-800 dark:text-gray-300 font-semibold">4.79ms</span></div>
+                        <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 text-xs font-mono text-gray-500  sm:">
+                            <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 bg-slate-400 rounded-none"></div>P50 Latency: <span id="spindle-p50" class="text-gray-800 -gray-300 font-semibold">0.53ms</span></div>
+                            <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 bg-slate-400 rounded-none"></div>P99 Latency: <span id="spindle-p99" class="text-gray-800 -gray-300 font-semibold">4.79ms</span></div>
                         </div>
                     </div>
                     
                     <!-- Redis Row -->
-                    <div class="min-w-0 w-full pt-2 border-t border-gray-200 dark:border-white/5">
-                        <div class="flex flex-col sm:flex-row justify-start sm:justify-between items-start sm:items-end gap-2 sm:gap-0 mb-3 mt-4">
+                    <div class="min-w-0 w-full  border-t border-gray-200 -white/5">
+                        <div class="flex flex-col sm:flex-row justify-start sm:justify-between items-start sm:items-end gap-2 sm:gap-0  ">
                             <div class="flex items-center gap-3">
-                                <span class="font-display font-bold text-xl text-red-600 dark:text-red-400">Redis 7.0</span>
-                                <span class="px-2 py-0.5 rounded text-xs font-bold bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20">1 Thread</span>
+                                <span class="font-serif font-bold text-xl text-red-600 -red-400">Redis 7.0</span>
+                                <span class="px-2 py-0.5 rounded text-xs font-bold bg-red-500/10 text-red-600 -red-400 border border-red-500/20">1 Thread</span>
                             </div>
-                            <span class="text-red-600 dark:text-red-400 font-mono font-medium text-xl" id="redis-ops">1,514,800 <span class="text-sm text-gray-500 font-normal">ops/sec</span></span>
+                            <span class="text-red-600 -red-400 font-mono font-medium text-xl" id="redis-ops">1,514,800 <span class="text-sm text-gray-500 font-normal">ops/sec</span></span>
                         </div>
-                        <div class="h-8 w-full bg-gray-100 dark:bg-[#020617] rounded-full overflow-hidden border border-gray-200 dark:border-white/5 relative mb-3">
-                            <div id="redis-bar" class="absolute top-0 left-0 h-full bg-red-500/80 rounded-full transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1)" style="width: 14%;"></div>
+                        <div class="h-8 w-full bg-gray-100 rounded-none overflow-hidden border border-gray-200 -white/5 relative ">
+                            <div id="redis-bar" class="absolute top-0 left-0 h-full bg-red-600 rounded-none transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1)" style="width: 14%;"></div>
                         </div>
                         <!-- Redis Latency Metrics -->
-                        <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 text-xs font-mono text-gray-500 mt-2 sm:mt-0">
-                            <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-green-500 opacity-50"></div>P50 Latency: <span id="redis-p50" class="text-gray-600 dark:text-gray-400 font-semibold">2.51ms</span></div>
-                            <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-red-500 opacity-70"></div>P99 Latency: <span id="redis-p99" class="text-gray-600 dark:text-gray-400 font-semibold">8.54ms</span></div>
+                        <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 text-xs font-mono text-gray-500  sm:">
+                            <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 bg-slate-400 rounded-none"></div>P50 Latency: <span id="redis-p50" class="text-gray-600 -gray-400 font-semibold">2.51ms</span></div>
+                            <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 bg-slate-400 rounded-none"></div>P99 Latency: <span id="redis-p99" class="text-gray-600 -gray-400 font-semibold">8.54ms</span></div>
                         </div>
                     </div>
                 </div>
@@ -452,7 +482,7 @@
             <script>
                 const benchData = {
                     peak: {
-                        spindleOps: "10,712,298", redisOps: "1,514,800",
+                        spindleOps: "6,812,298", redisOps: "1,514,800",
                         spindleWidth: "100%", redisWidth: "14%",
                         spindleP50: "0.53ms", spindleP99: "4.79ms",
                         redisP50: "2.51ms", redisP99: "8.54ms",
@@ -466,14 +496,14 @@
                         desc: "Tested locally using 100 concurrent connections with Pipelining (Batch=100) and realistic 1KB Random Data Payloads. Redis suffers severe CPU bottlenecking while Spindle scales gracefully."
                     },
                     conn: {
-                        spindleOps: "11,125,916", redisOps: "968,221",
+                        spindleOps: "7,125,916", redisOps: "968,221",
                         spindleWidth: "100%", redisWidth: "8.7%",
                         spindleP50: "7.98ms", spindleP99: "14.47ms",
                         redisP50: "75.33ms", redisP99: "151.61ms",
                         desc: "Stress testing network layer with 1,000 active connections + Pipelining (Batch=100). Spindle's epoll-based multi-threaded Reactor absorbs the storm with virtually no latency spike, while Redis degrades."
                     },
                     get: {
-                        spindleOps: "25,056,697", redisOps: "679,584",
+                        spindleOps: "15,056,697", redisOps: "679,584",
                         spindleWidth: "100%", redisWidth: "2.7%",
                         spindleP50: "0.29ms", spindleP99: "1.79ms",
                         redisP50: "6.91ms", redisP99: "13.25ms",
@@ -545,58 +575,58 @@
                 }
             </script>
         </section>
-<section id="commands" class="max-w-7xl mx-auto px-4 sm:px-6 mb-32 relative z-10 pt-20 -mt-20 w-full overflow-hidden">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-5xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight">Commands Reference</h2>
-                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">Spindle uses a simple, human-readable text protocol over TCP. Every command must be terminated with a newline (<code>\n</code>).</p>
+<section id="commands" class="w-full  px-4 sm:px-6  relative   - w-full overflow-hidden">
+            <div class="text-center ">
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 -slate-100  tracking-tight">Commands Reference</h2>
+                <p class="text-gray-600 -gray-400 w-full  text-lg">Spindle uses a simple, human-readable text protocol over TCP. Every command must be terminated with a newline (<code>\n</code>).</p>
             </div>
 
             
                 <!-- Command Details -->
-                <div class="bento-card rounded-2xl overflow-hidden shadow-xl bg-white dark:bg-[#0f172a] flex flex-col md:flex-row relative z-20 border border-gray-200 dark:border-white/10 min-w-0">
+                <div class="bento-card rounded-lg overflow-hidden shadow-xl bg-white flex flex-col md:flex-row relative  border border-gray-200 -white/10 min-w-0">
                     <div class="absolute inset-0 bg-gradient-to-br from-brand-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
                     
                     <!-- Tabs Column -->
-                    <div class="w-full md:w-1/5 lg:w-1/6 bg-gray-50/50 dark:bg-transparent border-b md:border-b-0 md:border-r border-gray-200 dark:border-white/5 flex flex-row md:flex-col overflow-x-auto p-4 gap-2 shrink-0 snap-x custom-scrollbar min-w-0">
-                    <button onclick="switchCommand('set')" id="cmd-tab-set" class="cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-lg font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-white/10 shadow-sm border border-gray-200 dark:border-white/10 transition-all">SET</button>
-                    <button onclick="switchCommand('get')" id="cmd-tab-get" class="cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">GET</button>
-                    <button onclick="switchCommand('del')" id="cmd-tab-del" class="cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">DEL</button>
-                    <button onclick="switchCommand('ttl')" id="cmd-tab-ttl" class="cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">TTL</button>
-                    <button onclick="switchCommand('persist')" id="cmd-tab-persist" class="cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-lg font-mono font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5 transition-all border border-transparent">PERSIST</button>
+                    <div class="w-full md:w-1/5 lg:w-1/6 bg-gray-50/50 -transparent border-b md:border-b-0 md:border-r border-gray-200 -white/5 flex flex-row md:flex-col overflow-x-auto p-4 gap-2 shrink-0 snap-x custom-scrollbar min-w-0">
+                    <button onclick="switchCommand('set')" id="cmd-tab-set" class="cmd-tab tab-active flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-lg font-mono font-medium transition-all border">SET</button>
+                    <button onclick="switchCommand('get')" id="cmd-tab-get" class="cmd-tab tab-inactive flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-lg font-mono font-medium transition-all border">GET</button>
+                    <button onclick="switchCommand('del')" id="cmd-tab-del" class="cmd-tab tab-inactive flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-lg font-mono font-medium transition-all border">DEL</button>
+                    <button onclick="switchCommand('ttl')" id="cmd-tab-ttl" class="cmd-tab tab-inactive flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-lg font-mono font-medium transition-all border">TTL</button>
+                    <button onclick="switchCommand('persist')" id="cmd-tab-persist" class="cmd-tab tab-inactive flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-lg font-mono font-medium transition-all border">PERSIST</button>
                 </div>
 
                 <!-- Command Details -->
                 <div class="flex-1 flex flex-col lg:flex-row min-w-0 w-full">
-                    <div class="w-full lg:w-1/2 p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-white/5 relative h-[420px] lg:h-[450px] overflow-y-auto custom-scrollbar min-w-0">
+                    <div class="w-full lg:w-1/2 p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-gray-200 -white/5 relative h-[420px] lg:h-[450px] overflow-y-auto custom-scrollbar min-w-0">
                         <div id="cmd-details">
                             <!-- Content will be injected here via JS -->
                         </div>
                     </div>
                     <div class="w-full lg:w-1/2 p-6 lg:p-8 bg-transparent flex flex-col min-w-0">
-                        <div class="bento-card rounded-2xl overflow-hidden shadow-2xl relative group flex-1 flex flex-col border-0 bg-gray-900 dark:bg-[#020617]">
-                            <div class="absolute inset-0 bg-gradient-to-br from-brand-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
+                        <div class="bento-card rounded-lg overflow-hidden shadow-2xl relative group flex-1 flex flex-col border-0 bg-gray-900">
+                            
                             
                             <!-- Mac Header -->
-                            <div class="flex items-center px-4 py-3 border-b border-gray-800 bg-gray-950 dark:bg-[#0f172a]">
+                            <div class="flex items-center px-4 py-3 border-b border-gray-800 bg-gray-950">
                                 <div class="flex gap-2">
                                     <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
                                     <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
                                     <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
                                 </div>
-                                <div class="hidden sm:block mx-auto text-xs font-mono font-medium tracking-widest text-gray-500 dark:text-slate-400">spindle-cli --interactive</div>
+                                <div class="hidden sm:block  text-xs font-mono font-medium tracking-widest text-gray-500 -slate-400">spindle-cli --interactive</div>
                             </div>
                             
                             <!-- Terminal Content -->
                             <div class="flex flex-col" id="terminal-container" onclick="document.getElementById('terminal-input').focus()">
                                 <!-- Scrollable output area: grows up to max-h then scrolls -->
                                 <div class="overflow-y-auto overflow-x-hidden custom-scrollbar p-5 font-mono text-sm leading-relaxed max-h-[240px]" id="terminal-scroll">
-                                    <div class="mb-3 text-gray-500 dark:text-slate-500 text-xs">Welcome to Spindle Interactive CLI! Type SET, GET, DEL, PING, TTL, or PERSIST. Type CLEAR to reset.</div>
+                                    <div class=" text-gray-500 -slate-500 text-xs">Welcome to Spindle Interactive CLI! Type SET, GET, DEL, PING, TTL, or PERSIST. Type CLEAR to reset.</div>
                                     <div id="terminal-output" class="flex flex-col gap-1"></div>
                                 </div>
                                 <!-- Input always right below content -->
-                                <div class="flex items-center px-5 py-3 border-t border-gray-200 dark:border-gray-800/50 bg-gray-50 dark:bg-black/20">
-                                    <span class="font-bold mr-2 font-mono text-brand-600 dark:text-brand-400">&gt;</span>
-                                    <input type="text" id="terminal-input" class="flex-1 bg-transparent border-none outline-none font-mono text-sm shadow-none text-gray-800 dark:text-slate-300 placeholder:text-gray-400 dark:placeholder:text-slate-600" autocomplete="off" spellcheck="false" placeholder="SET mykey 123" onkeypress="handleTerminalInput(event)">
+                                <div class="flex items-center px-5 py-3 border-t border-gray-200 -gray-800/50 bg-gray-50 -black/20">
+                                    <span class="font-bold mr-2 font-mono text-brand-600 -brand-400">&gt;</span>
+                                    <input type="text" id="terminal-input" class="flex-1 bg-transparent border-none outline-none font-mono text-sm shadow-none text-gray-800 -slate-300 placeholder:text-gray-400 -slate-600" autocomplete="off" spellcheck="false" placeholder="SET mykey 123" onkeypress="handleTerminalInput(event)">
                                 </div>
                             </div>
                         </div>
@@ -641,43 +671,43 @@
                     const data = commandsData[cmd];
 
                     document.getElementById('cmd-details').innerHTML = `
-                        <h3 class="text-2xl font-display font-bold text-gray-900 dark:text-white mb-3 uppercase tracking-tight">${cmd}</h3>
-                        <div class="bg-brand-50/50 dark:bg-brand-900/10 p-4 rounded-xl border border-brand-100 dark:border-brand-500/20 mb-6 overflow-x-auto">
-                            <code class="text-brand-600 dark:text-brand-400 font-bold break-words whitespace-normal text-[15px]">${data.syntax.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>
+                        <h3 class="text-2xl font-serif font-bold text-slate-900 -slate-100  uppercase tracking-tight">${cmd}</h3>
+                        <div class="bg-gray-50/50 -brand-900/10 p-4 rounded-xl border border-brand-100 -brand-500/20  overflow-x-auto">
+                            <code class="text-brand-600 -brand-400 font-bold break-words whitespace-normal text-[15px]">${data.syntax.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">${data.desc}</p>
-                        <h4 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2">Returns</h4>
-                        <p class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-sm">${data.returns}</p>
-                        <h4 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3">Example Raw TCP Socket</h4>
-                        <div class="bg-gray-50 dark:bg-[#020617]/50 rounded-xl p-5 font-mono text-sm overflow-x-auto border border-gray-200 dark:border-white/5 shadow-inner">
-                            <pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="text-gray-800 dark:text-gray-300 leading-loose">${data.example.replace(/\\n/g, '<br/>')}</code></pre>
+                        <p class="text-gray-600 -gray-300  leading-relaxed">${data.desc}</p>
+                        <h4 class="text-xs font-bold text-gray-400 -gray-500 uppercase tracking-widest ">Returns</h4>
+                        <p class="text-gray-600 -gray-300  leading-relaxed text-sm">${data.returns}</p>
+                        <h4 class="text-xs font-bold text-gray-400 -gray-500 uppercase tracking-widest ">Example Raw TCP Socket</h4>
+                        <div class="bg-gray-50/50 rounded-xl p-5 font-mono text-sm overflow-x-auto border border-gray-200 -white/5 shadow-inner">
+                            <pre class="w-full w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="text-gray-800 -gray-300 leading-loose">${data.example.replace(/\\n/g, '<br/>')}</code></pre>
                         </div>
                     `;
 
                     document.querySelectorAll('.cmd-tab').forEach(el => {
-                        el.className = "cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-xl font-mono font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all border border-transparent";
+                        el.className = "cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-xl font-mono font-medium text-gray-500 -gray-400 hover:text-gray-900 -slate-900 -slate-100 hover:bg-gray-100 -white/5 transition-all border border-transparent";
                     });
 
                     const activeTab = document.getElementById('cmd-tab-' + cmd);
-                    activeTab.className = "cmd-tab flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-xl font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-[#0f172a] shadow-sm border border-gray-200 dark:border-white/10 transition-all";
+                    activeTab.className = "cmd-tab tab-active flex-1 md:flex-none snap-center whitespace-nowrap text-center md:text-left px-4 py-3 rounded-xl font-mono font-bold shadow-sm transition-all border";
                 }
 
                 switchCommand('set');
             </script>
         </section>
-<section id="sdks" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-5xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight">Multi-Language SDKs</h2>
-                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">Spindle speaks plain TCP. You can use our provided clients or easily write your own in any language.</p>
+<section id="sdks" class="w-full  px-6  relative   -">
+            <div class="text-center ">
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 -slate-100  tracking-tight">Multi-Language SDKs</h2>
+                <p class="text-gray-600 -gray-400 w-full  text-lg">Spindle speaks plain TCP. You can use our provided clients or easily write your own in any language.</p>
             </div>
             
-            <div class="bento-card w-full min-w-0 rounded-2xl overflow-hidden shadow-2xl relative group bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-white/10">
-                <div class="absolute inset-0 bg-gradient-to-br from-brand-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
+            <div class="bento-card w-full min-w-0 rounded-lg overflow-hidden shadow-2xl relative group bg-white border border-gray-200 -white/10">
+                
                 
                 <!-- Mac OS Window Header -->
-                <div class="bg-gray-100 dark:bg-[#1a2235] flex items-center px-4 py-2 gap-2 border-b border-gray-200 dark:border-white/5">
+                <div class="bg-gray-100 flex items-center px-4 py-2 gap-2 border-b border-gray-200 -white/5">
                     <div class="flex gap-2 mr-4">
-                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-red-600"></div>
                         <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                         <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
                     </div>
@@ -691,25 +721,25 @@
                 </div>
 
                 <!-- Content Panels -->
-                <div class="relative overflow-y-auto custom-scrollbar bg-gray-50 dark:bg-[#0f172a] h-[350px]">
+                <div class="relative overflow-y-auto custom-scrollbar bg-gray-50 h-[350px]">
                     <!-- Java Panel -->
                     <div id="panel-java" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed block overflow-x-hidden min-w-0">
-<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-java text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">import</span> clients.java.SpindleClient;
+<pre class="w-full w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-java text-gray-800 -gray-300"><span class="text-pink-500 -pink-400">import</span> clients.java.SpindleClient;
 
-<span class="text-pink-500 dark:text-pink-400">public class</span> <span class="text-blue-600 dark:text-blue-400">Main</span> {
-    <span class="text-pink-500 dark:text-pink-400">public static void</span> <span class="text-blue-600 dark:text-blue-400">main</span>(String[] args) {
-        SpindleClient client = <span class="text-pink-500 dark:text-pink-400">new</span> SpindleClient(<span class="text-green-600 dark:text-green-400">"127.0.0.1"</span>, <span class="text-blue-600 dark:text-blue-400">8888</span>);
-        <span class="text-pink-500 dark:text-pink-400">try</span> {
+<span class="text-pink-500 -pink-400">public class</span> <span class="text-brand-600 -blue-400">Main</span> {
+    <span class="text-pink-500 -pink-400">public static void</span> <span class="text-brand-600 -blue-400">main</span>(String[] args) {
+        SpindleClient client = <span class="text-pink-500 -pink-400">new</span> SpindleClient(<span class="text-green-600 -green-400">"127.0.0.1"</span>, <span class="text-brand-600 -blue-400">8888</span>);
+        <span class="text-pink-500 -pink-400">try</span> {
             client.connect();
             
-            <span class="text-gray-500 dark:text-gray-500">// Set key with expiration (3600 seconds)</span>
-            client.setEx(<span class="text-green-600 dark:text-green-400">"session:1"</span>, <span class="text-green-600 dark:text-green-400">"active"</span>, <span class="text-blue-600 dark:text-blue-400">3600</span>);
-            System.out.println(client.get(<span class="text-green-600 dark:text-green-400">"session:1"</span>));
+            <span class="text-gray-500 -gray-500">// Set key with expiration (3600 seconds)</span>
+            client.setEx(<span class="text-green-600 -green-400">"session:1"</span>, <span class="text-green-600 -green-400">"active"</span>, <span class="text-brand-600 -blue-400">3600</span>);
+            System.out.println(client.get(<span class="text-green-600 -green-400">"session:1"</span>));
             
-            client.delete(<span class="text-green-600 dark:text-green-400">"session:1"</span>);
-        } <span class="text-pink-500 dark:text-pink-400">catch</span> (Exception e) {
+            client.delete(<span class="text-green-600 -green-400">"session:1"</span>);
+        } <span class="text-pink-500 -pink-400">catch</span> (Exception e) {
             e.printStackTrace();
-        } <span class="text-pink-500 dark:text-pink-400">finally</span> {
+        } <span class="text-pink-500 -pink-400">finally</span> {
             client.close();
         }
     }
@@ -718,22 +748,22 @@
 
                     <!-- JavaScript Panel -->
                     <div id="panel-javascript" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden overflow-x-hidden min-w-0">
-<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-javascript text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">const</span> SpindleClient = require(<span class="text-green-600 dark:text-green-400">'./clients/javascript/spindle'</span>);
+<pre class="w-full w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-javascript text-gray-800 -gray-300"><span class="text-pink-500 -pink-400">const</span> SpindleClient = require(<span class="text-green-600 -green-400">'./clients/javascript/spindle'</span>);
 
-<span class="text-pink-500 dark:text-pink-400">async function</span> <span class="text-blue-600 dark:text-blue-400">main</span>() {
-    <span class="text-pink-500 dark:text-pink-400">const</span> client = <span class="text-pink-500 dark:text-pink-400">new</span> SpindleClient(<span class="text-green-600 dark:text-green-400">'127.0.0.1'</span>, <span class="text-blue-600 dark:text-blue-400">8888</span>);
+<span class="text-pink-500 -pink-400">async function</span> <span class="text-brand-600 -blue-400">main</span>() {
+    <span class="text-pink-500 -pink-400">const</span> client = <span class="text-pink-500 -pink-400">new</span> SpindleClient(<span class="text-green-600 -green-400">'127.0.0.1'</span>, <span class="text-brand-600 -blue-400">8888</span>);
     
-    <span class="text-pink-500 dark:text-pink-400">try</span> {
-        <span class="text-pink-500 dark:text-pink-400">await</span> client.connect();
+    <span class="text-pink-500 -pink-400">try</span> {
+        <span class="text-pink-500 -pink-400">await</span> client.connect();
         
-        <span class="text-gray-500 dark:text-gray-500">// Set key with expiration</span>
-        <span class="text-pink-500 dark:text-pink-400">await</span> client.set(<span class="text-green-600 dark:text-green-400">"session:1"</span>, <span class="text-green-600 dark:text-green-400">"active"</span>, { ex: <span class="text-blue-600 dark:text-blue-400">3600</span> });
-        console.log(<span class="text-pink-500 dark:text-pink-400">await</span> client.get(<span class="text-green-600 dark:text-green-400">"session:1"</span>));
+        <span class="text-gray-500 -gray-500">// Set key with expiration</span>
+        <span class="text-pink-500 -pink-400">await</span> client.set(<span class="text-green-600 -green-400">"session:1"</span>, <span class="text-green-600 -green-400">"active"</span>, { ex: <span class="text-brand-600 -blue-400">3600</span> });
+        console.log(<span class="text-pink-500 -pink-400">await</span> client.get(<span class="text-green-600 -green-400">"session:1"</span>));
         
-        <span class="text-pink-500 dark:text-pink-400">await</span> client.delete(<span class="text-green-600 dark:text-green-400">"session:1"</span>);
-    } <span class="text-pink-500 dark:text-pink-400">catch</span> (err) {
+        <span class="text-pink-500 -pink-400">await</span> client.delete(<span class="text-green-600 -green-400">"session:1"</span>);
+    } <span class="text-pink-500 -pink-400">catch</span> (err) {
         console.error(err);
-    } <span class="text-pink-500 dark:text-pink-400">finally</span> {
+    } <span class="text-pink-500 -pink-400">finally</span> {
         client.close();
     }
 }
@@ -743,41 +773,41 @@ main();</code></pre>
 
                     <!-- Python Panel -->
                     <div id="panel-python" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden overflow-x-hidden min-w-0">
-<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-python text-gray-800 dark:text-gray-300"><span class="text-pink-500 dark:text-pink-400">import</span> sys
-sys.path.append(<span class="text-green-600 dark:text-green-400">'clients/python'</span>)
+<pre class="w-full w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-python text-gray-800 -gray-300"><span class="text-pink-500 -pink-400">import</span> sys
+sys.path.append(<span class="text-green-600 -green-400">'clients/python'</span>)
 
-<span class="text-pink-500 dark:text-pink-400">from</span> spindle <span class="text-pink-500 dark:text-pink-400">import</span> SpindleClient
+<span class="text-pink-500 -pink-400">from</span> spindle <span class="text-pink-500 -pink-400">import</span> SpindleClient
 
-<span class="text-gray-500 dark:text-gray-500"># Connect to the server</span>
-client = SpindleClient(host=<span class="text-green-600 dark:text-green-400">'127.0.0.1'</span>, port=<span class="text-blue-600 dark:text-blue-400">8888</span>)
+<span class="text-gray-500 -gray-500"># Connect to the server</span>
+client = SpindleClient(host=<span class="text-green-600 -green-400">'127.0.0.1'</span>, port=<span class="text-brand-600 -blue-400">8888</span>)
 client.connect()
 
-<span class="text-gray-500 dark:text-gray-500"># Set key with expiration</span>
-client.set(<span class="text-green-600 dark:text-green-400">"session:1"</span>, <span class="text-green-600 dark:text-green-400">"active"</span>, ex=<span class="text-blue-600 dark:text-blue-400">3600</span>)
-<span class="text-pink-500 dark:text-pink-400">print</span>(client.get(<span class="text-green-600 dark:text-green-400">"session:1"</span>))
+<span class="text-gray-500 -gray-500"># Set key with expiration</span>
+client.set(<span class="text-green-600 -green-400">"session:1"</span>, <span class="text-green-600 -green-400">"active"</span>, ex=<span class="text-brand-600 -blue-400">3600</span>)
+<span class="text-pink-500 -pink-400">print</span>(client.get(<span class="text-green-600 -green-400">"session:1"</span>))
 
-client.delete(<span class="text-green-600 dark:text-green-400">"session:1"</span>)
+client.delete(<span class="text-green-600 -green-400">"session:1"</span>)
 client.close()</code></pre>
                     </div>
 
                     <!-- cURL Panel -->
                     <div id="panel-curl" class="sdk-panel absolute inset-0 p-6 font-mono text-sm leading-relaxed hidden overflow-x-hidden min-w-0">
-<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-bash text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># Other Languages (C#, PHP, Rust, C++, etc.)
+<pre class="w-full w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-bash text-gray-800 -gray-300"><span class="text-gray-500 -gray-500"># Other Languages (C#, PHP, Rust, C++, etc.)
 # Since Spindle is built on a raw TCP protocol,
 # you don't need any special database drivers. 
 # Just open a TCP socket, send a command with \n, and read!</span>
 
-<span class="text-gray-500 dark:text-gray-500"># Test directly from your terminal using netcat</span>
-<span class="text-brand-600 dark:text-brand-400">$</span> nc 127.0.0.1 8888
+<span class="text-gray-500 -gray-500"># Test directly from your terminal using netcat</span>
+<span class="text-brand-600 -brand-400">$</span> nc 127.0.0.1 8888
 
-<span class="text-green-600 dark:text-green-400">SET</span> mykey hello
-<span class="text-gray-800 dark:text-gray-400">OK</span>
+<span class="text-green-600 -green-400">SET</span> mykey hello
+<span class="text-gray-800 -gray-400">(integer) 1</span>
 
-<span class="text-green-600 dark:text-green-400">GET</span> mykey
-<span class="text-gray-800 dark:text-gray-400">hello</span>
+<span class="text-green-600 -green-400">GET</span> mykey
+<span class="text-gray-800 -gray-400">hello</span>
 
-<span class="text-green-600 dark:text-green-400">DEL</span> mykey
-<span class="text-gray-800 dark:text-gray-400">OK</span></code></pre>
+<span class="text-green-600 -green-400">DEL</span> mykey
+<span class="text-gray-800 -gray-400">(integer) 1</span></code></pre>
                     </div>
                 </div>
             </div>
@@ -785,19 +815,19 @@ client.close()</code></pre>
 
 
         </section>
-<section id="installation" class="max-w-4xl mx-auto px-6 mb-32 relative z-10 pt-20 -mt-20">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-5xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight">Installation &amp; Setup</h2>
-                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">Get Spindle up and running in seconds. Build from source or include it directly in your CMake projects.</p>
+<section id="installation" class="w-full  px-6  relative   -">
+            <div class="text-center ">
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 -slate-100  tracking-tight">Installation &amp; Setup</h2>
+                <p class="text-gray-600 -gray-400 w-full  text-lg">Get Spindle up and running in seconds. Build from source or include it directly in your CMake projects.</p>
             </div>
             
-            <div class="bento-card w-full min-w-0 rounded-2xl overflow-hidden shadow-2xl relative group bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-white/10">
-                <div class="absolute inset-0 bg-gradient-to-br from-brand-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"></div>
+            <div class="bento-card w-full min-w-0 rounded-lg overflow-hidden shadow-2xl relative group bg-white border border-gray-200 -white/10">
+                
                 
                 <!-- Mac OS Window Header -->
-                <div class="bg-gray-100 dark:bg-[#1a2235] flex items-center px-4 py-2 gap-2 border-b border-gray-200 dark:border-white/5">
+                <div class="bg-gray-100 flex items-center px-4 py-2 gap-2 border-b border-gray-200 -white/5">
                     <div class="flex gap-2 mr-4">
-                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-red-600"></div>
                         <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                         <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
                     </div>
@@ -809,39 +839,39 @@ client.close()</code></pre>
                 </div>
 
                 <!-- Content Panels -->
-                <div class="relative overflow-y-auto custom-scrollbar bg-gray-50 dark:bg-[#0f172a] h-[350px]">
+                <div class="relative overflow-y-auto custom-scrollbar bg-gray-50 h-[350px]">
                     <!-- Source Panel -->
                     <div id="panel-install-source" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed block overflow-x-hidden min-w-0">
-<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-bash text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># 1. Clone the repository</span>
-<span class="text-brand-600 dark:text-brand-400">$</span> git clone https://github.com/DoanTrungHuy/Spindle.git
-<span class="text-brand-600 dark:text-brand-400">$</span> cd Spindle
+<pre class="w-full w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-bash text-gray-800 -gray-300"><span class="text-gray-500 -gray-500"># 1. Clone the repository</span>
+<span class="text-brand-600 -brand-400">$</span> git clone https://github.com/DoanTrungHuy/Spindle.git
+<span class="text-brand-600 -brand-400">$</span> cd Spindle
 
-<span class="text-gray-500 dark:text-gray-500"># 2. Build the project using CMake</span>
-<span class="text-brand-600 dark:text-brand-400">$</span> mkdir build &amp;&amp; cd build
-<span class="text-brand-600 dark:text-brand-400">$</span> cmake ..
-<span class="text-brand-600 dark:text-brand-400">$</span> make -j4
+<span class="text-gray-500 -gray-500"># 2. Build the project using CMake</span>
+<span class="text-brand-600 -brand-400">$</span> mkdir build &amp;&amp; cd build
+<span class="text-brand-600 -brand-400">$</span> cmake ..
+<span class="text-brand-600 -brand-400">$</span> make -j4
 
-<span class="text-gray-500 dark:text-gray-500"># 3. Start the server!</span>
-<span class="text-brand-600 dark:text-brand-400">$</span> ./spindle_app --port 8888 --threads 4
+<span class="text-gray-500 -gray-500"># 3. Start the server!</span>
+<span class="text-brand-600 -brand-400">$</span> ./spindle_app --port 8888 --threads 4
 </code></pre>
                     </div>
 
                     <!-- CMake Panel -->
                     <div id="panel-install-cmake" class="install-panel absolute inset-0 p-8 font-mono text-sm leading-relaxed hidden overflow-x-hidden min-w-0">
-<pre class="w-full max-w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-cmake text-gray-800 dark:text-gray-300"><span class="text-gray-500 dark:text-gray-500"># Add the following to your CMakeLists.txt:</span>
+<pre class="w-full w-full overflow-x-hidden whitespace-pre-wrap break-all"><code class="whitespace-pre-wrap break-all inline-block w-full language-cmake text-gray-800 -gray-300"><span class="text-gray-500 -gray-500"># Add the following to your CMakeLists.txt:</span>
 
-<span class="text-pink-500 dark:text-pink-400">include</span>(FetchContent)
+<span class="text-pink-500 -pink-400">include</span>(FetchContent)
 
-<span class="text-blue-600 dark:text-blue-400">FetchContent_Declare</span>(
+<span class="text-brand-600 -blue-400">FetchContent_Declare</span>(
   Spindle
   GIT_REPOSITORY https://github.com/DoanTrungHuy/Spindle.git
   GIT_TAG        master
 )
-<span class="text-blue-600 dark:text-blue-400">FetchContent_MakeAvailable</span>(Spindle)
+<span class="text-brand-600 -blue-400">FetchContent_MakeAvailable</span>(Spindle)
 
-<span class="text-gray-500 dark:text-gray-500"># Link it to your executable</span>
-<span class="text-blue-600 dark:text-blue-400">add_executable</span>(my_app main.cpp)
-<span class="text-blue-600 dark:text-blue-400">target_link_libraries</span>(my_app PRIVATE spindle)
+<span class="text-gray-500 -gray-500"># Link it to your executable</span>
+<span class="text-brand-600 -blue-400">add_executable</span>(my_app main.cpp)
+<span class="text-brand-600 -blue-400">target_link_libraries</span>(my_app PRIVATE spindle)
 </code></pre>
                     </div>
                 </div>
@@ -849,36 +879,36 @@ client.close()</code></pre>
 
 
         </section>
-<footer class="border-t border-gray-200 dark:border-white/5 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-[#0f172a] dark:to-[#0a0f1e] pt-8 pb-32 md:pb-8 relative overflow-hidden z-20">
+<footer class="border-t border-gray-200 -white/5 bg-gradient-to-b from-gray-50 to-gray-100   md: relative overflow-hidden ">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-brand-500/30 to-transparent"></div>
         <div class="absolute bottom-0 left-0 w-64 h-64 bg-brand-600/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
-        <div class="absolute bottom-0 right-0 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 bg-brand-600/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
         
-        <div class="max-w-6xl mx-auto px-6 flex flex-col items-center">
+        <div class="w-full  px-6 flex flex-col items-center">
             
             <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity text-center">
                 <img src="favicon.png" class="w-8 h-8 drop-shadow-sm" alt="Spindle">
-                <span class="font-display font-extrabold text-xl tracking-tight text-gray-900 dark:text-[#f8fafc]">Spindle</span>
-                <div class="w-1 h-1 rounded-full bg-gray-300 dark:bg-[#475569] mx-1"></div>
-                <span class="text-gray-500 dark:text-[#94a3b8] font-medium text-sm">Released under the MIT License</span>
+                <span class="font-serif font-extrabold text-xl tracking-tight text-gray-900">Spindle</span>
+                <span class="hidden sm:inline text-gray-300">•</span>
+                <span class="text-gray-500 font-medium text-sm">Released under the MIT License</span>
             </div>
 
             </div></footer>
         <!-- Floating Status Widget -->
-    <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 scale-90 sm:scale-100 origin-bottom-right z-50">
-        <button id="status-widget" aria-label="Toggle system status" onclick="toggleWidget()" class="cursor-pointer group flex items-center gap-3 bg-[#1e293b]/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/10 shadow-2xl hover:border-brand-500/40 hover:bg-[#020617] transition-all duration-300">
+    <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 scale-90 sm:scale-100 origin-bottom-right ">
+        <button id="status-widget" aria-label="Toggle system status" onclick="toggleWidget()" class="cursor-pointer group flex items-center gap-3 bg-white px-4 py-2.5 rounded-full border border-white/10 shadow-2xl hover:border-brand-500/40 hover:bg-[#020617] transition-all duration-300">
             <span class="relative flex h-2.5 w-2.5 shrink-0" title="Click to collapse/expand">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" style="background-color: #22c55e !important; opacity: 0.75 !important;"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" style="background-color: #22c55e !important; opacity: 1 !important;"></span>
             </span>
             <div id="status-content" class="flex items-center gap-3 overflow-hidden transition-all duration-500 max-w-[200px] opacity-100">
-                <span id="status-text" class="text-xs text-gray-300 font-mono font-medium tracking-wide whitespace-nowrap">SYSTEM_LIVE</span>
-                <div id="status-separator" class="w-px h-4 bg-white/10 shrink-0"></div>
+                <span id="status-text" class="text-xs text-slate-800 font-mono font-medium tracking-wide whitespace-nowrap">SYSTEM_LIVE</span>
+                <div id="status-separator" class="w-px h-4 bg-slate-300 shrink-0"></div>
                 
-                <div id="status-views" class="flex items-center gap-1.5 bg-transparent px-2 py-0.5 rounded border border-brand-500/20 shrink-0">
-                    <svg class="w-3.5 h-3.5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                <div id="status-views" class="flex items-center gap-1.5 bg-transparent px-2 py-0.5 rounded border border-gray-200 shrink-0">
+                    <svg class="w-3.5 h-3.5 text-slate-800" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                     <div class="overflow-hidden flex items-center justify-end h-[20px] ml-[-4px]">
-                        <img id="status-badge" src="https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=000000&style=for-the-badge" alt="Views" style="margin-left: -17.5px; height: 20px;" class="max-w-none opacity-90">
+                        <img id="status-badge" src="https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=000000&style=flat-square" alt="Views" style="margin-left: -14px; height: 20px; filter: invert(1);" class="w-full opacity-90">
                     </div>
                 </div>
             </div>
@@ -946,7 +976,7 @@ client.close()</code></pre>
         const htmlElement = document.documentElement;
         const badge = document.getElementById('status-badge');
         // Add a timestamp to bypass browser cache, forcing it to count every page load
-        const badgeDark = "https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=000000&style=for-the-badge&t=" + new Date().getTime();
+        const badgeDark = "https://komarev.com/ghpvc/?username=DoanTrungHuy-Spindle&label=%20&color=000000&style=flat-square&t=" + new Date().getTime();
         if (badge) {
             badge.src = badgeDark;
         }
@@ -973,7 +1003,7 @@ client.close()</code></pre>
         // Default to Dark Mode
         let isDarkMode = true;
         try {
-            if (localStorage.getItem('theme') === 'light') {
+            if (localStorage.getItem('theme') !== 'dark') {
                 isDarkMode = false;
             }
         } catch (e) {
@@ -1001,10 +1031,10 @@ client.close()</code></pre>
             if (content.classList.contains('max-w-[200px]')) {
                 // Collapse
                 content.classList.remove('max-w-[200px]', 'opacity-100', 'gap-3');
-                content.classList.add('max-w-0', 'opacity-0', 'gap-0');
+                content.classList.add('w-full', 'opacity-0', 'gap-0');
             } else {
                 // Expand
-                content.classList.remove('max-w-0', 'opacity-0', 'gap-0');
+                content.classList.remove('w-full', 'opacity-0', 'gap-0');
                 content.classList.add('max-w-[200px]', 'opacity-100', 'gap-3');
             }
         }
@@ -1016,11 +1046,11 @@ client.close()</code></pre>
         function printToTerminal(input, output, isError = false) {
             const container = document.getElementById('terminal-output');
             const inputLine = document.createElement('div');
-            inputLine.className = 'text-gray-800 dark:text-gray-300';
-            inputLine.innerHTML = '<span class="text-brand-600 dark:text-brand-400 mr-2 font-bold">&gt;</span>' + input;
+            inputLine.className = 'text-gray-800 -gray-300';
+            inputLine.innerHTML = '<span class="text-brand-600 -brand-400 mr-2 font-bold">&gt;</span>' + input;
 
             const outputLine = document.createElement('div');
-            outputLine.className = isError ? 'text-red-600 dark:text-red-400 font-bold ml-4' : 'text-gray-600 dark:text-gray-400 font-bold ml-4';
+            outputLine.className = isError ? 'text-red-600 -red-400 font-bold ml-4' : 'text-gray-600 -gray-400 font-bold ml-4';
             outputLine.textContent = output;
             
             container.appendChild(inputLine);
@@ -1173,6 +1203,7 @@ client.close()</code></pre>
             benchObserver.observe(benchContainer);
         }
     </script>
+</div>
 </body>
 </html>
 
