@@ -178,21 +178,8 @@
     
     /* RESPONSIVE & UX OPTIMIZATIONS */
     
-    /* A4 Paper Layout */
-    body {
-        padding: 2rem 1rem !important;
-        background-color: #e5e7eb !important;
-    }
-    #document-wrapper {
-        max-width: 900px !important;
-        margin: 0 auto !important;
-        background-color: #ffffff !important;
-        box-shadow: 0 12px 40px rgba(0,0,0,0.15) !important;
-        padding: 4rem 5rem !important;
-        min-height: 100vh;
-        width: 100% !important;
-        box-sizing: border-box !important;
-    }
+    
+    
 
 
     pre, code, .overflow-x-auto {
@@ -254,12 +241,7 @@
             padding: 0 !important;
             background-color: #ffffff !important;
         }
-        #document-wrapper {
-            padding: 1.5rem 1rem !important;
-            box-shadow: none !important;
-            margin: 0 !important;
-            border-radius: 0 !important;
-        }
+        
         main, section, header, footer {
             margin: 0 0 2rem 0 !important;
         }
@@ -283,11 +265,11 @@
     }
 </style>
 </head>
-<body class="antialiased bg-slate-50 -slate-900 text-slate-800 -slate-200 min-h-screen">
+<body class="antialiased bg-white -slate-900 text-slate-800 -slate-200 min-h-screen">
 <div id="document-wrapper">
     
     <!-- Navbar -->
-    <nav class="w-full relative  bg-white/90 -slate-900/90 backdrop-blur-md border-b border-border">
+    <nav class="max-w-6xl mx-auto w-full relative  bg-white/90 -slate-900/90 backdrop-blur-md border-b border-border">
         <div class="w-full  px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer group">
                 <img src="favicon.png" alt="Spindle" class="w-8 h-8 group-hover:scale-110 transition-transform duration-300">
@@ -311,7 +293,7 @@
 
     <main class="flex-grow w-full min-w-0 mesh-bg   relative">
         <!-- Hero Section -->
-        <header class="w-full  px-6 text-center  relative ">
+        <header class="max-w-4xl mx-auto w-full  px-6 text-center  relative ">
             <a href="https://github.com/DoanTrungHuy/Spindle/releases" target="_blank" class="inline-flex items-center px-5 py-1.5 rounded-full bg-gray-50/50 -transparent border border-brand-200 -brand-500/30 text-brand-600 -brand-400 text-xs font-bold tracking-wide uppercase  hover:bg-gray-50 -brand-500/10 transition-all shadow-sm">
                 v1.0.0 Release Notes
             </a>
@@ -355,7 +337,7 @@
 
     <!-- Footer -->
     
-<section id="architecture" class="w-full  px-6   -">
+<section id="architecture" class="max-w-5xl mx-auto w-full  px-6   -">
             <h2 class="font-serif text-3xl md:text-4xl font-bold  text-center">System Architecture & Design</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 architecture-grid gap-6">
@@ -420,7 +402,7 @@
                 </div>
             </div>
         </section>
-<section id="benchmark" class="w-full w-full  px-6  relative   -">
+<section id="benchmark" class="max-w-5xl mx-auto w-full  px-6  relative   -">
             <div class="text-center  overflow-hidden">
                 <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 -slate-100  tracking-tight break-words">Performance Benchmarks</h2>
                 <p class="text-gray-600 -gray-400 w-full  text-base sm:text-lg  break-words mb-6" id="benchmark-desc">Tested locally on an 8-core CPU using 100 concurrent connections with Pipelining (batch=100) and tiny payloads. Designed to measure theoretical max engine throughput.</p>
@@ -575,7 +557,7 @@
                 }
             </script>
         </section>
-<section id="commands" class="w-full  px-4 sm:px-6  relative   - w-full overflow-hidden">
+<section id="commands" class="max-w-6xl mx-auto w-full  px-4 sm:px-6  relative   - w-full overflow-hidden">
             <div class="text-center ">
                 <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 -slate-100  tracking-tight">Commands Reference</h2>
                 <p class="text-gray-600 -gray-400 w-full  text-lg">Spindle uses a simple, human-readable text protocol over TCP. Every command must be terminated with a newline (<code>\n</code>).</p>
@@ -695,7 +677,7 @@
                 switchCommand('set');
             </script>
         </section>
-<section id="sdks" class="w-full  px-6  relative   -">
+<section id="sdks" class="max-w-5xl mx-auto w-full  px-6  relative   -">
             <div class="text-center ">
                 <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 -slate-100  tracking-tight">Multi-Language SDKs</h2>
                 <p class="text-gray-600 -gray-400 w-full  text-lg">Spindle speaks plain TCP. You can use our provided clients or easily write your own in any language.</p>
@@ -815,7 +797,7 @@ client.close()</code></pre>
 
 
         </section>
-<section id="installation" class="w-full  px-6  relative   -">
+<section id="installation" class="max-w-5xl mx-auto w-full  px-6  relative   -">
             <div class="text-center ">
                 <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 -slate-100  tracking-tight">Installation &amp; Setup</h2>
                 <p class="text-gray-600 -gray-400 w-full  text-lg">Get Spindle up and running in seconds. Build from source or include it directly in your CMake projects.</p>
