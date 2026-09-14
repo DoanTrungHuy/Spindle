@@ -125,12 +125,17 @@
         gap: 2rem !important;
     }
     .bento-card {
-        background-color: transparent !important;
-        border: none !important;
-        border-top: 2px solid #e5e7eb !important;
-        border-radius: 0 !important;
-        padding: 1.5rem 0 0 0 !important;
-        box-shadow: none !important;
+        background-color: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
+        border-top: 3px solid #002147 !important;
+        border-radius: 8px !important;
+        padding: 2rem !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+        transition: all 0.2s ease;
+    }
+    .bento-card:hover {
+        transform: translateY(-4px) !important;
+        box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.1) !important;
     }
     .bento-card:hover {
         transform: none !important;
@@ -269,7 +274,8 @@
 <div id="document-wrapper">
     
     <!-- Navbar -->
-    <nav class="max-w-6xl mx-auto w-full relative  bg-white/90 -slate-900/90 backdrop-blur-md border-b border-border">
+    <nav class="w-full relative  bg-white/90 -slate-900/90 backdrop-blur-md border-b border-border">
+<div class="max-w-6xl mx-auto px-4">
         <div class="w-full  px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer group">
                 <img src="favicon.png" alt="Spindle" class="w-8 h-8 group-hover:scale-110 transition-transform duration-300">
@@ -287,13 +293,15 @@
                 </a>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
     
 
     <main class="flex-grow w-full min-w-0 mesh-bg   relative">
         <!-- Hero Section -->
-        <header class="max-w-4xl mx-auto w-full  px-6 text-center  relative ">
+        <header class="bg-white w-full py-20  px-6 text-center  relative ">
+<div class="max-w-4xl mx-auto px-4">
             <a href="https://github.com/DoanTrungHuy/Spindle/releases" target="_blank" class="inline-flex items-center px-5 py-1.5 rounded-full bg-gray-50/50 -transparent border border-brand-200 -brand-500/30 text-brand-600 -brand-400 text-xs font-bold tracking-wide uppercase  hover:bg-gray-50 -brand-500/10 transition-all shadow-sm">
                 v1.0.0 Release Notes
             </a>
@@ -311,7 +319,8 @@
                 <a href="#architecture" class="px-8 py-4 rounded-md bg-brand-900 text-slate-900 -slate-100 -white -slate-900 shadow-md font-semibold hover:scale-105 transition-transform duration-300 w-full sm:w-auto">Explore Architecture</a>
                 
             </div>
-        </header>
+        </div>
+</header>
 
         <!-- Interactive Terminal -->
         
@@ -337,7 +346,8 @@
 
     <!-- Footer -->
     
-<section id="architecture" class="max-w-5xl mx-auto w-full  px-6   -">
+<section id="architecture" class="bg-brand-50 w-full py-20 border-y border-border  px-6   -">
+<div class="max-w-6xl mx-auto px-4 sm:px-6">
             <h2 class="font-serif text-3xl md:text-4xl font-bold  text-center">System Architecture & Design</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 architecture-grid gap-6">
@@ -401,8 +411,10 @@
                     </div>
                 </div>
             </div>
-        </section>
-<section id="benchmark" class="max-w-5xl mx-auto w-full  px-6  relative   -">
+        </div>
+</section>
+<section id="benchmark" class="bg-white w-full py-20  px-6  relative   -">
+<div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center  overflow-hidden">
                 <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 -slate-100  tracking-tight break-words">Performance Benchmarks</h2>
                 <p class="text-gray-600 -gray-400 w-full  text-base sm:text-lg  break-words mb-6" id="benchmark-desc">Tested locally on an 8-core CPU using 100 concurrent connections with Pipelining (batch=100) and tiny payloads. Designed to measure theoretical max engine throughput.</p>
@@ -556,8 +568,10 @@
                     });
                 }
             </script>
-        </section>
-<section id="commands" class="max-w-6xl mx-auto w-full  px-4 sm:px-6  relative   - w-full overflow-hidden">
+        </div>
+</section>
+<section id="commands" class="bg-brand-50 w-full py-20 border-y border-border  px-4 sm:px-6  relative   - w-full overflow-hidden">
+<div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center ">
                 <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 -slate-100  tracking-tight">Commands Reference</h2>
                 <p class="text-gray-600 -gray-400 w-full  text-lg">Spindle uses a simple, human-readable text protocol over TCP. Every command must be terminated with a newline (<code>\n</code>).</p>
@@ -676,8 +690,10 @@
 
                 switchCommand('set');
             </script>
-        </section>
-<section id="sdks" class="max-w-5xl mx-auto w-full  px-6  relative   -">
+        </div>
+</section>
+<section id="sdks" class="bg-white w-full py-20  px-6  relative   -">
+<div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center ">
                 <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 -slate-100  tracking-tight">Multi-Language SDKs</h2>
                 <p class="text-gray-600 -gray-400 w-full  text-lg">Spindle speaks plain TCP. You can use our provided clients or easily write your own in any language.</p>
@@ -796,8 +812,10 @@ client.close()</code></pre>
             
 
 
-        </section>
-<section id="installation" class="max-w-5xl mx-auto w-full  px-6  relative   -">
+        </div>
+</section>
+<section id="installation" class="bg-brand-50 w-full py-20 border-y border-border  px-6  relative   -">
+<div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center ">
                 <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 -slate-100  tracking-tight">Installation &amp; Setup</h2>
                 <p class="text-gray-600 -gray-400 w-full  text-lg">Get Spindle up and running in seconds. Build from source or include it directly in your CMake projects.</p>
@@ -860,7 +878,8 @@ client.close()</code></pre>
             </div>
 
 
-        </section>
+        </div>
+</section>
 <footer class="border-t border-gray-200 -white/5 bg-gradient-to-b from-gray-50 to-gray-100   md: relative overflow-hidden ">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-brand-500/30 to-transparent"></div>
         <div class="absolute bottom-0 left-0 w-64 h-64 bg-brand-600/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
